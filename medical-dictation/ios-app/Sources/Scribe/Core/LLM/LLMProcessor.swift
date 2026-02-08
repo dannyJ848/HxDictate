@@ -489,7 +489,7 @@ extension LLMProcessor {
         var llmModel: String {
             switch self {
             case .powerSaver: return "llama-3.2-3b-q4_k_m.gguf"
-            case .balanced: return "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"
+            case .balanced: return "qwen2.5-7b-q4_k_m.gguf"
             case .maximum: return "deepseek-r1-distill-qwen-7b-q3_k_l.gguf"
             }
         }
