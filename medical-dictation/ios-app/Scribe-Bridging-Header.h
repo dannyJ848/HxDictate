@@ -12,12 +12,12 @@
 #import <whisper.h>
 
 // Whisper wrapper
-#import "whisper_wrapper.h"
+#import "CWhisper/include/whisper_wrapper.h"
 
 // Import llama.h for types
 #import <llama.h>
 
 // Llama wrapper
-#import "llama_wrapper.h"
+#import "CLlama/include/llama_wrapper.h"
 
 #endif /* Scribe_Bridging_Header_h */

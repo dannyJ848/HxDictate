@@ -5,7 +5,7 @@
 //  C wrapper to simplify Swift interop with llama.cpp
 //
 
-#include "llama_wrapper.h"
+#include "include/llama_wrapper.h"
 #include "llama.h"
 
 #include <string.h>

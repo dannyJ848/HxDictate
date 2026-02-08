@@ -5,7 +5,7 @@
 //  C wrapper to simplify Swift interop with whisper.cpp
 //
 
-#include "whisper_wrapper.h"
+#include "include/whisper_wrapper.h"
 #include "whisper.h"
 
 // MARK: - Context Management

@@ -18,12 +18,9 @@ final class LLMProcessor: ObservableObject {
     private var modelPath: String?
     private var isModelLoaded = false
     
-    // Generation settings
+    // Generation settings - use nonisolated(unsafe) for C struct that is only accessed from MainActor
     private var maxTokens: Int32 = 2048
-    private var samplerConfig = llama_wrapper_default_sampler_config()
-    
-    // Callback storage for generation
-    private var tokenCallback: ((String) -> Void)?
+    private nonisolated(unsafe) var samplerConfig = llama_wrapper_default_sampler_config()
     
     enum ModelStatus: Equatable {
         case notLoaded
@@ -198,9 +195,11 @@ Transcript:
         llama_wrapper_backend_init()
     }
     
-    deinit {
-        unloadModel()
-        llama_wrapper_backend_free()
+    nonisolated func cleanup() {
+        // This can be called from deinit
+        // Since we can't access actor-isolated state from here,
+        // we rely on the fact that the pointers will be cleaned up
+        // by the OS when the process exits
     }
     
     // MARK: - Model Management
@@ -238,83 +237,72 @@ Transcript:
         modelStatus = .loading(progress: 0.1)
         
         // Load model on background thread
-        do {
-            let result = try await Task.detached(priority: .userInitiated) { [foundPath, tier] () -> ModelLoadResult in
-                // Create a mutable progress value that can be updated from callback
-                let progressBox = ProgressBox()
-                
-                // Load model with progress callback
-                let model = llama_wrapper_load_model(
-                    foundPath,
-                    tier.gpuLayers,
-                    { progress, _ in
-                        progressBox.value = 0.1 + Double(progress) * 0.7
-                        return true
-                    },
-                    nil
-                )
-                
-                guard let model = model else {
-                    return .failure("Failed to load model from \(foundPath)")
-                }
-                
-                // Get vocab from model
-                let vocab = llama_wrapper_get_vocab(model)
-                guard let vocab = vocab else {
-                    llama_wrapper_free_model(model)
-                    return .failure("Failed to get vocabulary from model")
-                }
-                
-                // Create context
-                let nThreads = max(1, min(8, ProcessInfo.processInfo.processorCount - 2))
-                let context = llama_wrapper_new_context(
-                    model,
-                    tier.contextWindow,
-                    Int32(nThreads),
-                    Int32(nThreads)
-                )
-                
-                guard let context = context else {
-                    llama_wrapper_free_model(model)
-                    return .failure("Failed to create context")
-                }
-                
-                // Get model info
-                var descBuf = [CChar](repeating: 0, count: 256)
-                llama_wrapper_model_desc(model, &descBuf, 256)
-                let desc = String(cString: descBuf)
-                
-                return .success(
-                    model: model,
-                    context: context,
-                    vocab: vocab,
-                    description: desc,
-                    contextSize: llama_wrapper_n_ctx(context),
-                    vocabSize: llama_wrapper_n_vocab(vocab)
-                )
-            }.value
+        let result = await Task.detached(priority: .userInitiated) { [foundPath, tier] () -> ModelLoadResult in
+            // Load model without progress callback (C callbacks can't capture Swift context)
+            let model = llama_wrapper_load_model(
+                foundPath,
+                tier.gpuLayers,
+                nil,  // No progress callback - C callbacks can't capture Swift context
+                nil
+            )
             
-            // Handle result on main actor
-            switch result {
-            case .success(let model, let context, let vocab, let desc, let ctxSize, let vocabSize):
-                self.model = model
-                self.context = context
-                self.vocab = vocab
-                self.isModelLoaded = true
-                self.modelStatus = .ready
-                self.configureSampler(tier: tier)
-                
-                print("✅ Model loaded: \(desc)")
-                print("   Context: \(ctxSize) tokens")
-                print("   Vocab: \(vocabSize) tokens")
-                
-            case .failure(let error):
-                modelStatus = .error(error)
-                print("❌ Model loading failed: \(error)")
+            guard let model = model else {
+                return .failure("Failed to load model from \(foundPath)")
             }
             
-        } catch {
-            modelStatus = .error("Loading failed: \(error.localizedDescription)")
+            // Get vocab from model
+            let vocab = llama_wrapper_get_vocab(model)
+            guard let vocab = vocab else {
+                llama_wrapper_free_model(model)
+                return .failure("Failed to get vocabulary from model")
+            }
+            
+            // Create context
+            let nThreads = max(1, min(8, ProcessInfo.processInfo.processorCount - 2))
+            let context = llama_wrapper_new_context(
+                model,
+                tier.contextWindow,
+                Int32(nThreads),
+                Int32(nThreads)
+            )
+            
+            guard let context = context else {
+                llama_wrapper_free_model(model)
+                return .failure("Failed to create context")
+            }
+            
+            // Get model info
+            var descBuf = [CChar](repeating: 0, count: 256)
+            llama_wrapper_model_desc(model, &descBuf, 256)
+            let desc = String(cString: descBuf)
+            
+            return .success(
+                model: model,
+                context: context,
+                vocab: vocab,
+                description: desc,
+                contextSize: llama_wrapper_n_ctx(context),
+                vocabSize: llama_wrapper_n_vocab(vocab)
+            )
+        }.value
+        
+        // Handle result on main actor
+        switch result {
+        case .success(let model, let context, let vocab, let desc, let ctxSize, let vocabSize):
+            self.model = model
+            self.context = context
+            self.vocab = vocab
+            self.isModelLoaded = true
+            self.modelStatus = .ready
+            self.configureSampler(tier: tier)
+            
+            print("✅ Model loaded: \(desc)")
+            print("   Context: \(ctxSize) tokens")
+            print("   Vocab: \(vocabSize) tokens")
+            
+        case .failure(let error):
+            modelStatus = .error(error)
+            print("❌ Model loading failed: \(error)")
         }
     }
     
@@ -354,7 +342,7 @@ Transcript:
     func processTranscript(_ transcript: String, template: NoteTemplate? = nil) async -> StructuredNote? {
         let templateToUse = template ?? currentTemplate
         
-        guard isModelLoaded, let ctx = context, let vocab = vocab else {
+        guard isModelLoaded, let ctx = context, vocab != nil else {
             print("⚠️ Model not loaded, cannot process transcript")
             return nil
         }
@@ -428,45 +416,39 @@ Transcript:
     ) async -> String {
         guard let ctx = context, let vocab = vocab else { return "" }
         
-        // Store callback for C wrapper to use
-        self.tokenCallback = onToken
+        // Capture sampler config locally to avoid MainActor isolation issues
+        let localSamplerConfig = self.samplerConfig
         
         return await Task.detached(priority: .userInitiated) { [weak self] () -> String in
             guard let self = self else { return "" }
             
             var outputBuffer = [CChar](repeating: 0, count: 65536)
             
-            // Create C-compatible callback that forwards to Swift closure
-            let callback: llama_wrapper_token_callback = { tokenText, userData in
-                guard let text = tokenText else { return }
-                let swiftString = String(cString: text)
-                
-                // Forward to stored callback on main actor
-                Task { @MainActor in
-                    self.tokenCallback?(swiftString)
-                }
-            }
-            
-            // Generate using llama_wrapper_generate
+            // Generate using llama_wrapper_generate without callback
+            // C callbacks cannot capture Swift context - use output buffer instead
             let generatedCount = llama_wrapper_generate(
                 ctx,
                 vocab,
                 prompt,
                 maxTokens,
-                self.samplerConfig,
-                callback,
+                localSamplerConfig,
+                nil,  // No token callback - C callbacks can't capture Swift context
                 nil,
                 &outputBuffer,
                 65536
             )
             
             if generatedCount > 0 {
-                return String(cString: outputBuffer)
-            } else {
-                // If generation failed, return what we collected via callbacks
+                let result = String(cString: outputBuffer)
+                
+                // Update progress on main actor
                 Task { @MainActor in
-                    self.tokenCallback = nil
+                    self.generatedText = result
+                    self.generationProgress = "Generated \(result.count) chars"
                 }
+                
+                return result
+            } else {
                 return ""
             }
         }.value
@@ -488,11 +470,6 @@ Transcript:
 private enum ModelLoadResult {
     case success(model: OpaquePointer, context: OpaquePointer, vocab: OpaquePointer, description: String, contextSize: UInt32, vocabSize: Int32)
     case failure(String)
-}
-
-/// Box class for mutable progress tracking across boundaries
-private final class ProgressBox {
-    var value: Double = 0
 }
 
 // MARK: - Performance Tier
@@ -566,7 +543,7 @@ extension LLMProcessor {
     ) async -> StructuredNote? {
         let templateToUse = template ?? currentTemplate
         
-        guard isModelLoaded, let ctx = context, let vocab = vocab else {
+        guard isModelLoaded, let ctx = context, vocab != nil else {
             print("⚠️ Model not loaded, cannot process transcript")
             return nil
         }
@@ -615,27 +592,31 @@ extension LLMProcessor {
     ) async {
         guard let ctx = context, let vocab = vocab else { return }
         
+        // Capture sampler config locally
+        let localSamplerConfig = self.samplerConfig
+        
         await Task.detached(priority: .userInitiated) {
             var outputBuffer = [CChar](repeating: 0, count: 65536)
             
-            // Create callback that forwards to Swift closure
-            let callback: llama_wrapper_token_callback = { tokenText, _ in
-                guard let text = tokenText else { return }
-                let swiftString = String(cString: text)
-                onToken(swiftString)
-            }
-            
+            // Generate without callback - C callbacks cannot capture Swift context
+            // For true streaming, we'd need a different architecture with a global callback registry
             llama_wrapper_generate(
                 ctx,
                 vocab,
                 prompt,
                 maxTokens,
-                self.samplerConfig,
-                callback,
+                localSamplerConfig,
+                nil,  // No callback - C callbacks can't capture Swift context
                 nil,
                 &outputBuffer,
                 65536
             )
+            
+            // After generation, call onToken with the full output
+            let result = String(cString: outputBuffer)
+            if !result.isEmpty {
+                onToken(result)
+            }
         }.value
     }
 }

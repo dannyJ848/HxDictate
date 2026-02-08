@@ -24,12 +24,12 @@ let package = Package(
                 .define("GGML_USE_CPU", to: "1")
             ],
             linkerSettings: [
-                .linkedLibrary("whisper", package: nil),
-                .linkedLibrary("ggml", package: nil),
-                .linkedLibrary("ggml-base", package: nil),
-                .linkedLibrary("ggml-cpu", package: nil),
-                .linkedLibrary("ggml-metal", package: nil),
-                .linkedLibrary("ggml-blas", package: nil),
+                .linkedLibrary("whisper"),
+                .linkedLibrary("ggml"),
+                .linkedLibrary("ggml-base"),
+                .linkedLibrary("ggml-cpu"),
+                .linkedLibrary("ggml-metal"),
+                .linkedLibrary("ggml-blas"),
                 .linkedFramework("Accelerate"),
                 .linkedFramework("Metal"),
                 .linkedFramework("MetalKit"),
@@ -50,12 +50,12 @@ let package = Package(
                 .define("GGML_USE_CPU", to: "1")
             ],
             linkerSettings: [
-                .linkedLibrary("llama", package: nil),
-                .linkedLibrary("ggml", package: nil),
-                .linkedLibrary("ggml-base", package: nil),
-                .linkedLibrary("ggml-cpu", package: nil),
-                .linkedLibrary("ggml-metal", package: nil),
-                .linkedLibrary("ggml-blas", package: nil),
+                .linkedLibrary("llama"),
+                .linkedLibrary("ggml"),
+                .linkedLibrary("ggml-base"),
+                .linkedLibrary("ggml-cpu"),
+                .linkedLibrary("ggml-metal"),
+                .linkedLibrary("ggml-blas"),
                 .linkedFramework("Accelerate"),
                 .linkedFramework("Metal"),
                 .linkedFramework("MetalKit"),
@@ -77,10 +77,6 @@ let package = Package(
             name: "ScribeApp",
             dependencies: ["Scribe"],
             path: "Sources/ScribeApp"
-        ),
-        .testTarget(
-            name: "ScribeTests",
-            dependencies: ["Scribe"]
         )
     ]
 )

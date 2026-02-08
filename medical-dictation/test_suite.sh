@@ -35,11 +35,12 @@ EXPECTED_MODELS=(
     "deepseek-r1-distill-qwen-14b-q3_k_m.gguf:7339204000:50000000"
 )
 
-# Expected library files
+# Expected library files (updated paths)
 EXPECTED_LIBRARIES=(
-    "whisper.cpp/build-ios/libwhisper.a"
-    "llama.cpp/build-ios/libllama.a"
-    "whisper.cpp/build-ios/libggml.a"
+    "whisper.cpp/build-ios/src/libwhisper.a"
+    "llama.cpp/build-ios/src/libllama.a"
+    "whisper.cpp/build-ios/ggml/src/libggml.a"
+    "llama.cpp/build-ios/ggml/src/libggml.a"
 )
 
 # ============================================
@@ -190,6 +191,15 @@ test_libraries_present() {
         fi
     done
     
+    # Also check for Metal support
+    if [[ -f "${BUILD_DIR}/whisper.cpp/build-ios/ggml/src/ggml-metal/libggml-metal.a" ]]; then
+        log_success "Whisper Metal support library found"
+    fi
+    
+    if [[ -f "${BUILD_DIR}/llama.cpp/build-ios/ggml/src/ggml-metal/libggml-metal.a" ]]; then
+        log_success "LLaMA Metal support library found"
+    fi
+    
     $all_libraries_present
 }
 
@@ -199,8 +209,8 @@ test_library_symbols() {
     local symbols_ok=true
     
     # Check for key whisper symbols
-    if [[ -f "${BUILD_DIR}/whisper.cpp/build-ios/libwhisper.a" ]]; then
-        local whisper_symbols=$(nm "${BUILD_DIR}/whisper.cpp/build-ios/libwhisper.a" 2>/dev/null | grep -c "whisper_" || echo "0")
+    if [[ -f "${BUILD_DIR}/whisper.cpp/build-ios/src/libwhisper.a" ]]; then
+        local whisper_symbols=$(nm "${BUILD_DIR}/whisper.cpp/build-ios/src/libwhisper.a" 2>/dev/null | grep -c "whisper_" || echo "0")
         if [[ $whisper_symbols -gt 50 ]]; then
             log_success "libwhisper.a contains $whisper_symbols whisper symbols"
         else
@@ -208,16 +218,16 @@ test_library_symbols() {
         fi
         
         # Check for wrapper functions
-        if nm "${BUILD_DIR}/whisper.cpp/build-ios/libwhisper.a" 2>/dev/null | grep -q "whisper_init_from_file_with_params_wrapper"; then
+        if nm "${BUILD_DIR}/whisper.cpp/build-ios/src/libwhisper.a" 2>/dev/null | grep -q "whisper_init_from_file_with_params_wrapper"; then
             log_success "Whisper wrapper functions found in library"
         else
-            log_warning "Whisper wrapper functions not found - may need rebuild"
+            log_warning "Whisper wrapper functions not found - may need rebuild with wrappers"
         fi
     fi
     
     # Check for key llama symbols
-    if [[ -f "${BUILD_DIR}/llama.cpp/build-ios/libllama.a" ]]; then
-        local llama_symbols=$(nm "${BUILD_DIR}/llama.cpp/build-ios/libllama.a" 2>/dev/null | grep -c "llama_" || echo "0")
+    if [[ -f "${BUILD_DIR}/llama.cpp/build-ios/src/libllama.a" ]]; then
+        local llama_symbols=$(nm "${BUILD_DIR}/llama.cpp/build-ios/src/libllama.a" 2>/dev/null | grep -c "llama_" || echo "0")
         if [[ $llama_symbols -gt 100 ]]; then
             log_success "libllama.a contains $llama_symbols llama symbols"
         else
@@ -225,10 +235,10 @@ test_library_symbols() {
         fi
         
         # Check for wrapper functions
-        if nm "${BUILD_DIR}/llama.cpp/build-ios/libllama.a" 2>/dev/null | grep -q "llama_wrapper_load_model"; then
-            log_success "LLM wrapper functions found in library"
+        if nm "${BUILD_DIR}/llama.cpp/build-ios/src/libllama.a" 2>/dev/null | grep -q "llama_wrapper_load_model"; then
+            log_success "LLaMA wrapper functions found in library"
         else
-            log_warning "LLM wrapper functions not found - may need rebuild"
+            log_warning "LLaMA wrapper functions not found - may need rebuild with wrappers"
         fi
     fi
     
