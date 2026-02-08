@@ -1,0 +1,72 @@
+# Models - too large for git
+*.bin
+*.gguf
+*.pt
+*.safetensors
+*.pth
+*.ckpt
+models/*.bin
+models/*.gguf
+
+# Build artifacts
+build/
+*.a
+*.dylib
+*.framework
+*.xcframework
+
+# Xcode
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+DerivedData/
+build/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+Package.resolved
+
+# CocoaPods
+Pods/
+*.xcconfig
+
+# Carthage
+Carthage/Build/
+Carthage/Checkouts/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Code Injection
+iOSInjectionProject/
+
+# Sensitive
+*.pem
+*.key
+*.p12
+*.mobileprovision
+GoogleService-Info.plist
+Secrets.swift
+Config.plist
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.vscode/
+
+# Temporary
+*.tmp
+*.temp
+*.log
