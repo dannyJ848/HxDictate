@@ -1,0 +1,137 @@
+import Foundation
+import Combine
+
+/// Bridges to whisper.cpp for on-device STT
+@MainActor
+final class TranscriptionEngine: ObservableObject {
+    @Published var currentTranscript: String = ""
+    @Published var isTranscribing = false
+    @Published var modelStatus: ModelStatus = .notLoaded
+    
+    private var whisperContext: OpaquePointer?
+    private var audioBuffer: [Float] = []
+    private let bufferLock = NSLock()
+    private var transcriptionTask: Task<Void, Never>?
+    
+    enum ModelStatus {
+        case notLoaded
+        case loading
+        case ready
+        case error(String)
+    }
+    
+    // MARK: - Model Management
+    
+    func loadModel(named modelName: String = "ggml-small.bin") async {
+        modelStatus = .loading
+        
+        guard let modelPath = Bundle.main.path(forResource: modelName, ofType: nil) ??
+                FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                    .first?.appendingPathComponent(modelName).path else {
+            modelStatus = .error("Model not found: \(modelName)")
+            return
+        }
+        
+        // whisper.cpp C bridge call
+        let params = whisper_context_default_params()
+        whisperContext = whisper_init_from_file_with_params(modelPath, params)
+        
+        if whisperContext != nil {
+            modelStatus = .ready
+        } else {
+            modelStatus = .error("Failed to initialize Whisper context")
+        }
+    }
+    
+    func unloadModel() {
+        if let ctx = whisperContext {
+            whisper_free(ctx)
+            whisperContext = nil
+        }
+        modelStatus = .notLoaded
+    }
+    
+    // MARK: - Audio Processing
+    
+    func processAudioBuffer(_ buffer: AVAudioPCMBuffer, time: AVAudioTime) {
+        guard let floatData = buffer.floatChannelData?.pointee else { return }
+        
+        bufferLock.lock()
+        let frameLength = Int(buffer.frameLength)
+        let newSamples = (0..<frameLength).map { floatData[$0] }
+        audioBuffer.append(contentsOf: newSamples)
+        
+        // Process every 3 seconds of audio (48000 samples @ 16kHz)
+        if audioBuffer.count >= 48000 {
+            let chunk = Array(audioBuffer)
+            audioBuffer.removeAll(keepingCapacity: true)
+            bufferLock.unlock()
+            
+            transcriptionTask?.cancel()
+            transcriptionTask = Task {
+                await transcribeChunk(chunk)
+            }
+        } else {
+            bufferLock.unlock()
+        }
+    }
+    
+    private func transcribeChunk(_ samples: [Float]) async {
+        guard let ctx = whisperContext else { return }
+        guard !Task.isCancelled else { return }
+        
+        isTranscribing = true
+        defer { isTranscribing = false }
+        
+        // whisper.cpp parameters
+        var params = whisper_full_default_params(WHISPER_SAMPLING_GREEDY)
+        params.print_progress = false
+        params.print_realtime = false
+        params.print_timestamps = false
+        params.translate = false
+        params.language = "en"
+        params.n_threads = 4 // iPhone 17 Pro has 6 performance cores
+        
+        let result = whisper_full(ctx, params, samples, Int32(samples.count))
+        
+        guard result == 0 else {
+            print("Whisper transcription failed with code: \(result)")
+            return
+        }
+        
+        let segmentCount = whisper_full_n_segments(ctx)
+        var transcript = ""
+        
+        for i in 0..<segmentCount {
+            if let text = whisper_full_get_segment_text(ctx, i) {
+                transcript += String(cString: text) + " "
+            }
+        }
+        
+        guard !Task.isCancelled else { return }
+        
+        await MainActor.run {
+            self.currentTranscript += transcript.trimmingCharacters(in: .whitespaces) + " "
+        }
+    }
+    
+    func clearTranscript() {
+        currentTranscript = ""
+        audioBuffer.removeAll()
+    }
+}
+
+// C function declarations (would be in a bridging header)
+// These are placeholders - actual implementation needs whisper.cpp headers
+struct whisper_context {}
+struct whisper_full_params {}
+enum whisper_sampling_strategy: Int32 {
+    case WHISPER_SAMPLING_GREEDY = 0
+}
+func whisper_context_default_params() -> whisper_full_params { fatalError() }
+func whisper_init_from_file_with_params(_ path: String, _ params: whisper_full_params) -> OpaquePointer? { fatalError() }
+func whisper_free(_ ctx: OpaquePointer) {}
+func whisper_full_default_params(_ strategy: whisper_sampling_strategy) -> whisper_full_params { fatalError() }
+func whisper_full(_ ctx: OpaquePointer, _ params: whisper_full_params, _ samples: [Float], _ n_samples: Int32) -> Int32 { fatalError() }
+func whisper_full_n_segments(_ ctx: OpaquePointer) -> Int32 { fatalError() }
+func whisper_full_get_segment_text(_ ctx: OpaquePointer, _ segment: Int32) -> UnsafePointer<CChar>? { fatalError() }
