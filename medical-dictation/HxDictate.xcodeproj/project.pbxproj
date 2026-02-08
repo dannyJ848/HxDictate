@@ -275,6 +275,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				ENABLE_BITCODE = NO;
+				GENERATE_INFOPLIST_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/scripts/build/whisper.cpp/include",
@@ -282,6 +283,7 @@
 					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
 					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
 				);
+				INFOPLIST_FILE = "ios-app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -372,6 +374,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				ENABLE_BITCODE = NO;
+				GENERATE_INFOPLIST_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/scripts/build/whisper.cpp/include",
@@ -379,6 +382,7 @@
 					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
 					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
 				);
+				INFOPLIST_FILE = "ios-app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
