@@ -39,7 +39,7 @@ struct llama_model *llama_wrapper_load_model(const char *path_model,
                                               void *user_data) {
     struct llama_model_params params = llama_model_default_params();
     params.n_gpu_layers = n_gpu_layers;
-    params.use_mmap = true;
+    params.use_mmap = false;  // Disable mmap for iOS - causes memory issues
     params.use_mlock = false;
     
     if (progress_callback) {
