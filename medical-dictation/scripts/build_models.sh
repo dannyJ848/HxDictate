@@ -36,32 +36,17 @@ echo ""
 echo "📦 Building Whisper.cpp..."
 cd whisper.cpp
 
+# Patch CMakeLists.txt to skip examples and tests for iOS build
+if [ -f "CMakeLists.txt" ]; then
+    # Backup original
+    cp CMakeLists.txt CMakeLists.txt.backup
+    # Comment out the examples and tests subdirectories
+    sed -i '' 's/add_subdirectory(examples)/# add_subdirectory(examples)/' CMakeLists.txt
+    sed -i '' 's/add_subdirectory(tests)/# add_subdirectory(tests)/' CMakeLists.txt
+fi
+
 # Build for iOS device (arm64)
 echo "Building whisper.cpp for iOS device..."
-rm -rf build-ios
-mkdir build-ios
-cd build-ios
-
-cmake .. \
-    -DCMAKE_SYSTEM_NAME=iOS \
-    -DCMAKE_OSX_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
-    -DCMAKE_OSX_ARCHITECTURES=arm64 \
-    -DWHISPER_METAL=ON \
-    -DWHISPER_METAL_EMBED_LIBRARY=ON \
-    -DBUILD_SHARED_LIBS=OFF \
-    -DCMAKE_BUILD_TYPE=Release
-
-make -j$(sysctl -n hw.ncpu)
-
-cd ../..
-
-# Build llama.cpp for iOS
-echo ""
-echo "📦 Building llama.cpp..."
-cd llama.cpp
-
-# Build for iOS device (arm64)
-echo "Building llama.cpp for iOS device..."
 rm -rf build-ios
 mkdir build-ios
 cd build-ios
@@ -78,6 +63,53 @@ cmake .. \
 make -j$(sysctl -n hw.ncpu)
 
 cd ../..
+
+# Restore original CMakeLists.txt
+if [ -f "CMakeLists.txt.backup" ]; then
+    mv CMakeLists.txt.backup CMakeLists.txt
+fi
+
+# Build llama.cpp for iOS
+echo ""
+echo "📦 Building llama.cpp..."
+cd llama.cpp
+
+# Patch CMakeLists.txt to skip tools for iOS build
+if [ -f "CMakeLists.txt" ]; then
+    # Backup original
+    cp CMakeLists.txt CMakeLists.txt.backup
+    # Comment out the tools subdirectory
+    sed -i '' 's/add_subdirectory(tools)/# add_subdirectory(tools)/' CMakeLists.txt
+    # Also try to comment out examples if present
+    sed -i '' 's/add_subdirectory(examples)/# add_subdirectory(examples)/' CMakeLists.txt 2>/dev/null || true
+fi
+
+# Build for iOS device (arm64)
+echo "Building llama.cpp for iOS device..."
+rm -rf build-ios
+mkdir build-ios
+cd build-ios
+
+cmake .. \
+    -DCMAKE_SYSTEM_NAME=iOS \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
+    -DCMAKE_OSX_ARCHITECTURES=arm64 \
+    -DGGML_METAL=ON \
+    -DGGML_METAL_EMBED_LIBRARY=ON \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DLLAMA_BUILD_EXAMPLES=OFF \
+    -DLLAMA_BUILD_TESTS=OFF
+
+# Build only core libraries
+make -j$(sysctl -n hw.ncpu) ggml llama
+
+cd ../..
+
+# Restore original CMakeLists.txt
+if [ -f "CMakeLists.txt.backup" ]; then
+    mv CMakeLists.txt.backup CMakeLists.txt
+fi
 
 # Download models
 echo ""
