@@ -16,7 +16,7 @@ struct SettingsView: View {
             switch self {
             case .powerSaver: return .largeTurbo
             case .balanced: return .medium
-            case .maximum: return .largeTurbo
+            case .maximum: return .medium
             }
         }
         
@@ -32,7 +32,7 @@ struct SettingsView: View {
             switch self {
             case .powerSaver: return "~2.0 GB + 1.6 GB STT"
             case .balanced: return "~4.4 GB + 1.5 GB STT"
-            case .maximum: return "~3.2 GB + 1.6 GB STT"
+            case .maximum: return "~3.8 GB + 1.5 GB STT"
             }
         }
         
@@ -43,7 +43,7 @@ struct SettingsView: View {
             case .balanced:
                 return "Qwen2.5 7B. Multilingual (Spanish/English)."
             case .maximum:
-                return "DeepSeek 7B Q3_K_L. Smallest DeepSeek, most likely to work."
+                return "DeepSeek 7B Q3_K_L + Whisper Medium. Smallest DeepSeek with Medium STT."
             }
         }
     }
