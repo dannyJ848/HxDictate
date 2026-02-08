@@ -7,7 +7,7 @@ import SwiftData
 final class HPTemplate {
     var id: UUID
     var name: String
-    var currentSection: HPSection
+    var currentSectionRaw: String  // Stored as String for SwiftData compatibility
     var isActive: Bool
     var createdAt: Date
     
@@ -18,11 +18,21 @@ final class HPTemplate {
     init() {
         self.id = UUID()
         self.name = "Complete H&P"
-        self.currentSection = .identifyingData
+        self.currentSectionRaw = HPSection.identifyingData.rawValue
         self.isActive = false
         self.createdAt = Date()
         self.completedQuestions = [:]
         self.transcriptBySection = [:]
+    }
+    
+    /// Computed property for enum access
+    var currentSection: HPSection {
+        get {
+            HPSection(rawValue: currentSectionRaw) ?? .identifyingData
+        }
+        set {
+            currentSectionRaw = newValue.rawValue
+        }
     }
     
     /// All H&P sections in order

@@ -109,6 +109,10 @@ struct RecordingView: View {
     private func toggleRecording() {
         if audioManager.isRecording {
             audioManager.stopRecording()
+            // Process any remaining audio in the buffer
+            Task {
+                await transcriptionEngine.processFinalBuffer()
+            }
         } else {
             do {
                 try audioManager.startRecording()

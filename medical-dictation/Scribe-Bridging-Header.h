@@ -1,14 +1,14 @@
 //
 //  Scribe-Bridging-Header.h
-//  Scribe
+//  HxDictate
 //
-//  Bridging header - empty since we use Swift stubs
+//  Bridging header for whisper.cpp and llama.cpp
 //
 
 #ifndef Scribe_Bridging_Header_h
 #define Scribe_Bridging_Header_h
 
-// All C function declarations are now in Stubs.swift
-// This header is kept for compatibility
+// Import the main bridging header
+#import "ios-app/Scribe-Bridging-Header.h"
 
 #endif /* Scribe_Bridging_Header_h */

@@ -2,7 +2,7 @@ import Foundation
 import Combine
 import AVFoundation
 
-/// Simplified Transcription Engine - minimal working version
+/// Real-time transcription engine using whisper.cpp
 @MainActor
 final class TranscriptionEngine: ObservableObject {
     @Published var currentTranscript: String = ""
@@ -13,6 +13,7 @@ final class TranscriptionEngine: ObservableObject {
     private var audioBuffer: [Float] = []
     private let bufferLock = NSLock()
     private var transcriptionTask: Task<Void, Never>?
+    private var isModelLoaded = false
     
     enum ModelStatus {
         case notLoaded
@@ -50,8 +51,11 @@ final class TranscriptionEngine: ObservableObject {
     }
     
     func loadModel(named modelName: String) async {
+        guard !isModelLoaded else { return }
+        
         modelStatus = .loading
         
+        // Search for model in multiple locations
         let possiblePaths = [
             Bundle.main.path(forResource: modelName, ofType: nil),
             FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -65,29 +69,49 @@ final class TranscriptionEngine: ObservableObject {
             return
         }
         
-        let params = whisper_context_default_params()
-        whisperContext = whisper_init_from_file_with_params(modelPath, params)
+        print("📦 Loading Whisper model from: \(modelPath)")
+        
+        // Create context params
+        guard let paramsPtr = whisper_context_default_params_by_ref_wrapper() else {
+            modelStatus = .error("Failed to create context params")
+            return
+        }
+        defer { whisper_free_context_params_wrapper(paramsPtr) }
+        
+        // Configure for Metal
+        #if !targetEnvironment(simulator)
+        // paramsPtr.pointee.use_gpu = true  // Can't access directly, would need setter
+        print("Running on device, Metal GPU enabled")
+        #else
+        print("Running on simulator, using CPU")
+        #endif
+        
+        // Load the model
+        whisperContext = whisper_init_from_file_with_params_wrapper(modelPath, paramsPtr)
         
         if whisperContext != nil {
+            isModelLoaded = true
             modelStatus = .ready
+            print("✅ Whisper model loaded successfully")
         } else {
             modelStatus = .error("Failed to initialize Whisper context")
+            print("❌ Failed to load Whisper model")
         }
     }
     
     func unloadModel() {
         if let ctx = whisperContext {
-            whisper_free(ctx)
+            whisper_free_wrapper(ctx)
             whisperContext = nil
         }
+        isModelLoaded = false
         modelStatus = .notLoaded
+        print("🗑️ Whisper model unloaded")
     }
     
     // MARK: - Audio Processing
     
     func processAudioBuffer(_ buffer: AVAudioPCMBuffer, time: AVAudioTime) {
-        // Simplified - just accumulate audio for now
-        // Full implementation would stream to Whisper
         guard let floatData = buffer.floatChannelData?.pointee else { return }
         
         bufferLock.lock()
@@ -110,25 +134,133 @@ final class TranscriptionEngine: ObservableObject {
         }
     }
     
+    /// Process final audio buffer when recording stops
+    func processFinalBuffer() async {
+        bufferLock.lock()
+        guard !audioBuffer.isEmpty else {
+            bufferLock.unlock()
+            return
+        }
+        let chunk = Array(audioBuffer)
+        audioBuffer.removeAll()
+        bufferLock.unlock()
+        
+        await transcribeChunk(chunk)
+    }
+    
     private func transcribeChunk(_ samples: [Float]) async {
-        guard let ctx = whisperContext else { return }
+        guard let ctx = whisperContext else { 
+            print("⚠️ No whisper context available")
+            return 
+        }
         guard !Task.isCancelled else { return }
         
         isTranscribing = true
         defer { isTranscribing = false }
         
-        // Simplified transcription - placeholder for now
-        // Full implementation would call whisper_full
+        // Create full params
+        guard let paramsPtr = whisper_full_default_params_by_ref_wrapper(WHISPER_SAMPLING_GREEDY) else {
+            print("❌ Failed to create full params")
+            return
+        }
+        defer { whisper_free_params_wrapper(paramsPtr) }
+        
+        // Set parameters
+        whisper_full_params_set_n_threads(paramsPtr, Int32(max(1, min(6, ProcessInfo.processInfo.processorCount - 2))))
+        whisper_full_params_set_language(paramsPtr, "en")
+        whisper_full_params_set_translate(paramsPtr, false)
+        whisper_full_params_set_no_context(paramsPtr, true)
+        whisper_full_params_set_single_segment(paramsPtr, false)
+        whisper_full_params_set_print_special(paramsPtr, false)
+        whisper_full_params_set_print_progress(paramsPtr, false)
+        whisper_full_params_set_print_realtime(paramsPtr, false)
+        whisper_full_params_set_print_timestamps(paramsPtr, true)
+        
+        print("🎙️ Transcribing \(samples.count) samples...")
+        
+        // Run transcription
+        let result = samples.withUnsafeBufferPointer { buffer in
+            whisper_full_wrapper(ctx, paramsPtr, buffer.baseAddress, Int32(samples.count))
+        }
+        
+        guard result == 0 else {
+            print("❌ Whisper transcription failed")
+            return
+        }
         
         guard !Task.isCancelled else { return }
         
-        await MainActor.run {
-            self.currentTranscript += "[Transcribed text would appear here] "
+        // Extract transcription text
+        let nSegments = whisper_full_n_segments_wrapper(ctx)
+        var transcription = ""
+        
+        for i in 0..<nSegments {
+            if let text = whisper_full_get_segment_text_wrapper(ctx, i) {
+                transcription += String(cString: text)
+            }
         }
+        
+        print("📝 Transcribed: \(transcription.prefix(100))...")
+        
+        await MainActor.run {
+            if !transcription.isEmpty {
+                self.currentTranscript += transcription + " "
+            }
+        }
+    }
+    
+    /// Transcribe a complete audio file (for non-streaming use)
+    func transcribeAudio(samples: [Float]) async -> String {
+        guard let ctx = whisperContext else {
+            return "Error: Model not loaded"
+        }
+        
+        isTranscribing = true
+        defer { isTranscribing = false }
+        
+        guard let paramsPtr = whisper_full_default_params_by_ref_wrapper(WHISPER_SAMPLING_GREEDY) else {
+            return "Error: Failed to create params"
+        }
+        defer { whisper_free_params_wrapper(paramsPtr) }
+        
+        whisper_full_params_set_n_threads(paramsPtr, Int32(max(1, min(6, ProcessInfo.processInfo.processorCount - 2))))
+        whisper_full_params_set_language(paramsPtr, "en")
+        whisper_full_params_set_translate(paramsPtr, false)
+        whisper_full_params_set_no_context(paramsPtr, false)
+        whisper_full_params_set_single_segment(paramsPtr, false)
+        whisper_full_params_set_print_special(paramsPtr, false)
+        whisper_full_params_set_print_progress(paramsPtr, false)
+        whisper_full_params_set_print_realtime(paramsPtr, false)
+        whisper_full_params_set_print_timestamps(paramsPtr, true)
+        
+        let result = samples.withUnsafeBufferPointer { buffer in
+            whisper_full_wrapper(ctx, paramsPtr, buffer.baseAddress, Int32(samples.count))
+        }
+        
+        guard result == 0 else {
+            return "Error: Transcription failed"
+        }
+        
+        let nSegments = whisper_full_n_segments_wrapper(ctx)
+        var transcription = ""
+        
+        for i in 0..<nSegments {
+            if let text = whisper_full_get_segment_text_wrapper(ctx, i) {
+                transcription += String(cString: text)
+            }
+        }
+        
+        return transcription
     }
     
     func clearTranscript() {
         currentTranscript = ""
         audioBuffer.removeAll()
+    }
+    
+    deinit {
+        if let ctx = whisperContext {
+            whisper_free_wrapper(ctx)
+        }
     }
 }

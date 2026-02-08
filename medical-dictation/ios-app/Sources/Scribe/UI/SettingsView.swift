@@ -11,45 +11,39 @@ struct SettingsView: View {
         case powerSaver
         case balanced
         case maximum
-        case extreme
         
         var sttTier: TranscriptionEngine.PerformanceTier {
             switch self {
-            case .powerSaver: return .small
+            case .powerSaver: return .largeTurbo
             case .balanced: return .medium
             case .maximum: return .largeTurbo
-            case .extreme: return .largeV3
             }
         }
         
         var llmModel: String {
             switch self {
-            case .powerSaver: return "Qwen 2.5 3B"
-            case .balanced: return "DeepSeek-R1 7B"
+            case .powerSaver: return "DeepSeek-R1 7B"
+            case .balanced: return "DeepSeek-R1 14B"
             case .maximum: return "DeepSeek-R1 14B"
-            case .extreme: return "DeepSeek-R1 14B (Large V3 STT)"
             }
         }
         
         var llmSize: String {
             switch self {
-            case .powerSaver: return "~1.8 GB"
-            case .balanced: return "~4.5 GB"
-            case .maximum: return "~6.5 GB (Q3)"
-            case .extreme: return "~6.5 GB + 2.9 GB STT"
+            case .powerSaver: return "~4.5 GB + 1.6 GB STT"
+            case .balanced: return "~6.5 GB + 1.5 GB STT"
+            case .maximum: return "~6.5 GB + 1.6 GB STT"
             }
         }
         
         var description: String {
             switch self {
             case .powerSaver:
-                return "Fastest, lowest battery. Good for ED/surgery."
+                return "Large V3 Turbo + 7B. Good balance of speed and accuracy."
             case .balanced:
-                return "Best tradeoff. Recommended for most rotations."
+                return "Medium + 14B. Best for clinical use."
             case .maximum:
-                return "Best accuracy. Psychiatry/internal medicine. May lag."
-            case .extreme:
-                return "ABSOLUTE MAXIMUM. Large V3 + 14B. Phone will heat up."
+                return "Large V3 Turbo + 14B. Fastest with best accuracy."
             }
         }
     }
@@ -66,7 +60,6 @@ struct SettingsView: View {
                         Text("Power Saver").tag(PerformanceTier.powerSaver)
                         Text("Balanced").tag(PerformanceTier.balanced)
                         Text("Maximum").tag(PerformanceTier.maximum)
-                        Text("🔥 EXTREME").tag(PerformanceTier.extreme)
                     }
                     .pickerStyle(.segmented)
                     .onChange(of: selectedTier) { newTier in
@@ -81,7 +74,6 @@ struct SettingsView: View {
                                 case .powerSaver: return .powerSaver
                                 case .balanced: return .balanced
                                 case .maximum: return .maximum
-                                case .extreme: return .extreme
                                 }
                             }()
                             await llmProcessor.loadModel(tier: llmTier)

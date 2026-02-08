@@ -8,20 +8,75 @@ let package = Package(
         .library(name: "Scribe", targets: ["Scribe"]),
         .executable(name: "ScribeApp", targets: ["ScribeApp"])
     ],
-    dependencies: [
-        // We'll vendor whisper.cpp and llama.cpp as XCFrameworks or build from source
-    ],
+    dependencies: [],
     targets: [
+        // C target for whisper.cpp wrapper
         .target(
-            name: "Scribe",
+            name: "CWhisper",
             dependencies: [],
-            swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency")
+            path: "CWhisper",
+            sources: ["whisper_wrapper.c"],
+            publicHeadersPath: "include",
+            cSettings: [
+                .headerSearchPath("../scripts/build/whisper.cpp/include"),
+                .headerSearchPath("../scripts/build/whisper.cpp/ggml/include"),
+                .define("GGML_USE_METAL", to: "1"),
+                .define("GGML_USE_CPU", to: "1")
+            ],
+            linkerSettings: [
+                .linkedLibrary("whisper", package: nil),
+                .linkedLibrary("ggml", package: nil),
+                .linkedLibrary("ggml-base", package: nil),
+                .linkedLibrary("ggml-cpu", package: nil),
+                .linkedLibrary("ggml-metal", package: nil),
+                .linkedLibrary("ggml-blas", package: nil),
+                .linkedFramework("Accelerate"),
+                .linkedFramework("Metal"),
+                .linkedFramework("MetalKit"),
+                .linkedFramework("MetalPerformanceShaders")
             ]
         ),
+        // C target for llama.cpp wrapper
+        .target(
+            name: "CLlama",
+            dependencies: [],
+            path: "CLlama",
+            sources: ["llama_wrapper.c"],
+            publicHeadersPath: "include",
+            cSettings: [
+                .headerSearchPath("../scripts/build/llama.cpp/include"),
+                .headerSearchPath("../scripts/build/llama.cpp/ggml/include"),
+                .define("GGML_USE_METAL", to: "1"),
+                .define("GGML_USE_CPU", to: "1")
+            ],
+            linkerSettings: [
+                .linkedLibrary("llama", package: nil),
+                .linkedLibrary("ggml", package: nil),
+                .linkedLibrary("ggml-base", package: nil),
+                .linkedLibrary("ggml-cpu", package: nil),
+                .linkedLibrary("ggml-metal", package: nil),
+                .linkedLibrary("ggml-blas", package: nil),
+                .linkedFramework("Accelerate"),
+                .linkedFramework("Metal"),
+                .linkedFramework("MetalKit"),
+                .linkedFramework("MetalPerformanceShaders")
+            ]
+        ),
+        // Main Scribe library
+        .target(
+            name: "Scribe",
+            dependencies: ["CWhisper", "CLlama"],
+            path: "Sources/Scribe",
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency"),
+                .unsafeFlags(["-import-objc-header", "../Scribe-Bridging-Header.h"])
+            ]
+        ),
+        // App executable
         .executableTarget(
             name: "ScribeApp",
-            dependencies: ["Scribe"]
+            dependencies: ["Scribe"],
+            path: "Sources/ScribeApp"
         ),
         .testTarget(
             name: "ScribeTests",

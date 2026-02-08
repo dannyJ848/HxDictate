@@ -7,135 +7,182 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		35C910B988F24ACBE848445C /* LLMProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA9D10F0C945C07FE2CD82C /* LLMProcessor.swift */; };
-		3EF65AB7F6E95C30B383436F /* ScribeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A761F51486802E9D227F6C /* ScribeApp.swift */; };
-		4FE06AC7DEA9083A069EE87A /* NoteModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F902614375825F293C62F9C /* NoteModels.swift */; };
-		5EF597A9A293D3D58ED6D574 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29909C644DA808805D4D2434 /* SettingsView.swift */; };
-		83C6AB8298E99EA4A9CE5238 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C76B754FC6874DCF1AAFC97 /* Foundation.framework */; };
-		A73436173A475F3241726359 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34801D9C16D14FA1F0F39064 /* AudioSessionManager.swift */; };
-		BB2346032C62DFB680A3A26E /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C4BE6EA6FB6B1B954C2F3 /* RecordingView.swift */; };
-		CEA429A57106B2E98B4898A4 /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7005667DEFA5343DC19BB7AC /* TranscriptionEngine.swift */; };
-		D8F942C9A27831E95C8F8689 /* ggml-large-v3.bin in Resources */ = {isa = PBXBuildFile; fileRef = 6783AF81EA7E73A4F2D2A701 /* ggml-large-v3.bin */; };
-		E2D2A890772F93435F51BAED /* Stubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B39F798046D9C17134B39A /* Stubs.swift */; };
-		E3293B72CF4571EE666C51E0 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CAC705F4AD4D0A76C47E295 /* HistoryView.swift */; };
-		F4E7D2BCEC4332CD60734096 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf in Resources */ = {isa = PBXBuildFile; fileRef = 3E4EEFF68F26FB483CD07512 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */; };
+		0B6E1F90D1CB4BB179F7F0AD /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC678596B45F665AF582E5 /* AudioSessionManager.swift */; };
+		15CCEE07132D1BAA390C66A7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FDD42F4B13778030D56FBF /* SettingsView.swift */; };
+		1E9C34536C2D497CE163FA0B /* ggml-large-v3.bin in Resources */ = {isa = PBXBuildFile; fileRef = FEE15B60657951A2B308277B /* ggml-large-v3.bin */; };
+		1F8F3132F18E78D59BE73EA3 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A3F613C5A0F7D6D6FD7C58 /* Accelerate.framework */; };
+		21E8E6003847DB0BC601835C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269CD85259596F224B8ECA16 /* Foundation.framework */; };
+		22562D82FBAA7A91D22336A1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E159662D89F4F6D3FE44F401 /* AVFoundation.framework */; };
+		2881E8CC8FD4E07E7AC7F320 /* ggml-large-v3-turbo.bin in Resources */ = {isa = PBXBuildFile; fileRef = 1717EDFBB9F458809D7914EF /* ggml-large-v3-turbo.bin */; };
+		2FAAFCD39695F4EDD6985473 /* whisper_wrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C39F507C7B7C25D8B951676 /* whisper_wrapper.c */; };
+		30845211295D2BEFD0D33936 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE98EE684C9F45520ADFF64E /* HistoryView.swift */; };
+		30B1946045B5AF19FC30C029 /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB25B8AED75263FDDE7F737 /* TranscriptionEngine.swift */; };
+		3B644BDFA20CE9501E210F43 /* GuidedHPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F10E268218392BD85623475 /* GuidedHPView.swift */; };
+		3CFC84B8B416BFB0B3934CEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BA1CD221878D5387AA6ADCA /* Assets.xcassets */; };
+		4C1327B3302E57B4CE53D05A /* ggml-medium.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0BDC8AFD1CECF9F3798D50C7 /* ggml-medium.bin */; };
+		513A748B5292481ED2DE2615 /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC60E2BD713CAB07570B483 /* RecordingView.swift */; };
+		5B58603850FC32A3411E0C6D /* llama_wrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = F2608FC459CF0CA75F932BDE /* llama_wrapper.c */; };
+		61D9EBA637928020901D975F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6A21B3B530583EE0A1E289D /* MetalKit.framework */; };
+		73485AEFA40FE5CD3E537C15 /* Stubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B952A80687C76668170F3AB6 /* Stubs.swift */; };
+		77CE91B22AB7A7C0B35D7ADF /* LLMProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6589168735DD7EEB95C7DE1 /* LLMProcessor.swift */; };
+		7E21B587A830B9B9B79A162F /* ggml-small.bin in Resources */ = {isa = PBXBuildFile; fileRef = 8E23B573919C82C5E73A9EA3 /* ggml-small.bin */; };
+		9EA7FED178B2BE0EDC79E10F /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf in Resources */ = {isa = PBXBuildFile; fileRef = CDF5FA20CDC7671B408E9CAB /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */; };
+		A16BDBFF65CA16DB2AC141FA /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf in Resources */ = {isa = PBXBuildFile; fileRef = 54F89313E3F1E5D0CF2F0277 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */; };
+		AA356AA791F4221292ABD739 /* HPTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FBFBC82859DDC113192074 /* HPTemplate.swift */; };
+		B0464702BFFC1D51C9B719B4 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DB8EF65D5FD34959D33F35D /* Metal.framework */; };
+		C0BFBDEC5767D2CDBF150719 /* ScribeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512D9771F45EA8255572EBDD /* ScribeApp.swift */; };
+		E15918949EDBBE36CA89A368 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CBC5890B44231151A906B5 /* UIKit.framework */; };
+		F9B549B17B0D400686ED4980 /* NoteModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861ED13A75454F0896CBE960 /* NoteModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		29909C644DA808805D4D2434 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = "ios-app/Sources/Scribe/UI/SettingsView.swift"; sourceTree = "<group>"; };
-		29CB9AD14B672FA4ABCDDF5E /* Scribe-Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "Scribe-Bridging-Header.h"; path = "ios-app/Scribe-Bridging-Header.h"; sourceTree = "<group>"; };
-		34801D9C16D14FA1F0F39064 /* AudioSessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AudioSessionManager.swift; path = "ios-app/Sources/Scribe/Core/Audio/AudioSessionManager.swift"; sourceTree = "<group>"; };
-		3E4EEFF68F26FB483CD07512 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */ = {isa = PBXFileReference; includeInIndex = 1; name = "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; sourceTree = "<group>"; };
-		522C4BE6EA6FB6B1B954C2F3 /* RecordingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RecordingView.swift; path = "ios-app/Sources/Scribe/UI/RecordingView.swift"; sourceTree = "<group>"; };
-		6783AF81EA7E73A4F2D2A701 /* ggml-large-v3.bin */ = {isa = PBXFileReference; includeInIndex = 1; name = "ggml-large-v3.bin"; path = "scripts/build/models/ggml-large-v3.bin"; sourceTree = "<group>"; };
-		7005667DEFA5343DC19BB7AC /* TranscriptionEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TranscriptionEngine.swift; path = "ios-app/Sources/Scribe/Core/STT/TranscriptionEngine.swift"; sourceTree = "<group>"; };
-		7F902614375825F293C62F9C /* NoteModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NoteModels.swift; path = "ios-app/Sources/Scribe/Models/NoteModels.swift"; sourceTree = "<group>"; };
-		8CAC705F4AD4D0A76C47E295 /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoryView.swift; path = "ios-app/Sources/Scribe/UI/HistoryView.swift"; sourceTree = "<group>"; };
-		9C76B754FC6874DCF1AAFC97 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		9EA9D10F0C945C07FE2CD82C /* LLMProcessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LLMProcessor.swift; path = "ios-app/Sources/Scribe/Core/LLM/LLMProcessor.swift"; sourceTree = "<group>"; };
-		C7B39F798046D9C17134B39A /* Stubs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stubs.swift; path = "ios-app/Sources/Scribe/Core/Stubs.swift"; sourceTree = "<group>"; };
-		DC5F289D17535955F38502FD /* HxDictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HxDictate.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1A761F51486802E9D227F6C /* ScribeApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScribeApp.swift; path = "ios-app/Sources/ScribeApp/ScribeApp.swift"; sourceTree = "<group>"; };
+		07CBC5890B44231151A906B5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0BDC8AFD1CECF9F3798D50C7 /* ggml-medium.bin */ = {isa = PBXFileReference; includeInIndex = 1; name = "ggml-medium.bin"; path = "scripts/build/models/ggml-medium.bin"; sourceTree = "<group>"; };
+		0DB8EF65D5FD34959D33F35D /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		10FBFBC82859DDC113192074 /* HPTemplate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HPTemplate.swift; path = "ios-app/Sources/Scribe/Models/HPTemplate.swift"; sourceTree = "<group>"; };
+		1717EDFBB9F458809D7914EF /* ggml-large-v3-turbo.bin */ = {isa = PBXFileReference; includeInIndex = 1; name = "ggml-large-v3-turbo.bin"; path = "scripts/build/models/ggml-large-v3-turbo.bin"; sourceTree = "<group>"; };
+		269CD85259596F224B8ECA16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		31A3F613C5A0F7D6D6FD7C58 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		3BA1CD221878D5387AA6ADCA /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "ios-app/Resources/Assets.xcassets"; sourceTree = "<group>"; };
+		3E0E11E84EF6D258F2A2C91F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = "ios-app/Resources/Info.plist"; sourceTree = "<group>"; };
+		512D9771F45EA8255572EBDD /* ScribeApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScribeApp.swift; path = "ios-app/Sources/ScribeApp/ScribeApp.swift"; sourceTree = "<group>"; };
+		54F89313E3F1E5D0CF2F0277 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */ = {isa = PBXFileReference; includeInIndex = 1; name = "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; sourceTree = "<group>"; };
+		6C39F507C7B7C25D8B951676 /* whisper_wrapper.c */ = {isa = PBXFileReference; includeInIndex = 1; name = whisper_wrapper.c; path = "ios-app/whisper_wrapper.c"; sourceTree = "<group>"; };
+		6FB25B8AED75263FDDE7F737 /* TranscriptionEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TranscriptionEngine.swift; path = "ios-app/Sources/Scribe/Core/STT/TranscriptionEngine.swift"; sourceTree = "<group>"; };
+		7F10E268218392BD85623475 /* GuidedHPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GuidedHPView.swift; path = "ios-app/Sources/Scribe/UI/GuidedHPView.swift"; sourceTree = "<group>"; };
+		861ED13A75454F0896CBE960 /* NoteModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NoteModels.swift; path = "ios-app/Sources/Scribe/Models/NoteModels.swift"; sourceTree = "<group>"; };
+		87FDD42F4B13778030D56FBF /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = "ios-app/Sources/Scribe/UI/SettingsView.swift"; sourceTree = "<group>"; };
+		8E23B573919C82C5E73A9EA3 /* ggml-small.bin */ = {isa = PBXFileReference; includeInIndex = 1; name = "ggml-small.bin"; path = "scripts/build/models/ggml-small.bin"; sourceTree = "<group>"; };
+		A9EC678596B45F665AF582E5 /* AudioSessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AudioSessionManager.swift; path = "ios-app/Sources/Scribe/Core/Audio/AudioSessionManager.swift"; sourceTree = "<group>"; };
+		B952A80687C76668170F3AB6 /* Stubs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stubs.swift; path = "ios-app/Sources/Scribe/Core/Stubs.swift"; sourceTree = "<group>"; };
+		CDF5FA20CDC7671B408E9CAB /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */ = {isa = PBXFileReference; includeInIndex = 1; name = "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; sourceTree = "<group>"; };
+		CE98EE684C9F45520ADFF64E /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoryView.swift; path = "ios-app/Sources/Scribe/UI/HistoryView.swift"; sourceTree = "<group>"; };
+		E159662D89F4F6D3FE44F401 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		ECC60E2BD713CAB07570B483 /* RecordingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RecordingView.swift; path = "ios-app/Sources/Scribe/UI/RecordingView.swift"; sourceTree = "<group>"; };
+		F2608FC459CF0CA75F932BDE /* llama_wrapper.c */ = {isa = PBXFileReference; includeInIndex = 1; name = llama_wrapper.c; path = "ios-app/llama_wrapper.c"; sourceTree = "<group>"; };
+		F46E8E9C38990A07A0245A5F /* HxDictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HxDictate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6589168735DD7EEB95C7DE1 /* LLMProcessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LLMProcessor.swift; path = "ios-app/Sources/Scribe/Core/LLM/LLMProcessor.swift"; sourceTree = "<group>"; };
+		F6A21B3B530583EE0A1E289D /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		FEE15B60657951A2B308277B /* ggml-large-v3.bin */ = {isa = PBXFileReference; includeInIndex = 1; name = "ggml-large-v3.bin"; path = "scripts/build/models/ggml-large-v3.bin"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		09F8C2CEF4355AF25D0B2269 /* Frameworks */ = {
+		275DB821D9342BF32EA32180 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83C6AB8298E99EA4A9CE5238 /* Foundation.framework in Frameworks */,
+				21E8E6003847DB0BC601835C /* Foundation.framework in Frameworks */,
+				1F8F3132F18E78D59BE73EA3 /* Accelerate.framework in Frameworks */,
+				B0464702BFFC1D51C9B719B4 /* Metal.framework in Frameworks */,
+				61D9EBA637928020901D975F /* MetalKit.framework in Frameworks */,
+				22562D82FBAA7A91D22336A1 /* AVFoundation.framework in Frameworks */,
+				E15918949EDBBE36CA89A368 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		14AF68EAD87FC29166A04EE9 /* Models */ = {
+		0E3FD81AC76DD00DA8AD4149 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6783AF81EA7E73A4F2D2A701 /* ggml-large-v3.bin */,
-				3E4EEFF68F26FB483CD07512 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		302AC560CD8406C0C8CC9138 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				CC345AB81FA87D14E180F5CB /* iOS */,
+				5FB46E45B0E472BCD78D9086 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4D4365C875EF2CD24231BD37 /* Scribe */ = {
+		315D4FE7AFB1F4FE6601187F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F1E5BDEA44D2EA4204A52D50 /* Core */,
+				8E23B573919C82C5E73A9EA3 /* ggml-small.bin */,
+				0BDC8AFD1CECF9F3798D50C7 /* ggml-medium.bin */,
+				1717EDFBB9F458809D7914EF /* ggml-large-v3-turbo.bin */,
+				FEE15B60657951A2B308277B /* ggml-large-v3.bin */,
+				CDF5FA20CDC7671B408E9CAB /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */,
+				54F89313E3F1E5D0CF2F0277 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */,
 			);
-			name = Scribe;
+			name = Models;
 			sourceTree = "<group>";
 		};
-		50DC1E84479F0580755D7515 = {
+		5FB46E45B0E472BCD78D9086 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				E3D1066486AE8B98E5FFD6C4 /* Products */,
-				302AC560CD8406C0C8CC9138 /* Frameworks */,
-				E1A761F51486802E9D227F6C /* ScribeApp.swift */,
-				29909C644DA808805D4D2434 /* SettingsView.swift */,
-				522C4BE6EA6FB6B1B954C2F3 /* RecordingView.swift */,
-				8CAC705F4AD4D0A76C47E295 /* HistoryView.swift */,
-				9EA9D10F0C945C07FE2CD82C /* LLMProcessor.swift */,
-				34801D9C16D14FA1F0F39064 /* AudioSessionManager.swift */,
-				7005667DEFA5343DC19BB7AC /* TranscriptionEngine.swift */,
-				7F902614375825F293C62F9C /* NoteModels.swift */,
-				29CB9AD14B672FA4ABCDDF5E /* Scribe-Bridging-Header.h */,
-				14AF68EAD87FC29166A04EE9 /* Models */,
-				946C45A26AADD6F0F2DC7F17 /* Sources */,
-			);
-			sourceTree = "<group>";
-		};
-		946C45A26AADD6F0F2DC7F17 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				4D4365C875EF2CD24231BD37 /* Scribe */,
-			);
-			name = Sources;
-			sourceTree = "<group>";
-		};
-		CC345AB81FA87D14E180F5CB /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				9C76B754FC6874DCF1AAFC97 /* Foundation.framework */,
+				269CD85259596F224B8ECA16 /* Foundation.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		E3D1066486AE8B98E5FFD6C4 /* Products */ = {
+		62D60FAAB397CCE3206B0BD3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DC5F289D17535955F38502FD /* HxDictate.app */,
+				3BA1CD221878D5387AA6ADCA /* Assets.xcassets */,
+				3E0E11E84EF6D258F2A2C91F /* Info.plist */,
 			);
-			name = Products;
+			name = Resources;
 			sourceTree = "<group>";
 		};
-		F1E5BDEA44D2EA4204A52D50 /* Core */ = {
+		BC6CA9989CC81A05781E28CF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C7B39F798046D9C17134B39A /* Stubs.swift */,
+				512D9771F45EA8255572EBDD /* ScribeApp.swift */,
+				87FDD42F4B13778030D56FBF /* SettingsView.swift */,
+				7F10E268218392BD85623475 /* GuidedHPView.swift */,
+				ECC60E2BD713CAB07570B483 /* RecordingView.swift */,
+				CE98EE684C9F45520ADFF64E /* HistoryView.swift */,
+				F6589168735DD7EEB95C7DE1 /* LLMProcessor.swift */,
+				A9EC678596B45F665AF582E5 /* AudioSessionManager.swift */,
+				B952A80687C76668170F3AB6 /* Stubs.swift */,
+				6FB25B8AED75263FDDE7F737 /* TranscriptionEngine.swift */,
+				10FBFBC82859DDC113192074 /* HPTemplate.swift */,
+				861ED13A75454F0896CBE960 /* NoteModels.swift */,
+				6C39F507C7B7C25D8B951676 /* whisper_wrapper.c */,
+				F2608FC459CF0CA75F932BDE /* llama_wrapper.c */,
 			);
-			name = Core;
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		C15D3158036E142095F2464F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				31A3F613C5A0F7D6D6FD7C58 /* Accelerate.framework */,
+				0DB8EF65D5FD34959D33F35D /* Metal.framework */,
+				F6A21B3B530583EE0A1E289D /* MetalKit.framework */,
+				E159662D89F4F6D3FE44F401 /* AVFoundation.framework */,
+				07CBC5890B44231151A906B5 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C367FCB4CB576BA00F2E8AB4 = {
+			isa = PBXGroup;
+			children = (
+				DC695B576531BF29EEA2B28C /* Products */,
+				0E3FD81AC76DD00DA8AD4149 /* Frameworks */,
+				C15D3158036E142095F2464F /* Frameworks */,
+				BC6CA9989CC81A05781E28CF /* Sources */,
+				62D60FAAB397CCE3206B0BD3 /* Resources */,
+				315D4FE7AFB1F4FE6601187F /* Models */,
+			);
+			sourceTree = "<group>";
+		};
+		DC695B576531BF29EEA2B28C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F46E8E9C38990A07A0245A5F /* HxDictate.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D3748C7D1B2923699EEC460D /* HxDictate */ = {
+		F852BF4ED916208F0BCA6EF7 /* HxDictate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7F0B3A72039A8461A7396764 /* Build configuration list for PBXNativeTarget "HxDictate" */;
+			buildConfigurationList = DBD89FA9E4180769A04EEA8A /* Build configuration list for PBXNativeTarget "HxDictate" */;
 			buildPhases = (
-				3308DC42208832A7D0BF130A /* Sources */,
-				09F8C2CEF4355AF25D0B2269 /* Frameworks */,
-				D72CAE1EA1AEF1851FC11049 /* Resources */,
+				0A05463F111B81D1DE27F691 /* Sources */,
+				275DB821D9342BF32EA32180 /* Frameworks */,
+				9BEDD783290E545F42700297 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -143,19 +190,19 @@
 			);
 			name = HxDictate;
 			productName = HxDictate;
-			productReference = DC5F289D17535955F38502FD /* HxDictate.app */;
+			productReference = F46E8E9C38990A07A0245A5F /* HxDictate.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B1875BC0C89E2A73DE581013 /* Project object */ = {
+		E928D76A53A9CDC7D9DC396C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 			};
-			buildConfigurationList = 4023F1031CF1C199644D2C09 /* Build configuration list for PBXProject "HxDictate" */;
+			buildConfigurationList = 1971DC1503FBB794003D1043 /* Build configuration list for PBXProject "HxDictate" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -163,51 +210,251 @@
 				en,
 				Base,
 			);
-			mainGroup = 50DC1E84479F0580755D7515;
+			mainGroup = C367FCB4CB576BA00F2E8AB4;
 			minimizedProjectReferenceProxies = 0;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = E3D1066486AE8B98E5FFD6C4 /* Products */;
+			productRefGroup = DC695B576531BF29EEA2B28C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D3748C7D1B2923699EEC460D /* HxDictate */,
+				F852BF4ED916208F0BCA6EF7 /* HxDictate */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D72CAE1EA1AEF1851FC11049 /* Resources */ = {
+		9BEDD783290E545F42700297 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8F942C9A27831E95C8F8689 /* ggml-large-v3.bin in Resources */,
-				F4E7D2BCEC4332CD60734096 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf in Resources */,
+				3CFC84B8B416BFB0B3934CEF /* Assets.xcassets in Resources */,
+				7E21B587A830B9B9B79A162F /* ggml-small.bin in Resources */,
+				4C1327B3302E57B4CE53D05A /* ggml-medium.bin in Resources */,
+				2881E8CC8FD4E07E7AC7F320 /* ggml-large-v3-turbo.bin in Resources */,
+				1E9C34536C2D497CE163FA0B /* ggml-large-v3.bin in Resources */,
+				9EA7FED178B2BE0EDC79E10F /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf in Resources */,
+				A16BDBFF65CA16DB2AC141FA /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3308DC42208832A7D0BF130A /* Sources */ = {
+		0A05463F111B81D1DE27F691 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EF65AB7F6E95C30B383436F /* ScribeApp.swift in Sources */,
-				5EF597A9A293D3D58ED6D574 /* SettingsView.swift in Sources */,
-				BB2346032C62DFB680A3A26E /* RecordingView.swift in Sources */,
-				E3293B72CF4571EE666C51E0 /* HistoryView.swift in Sources */,
-				35C910B988F24ACBE848445C /* LLMProcessor.swift in Sources */,
-				A73436173A475F3241726359 /* AudioSessionManager.swift in Sources */,
-				CEA429A57106B2E98B4898A4 /* TranscriptionEngine.swift in Sources */,
-				4FE06AC7DEA9083A069EE87A /* NoteModels.swift in Sources */,
-				E2D2A890772F93435F51BAED /* Stubs.swift in Sources */,
+				C0BFBDEC5767D2CDBF150719 /* ScribeApp.swift in Sources */,
+				15CCEE07132D1BAA390C66A7 /* SettingsView.swift in Sources */,
+				3B644BDFA20CE9501E210F43 /* GuidedHPView.swift in Sources */,
+				513A748B5292481ED2DE2615 /* RecordingView.swift in Sources */,
+				30845211295D2BEFD0D33936 /* HistoryView.swift in Sources */,
+				77CE91B22AB7A7C0B35D7ADF /* LLMProcessor.swift in Sources */,
+				0B6E1F90D1CB4BB179F7F0AD /* AudioSessionManager.swift in Sources */,
+				73485AEFA40FE5CD3E537C15 /* Stubs.swift in Sources */,
+				30B1946045B5AF19FC30C029 /* TranscriptionEngine.swift in Sources */,
+				AA356AA791F4221292ABD739 /* HPTemplate.swift in Sources */,
+				F9B549B17B0D400686ED4980 /* NoteModels.swift in Sources */,
+				2FAAFCD39695F4EDD6985473 /* whisper_wrapper.c in Sources */,
+				5B58603850FC32A3411E0C6D /* llama_wrapper.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		15D7BA9BB3E9048430E06A75 /* Debug */ = {
+		08322E05586F720F5B9FF173 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G99N9A97Z4;
+				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/scripts/build/whisper.cpp/include",
+					"$(SRCROOT)/scripts/build/llama.cpp/include",
+					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
+					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
+					"$(SRCROOT)/ios-app",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/ios-app/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/ggml/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-blas",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-metal",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lwhisper",
+					"-lllama",
+					"-lggml",
+					"-lggml-base",
+					"-lggml-cpu",
+					"-lggml-metal",
+					"-lggml-blas",
+					"-lc++",
+					"-lc++abi",
+					"-framework",
+					Accelerate,
+					"-framework",
+					Metal,
+					"-framework",
+					MetalKit,
+					"-framework",
+					Foundation,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					SwiftData,
+					"-framework",
+					UIKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danny.hxdictate;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ios-app/Scribe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		322ECD8D5F11C915741F809F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		37C8EF00C094498A09CA9D5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G99N9A97Z4;
+				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/scripts/build/whisper.cpp/include",
+					"$(SRCROOT)/scripts/build/llama.cpp/include",
+					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
+					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
+					"$(SRCROOT)/ios-app",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/ios-app/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/ggml/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-blas",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-metal",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lwhisper",
+					"-lllama",
+					"-lggml",
+					"-lggml-base",
+					"-lggml-cpu",
+					"-lggml-metal",
+					"-lggml-blas",
+					"-lc++",
+					"-lc++abi",
+					"-framework",
+					Accelerate,
+					"-framework",
+					Metal,
+					"-framework",
+					MetalKit,
+					"-framework",
+					Foundation,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					SwiftData,
+					"-framework",
+					UIKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danny.hxdictate;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ios-app/Scribe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		730B1D462B7180A7C783F60A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -268,171 +515,28 @@
 			};
 			name = Debug;
 		};
-		CF3E4115F3C164BE39EB4017 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				ENABLE_BITCODE = NO;
-				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/include",
-					"$(SRCROOT)/scripts/build/llama.cpp/include",
-					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
-					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
-				);
-				INFOPLIST_FILE = "ios-app/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
-				);
-				OTHER_LDFLAGS = (
-					"-lwhisper",
-					"-lllama",
-					"-lggml",
-					"-lc++",
-					"-framework",
-					Accelerate,
-					"-framework",
-					Metal,
-					"-framework",
-					MetalKit,
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.danny.hxdictate;
-				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Scribe-Bridging-Header.h";
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = 1;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		D766D7F95DEDD445E15565B1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		EED95AC7AF2EEE185448C21F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				ENABLE_BITCODE = NO;
-				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/include",
-					"$(SRCROOT)/scripts/build/llama.cpp/include",
-					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
-					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
-				);
-				INFOPLIST_FILE = "ios-app/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
-				);
-				OTHER_LDFLAGS = (
-					"-lwhisper",
-					"-lllama",
-					"-lggml",
-					"-lc++",
-					"-framework",
-					Accelerate,
-					"-framework",
-					Metal,
-					"-framework",
-					MetalKit,
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.danny.hxdictate;
-				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Scribe-Bridging-Header.h";
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4023F1031CF1C199644D2C09 /* Build configuration list for PBXProject "HxDictate" */ = {
+		1971DC1503FBB794003D1043 /* Build configuration list for PBXProject "HxDictate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				15D7BA9BB3E9048430E06A75 /* Debug */,
-				D766D7F95DEDD445E15565B1 /* Release */,
+				730B1D462B7180A7C783F60A /* Debug */,
+				322ECD8D5F11C915741F809F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7F0B3A72039A8461A7396764 /* Build configuration list for PBXNativeTarget "HxDictate" */ = {
+		DBD89FA9E4180769A04EEA8A /* Build configuration list for PBXNativeTarget "HxDictate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CF3E4115F3C164BE39EB4017 /* Release */,
-				EED95AC7AF2EEE185448C21F /* Debug */,
+				37C8EF00C094498A09CA9D5F /* Release */,
+				08322E05586F720F5B9FF173 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = B1875BC0C89E2A73DE581013 /* Project object */;
+	rootObject = E928D76A53A9CDC7D9DC396C /* Project object */;
 }

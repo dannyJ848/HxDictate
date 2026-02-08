@@ -3,7 +3,7 @@ import AVFoundation
 
 /// Guided H&P view with voice navigation
 struct GuidedHPView: View {
-    @StateObject private var template = HPTemplate()
+    @State private var template = HPTemplate()
     @StateObject private var audioManager = AudioSessionManager()
     @StateObject private var transcriptionEngine = TranscriptionEngine()
     

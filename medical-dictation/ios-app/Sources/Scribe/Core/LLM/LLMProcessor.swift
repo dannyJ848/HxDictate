@@ -1,18 +1,31 @@
 import Foundation
 import Combine
 
-/// Simplified LLM Processor - minimal working version for testing
+/// LLM Processor - Real llama.cpp integration for on-device inference
 @MainActor
 final class LLMProcessor: ObservableObject {
     @Published var structuredNote: StructuredNote?
     @Published var isProcessing = false
     @Published var modelStatus: ModelStatus = .notLoaded
     @Published var currentTemplate: NoteTemplate = .soap
+    @Published var generationProgress: String = ""
+    @Published var generatedText: String = ""
     
-    private var llamaContext: OpaquePointer?
-    private let processingQueue = DispatchQueue(label: "com.scribe.llm", qos: .userInitiated)
+    // Private state - pointers to C structures
+    private var model: OpaquePointer?
+    private var context: OpaquePointer?
+    private var vocab: OpaquePointer?
+    private var modelPath: String?
+    private var isModelLoaded = false
     
-    enum ModelStatus {
+    // Generation settings
+    private var maxTokens: Int32 = 2048
+    private var samplerConfig = llama_wrapper_default_sampler_config()
+    
+    // Callback storage for generation
+    private var tokenCallback: ((String) -> Void)?
+    
+    enum ModelStatus: Equatable {
         case notLoaded
         case loading(progress: Double)
         case ready
@@ -48,123 +61,438 @@ Include: Chief Complaint, History of Present Illness, Past Medical History, Medi
 Transcript:
 """
             case .summary:
-                return "Summarize the following patient encounter in one clear paragraph suitable for handoff to another provider:"
+                return "Summarize the following patient encounter in one clear paragraph suitable for handoff to another provider:\n\nTranscript:"
             case .bullets:
-                return "Extract the key points from the following patient encounter as concise bullet points:"
+                return "Extract the key points from the following patient encounter as concise bullet points:\n\nTranscript:"
             }
         }
+        
+        /// Format the output into sections
+        func parseSections(from text: String) -> [String: String] {
+            var sections: [String: String] = [:]
+            
+            switch self {
+            case .soap:
+                sections = parseSOAP(from: text)
+            case .hp:
+                sections = parseHP(from: text)
+            case .summary:
+                sections = ["Summary": text.trimmingCharacters(in: .whitespacesAndNewlines)]
+            case .bullets:
+                sections = ["Key Points": text.trimmingCharacters(in: .whitespacesAndNewlines)]
+            }
+            
+            // If parsing failed, return the full text
+            if sections.isEmpty {
+                sections = ["Generated Note": text]
+            }
+            
+            return sections
+        }
+        
+        private func parseSOAP(from text: String) -> [String: String] {
+            var sections: [String: String] = [:]
+            let lines = text.components(separatedBy: .newlines)
+            var currentSection: String?
+            var currentContent: [String] = []
+            
+            for line in lines {
+                let trimmed = line.trimmingCharacters(in: .whitespaces)
+                
+                // Check for section headers
+                if trimmed.lowercased().hasPrefix("subjective:") ||
+                   trimmed.lowercased().hasPrefix("**subjective:**") {
+                    if let section = currentSection {
+                        sections[section] = currentContent.joined(separator: "\n").trimmingCharacters(in: .whitespaces)
+                    }
+                    currentSection = "Subjective"
+                    currentContent = [String(trimmed.dropFirst(trimmed.contains("**") ? 14 : 12))]
+                } else if trimmed.lowercased().hasPrefix("objective:") ||
+                          trimmed.lowercased().hasPrefix("**objective:**") {
+                    if let section = currentSection {
+                        sections[section] = currentContent.joined(separator: "\n").trimmingCharacters(in: .whitespaces)
+                    }
+                    currentSection = "Objective"
+                    currentContent = [String(trimmed.dropFirst(trimmed.contains("**") ? 12 : 10))]
+                } else if trimmed.lowercased().hasPrefix("assessment:") ||
+                          trimmed.lowercased().hasPrefix("**assessment:**") {
+                    if let section = currentSection {
+                        sections[section] = currentContent.joined(separator: "\n").trimmingCharacters(in: .whitespaces)
+                    }
+                    currentSection = "Assessment"
+                    currentContent = [String(trimmed.dropFirst(trimmed.contains("**") ? 13 : 11))]
+                } else if trimmed.lowercased().hasPrefix("plan:") ||
+                          trimmed.lowercased().hasPrefix("**plan:**") {
+                    if let section = currentSection {
+                        sections[section] = currentContent.joined(separator: "\n").trimmingCharacters(in: .whitespaces)
+                    }
+                    currentSection = "Plan"
+                    currentContent = [String(trimmed.dropFirst(trimmed.contains("**") ? 8 : 5))]
+                } else {
+                    currentContent.append(line)
+                }
+            }
+            
+            // Don't forget the last section
+            if let section = currentSection {
+                sections[section] = currentContent.joined(separator: "\n").trimmingCharacters(in: .whitespaces)
+            }
+            
+            return sections
+        }
+        
+        private func parseHP(from text: String) -> [String: String] {
+            var sections: [String: String] = [:]
+            let lines = text.components(separatedBy: .newlines)
+            var currentSection: String?
+            var currentContent: [String] = []
+            
+            let sectionHeaders = [
+                "chief complaint", "history of present illness", "hpi",
+                "past medical history", "pmh", "medications", "meds",
+                "allergies", "family history", "social history",
+                "review of systems", "ros", "physical exam", "exam",
+                "assessment", "plan"
+            ]
+            
+            for line in lines {
+                let trimmed = line.trimmingCharacters(in: .whitespaces)
+                let lowerTrimmed = trimmed.lowercased()
+                
+                var foundHeader: String?
+                for header in sectionHeaders {
+                    if lowerTrimmed.hasPrefix(header + ":") ||
+                       lowerTrimmed.hasPrefix("**" + header + ":**") {
+                        foundHeader = header.capitalized
+                        break
+                    }
+                }
+                
+                if let header = foundHeader {
+                    if let section = currentSection {
+                        sections[section] = currentContent.joined(separator: "\n").trimmingCharacters(in: .whitespaces)
+                    }
+                    currentSection = header
+                    // Extract content after header
+                    let headerEnd = trimmed.firstIndex(of: ":") ?? trimmed.startIndex
+                    let contentStart = trimmed.index(headerEnd, offsetBy: 1)
+                    let content = String(trimmed[contentStart...]).trimmingCharacters(in: .whitespaces)
+                    currentContent = content.isEmpty ? [] : [content]
+                } else {
+                    currentContent.append(line)
+                }
+            }
+            
+            if let section = currentSection {
+                sections[section] = currentContent.joined(separator: "\n").trimmingCharacters(in: .whitespaces)
+            }
+            
+            return sections
+        }
+    }
+    
+    // MARK: - Initialization
+    
+    init() {
+        // Initialize llama backend
+        llama_wrapper_backend_init()
+    }
+    
+    deinit {
+        unloadModel()
+        llama_wrapper_backend_free()
     }
     
     // MARK: - Model Management
     
-    /// Load LLM with tier-based configuration
+    /// Load the LLM model from disk
+    /// - Parameter tier: Performance tier determining which model to load
     func loadModel(tier: PerformanceTier = .balanced) async {
+        guard !isModelLoaded else {
+            modelStatus = .ready
+            return
+        }
+        
         modelStatus = .loading(progress: 0)
         
-        guard let modelPath = locateModel(named: tier.llmModel) else {
-            modelStatus = .error("Model not found: \(tier.llmModel)")
+        // Find model file
+        let modelName = tier.llmModel
+        let possiblePaths = [
+            Bundle.main.path(forResource: modelName, ofType: nil),
+            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                .first?.appendingPathComponent(modelName).path,
+            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + modelName
+        ].compactMap { $0 }
+        
+        guard let foundPath = possiblePaths.first(where: { FileManager.default.fileExists(atPath: $0) }) else {
+            modelStatus = .error("Model not found: \(modelName)")
+            print("⚠️ Model not found: \(modelName)")
+            print("Searched paths: \(possiblePaths)")
             return
         }
         
-        // llama.cpp initialization with tier-specific params
-        var params = llama_model_default_params()
-        params.n_gpu_layers = tier.gpuLayers
-        params.use_mmap = 1
-        params.use_mlock = tier == .maximum ? 0 : 1
+        modelPath = foundPath
+        print("📦 Loading model from: \(foundPath)")
         
-        guard let model = llama_load_model_from_file(modelPath, params) else {
-            modelStatus = .error("Failed to load model")
-            return
-        }
+        // Update progress
+        modelStatus = .loading(progress: 0.1)
         
-        var ctxParams = llama_context_default_params()
-        ctxParams.n_ctx = tier.contextWindow
-        ctxParams.n_batch = tier.batchSize
-        ctxParams.n_threads = 6
-        ctxParams.n_threads_batch = 6
-        ctxParams.flash_attn = 1
-        ctxParams.logits_all = 0
-        ctxParams.embeddings = 0
-        
-        llamaContext = llama_new_context_with_model(model, ctxParams)
-        
-        if llamaContext != nil {
-            modelStatus = .ready
-        } else {
-            modelStatus = .error("Failed to initialize context")
-        }
-    }
-    
-    func unloadModel() {
-        if let ctx = llamaContext {
-            llama_free(ctx)
-            llamaContext = nil
-        }
-        modelStatus = .notLoaded
-    }
-    
-    private func locateModel(named: String) -> String? {
-        var possiblePaths: [String] = []
-        
-        if let bundlePath = Bundle.main.path(forResource: named, ofType: nil) {
-            possiblePaths.append(bundlePath)
-        }
-        
-        if let docsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            .first?.appendingPathComponent(named).path {
-            possiblePaths.append(docsPath)
-        }
-        
-        possiblePaths.append(FileManager.default.currentDirectoryPath + "/scripts/build/models/" + named)
-        possiblePaths.append("/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + named)
-        
-        for path in possiblePaths {
-            if FileManager.default.fileExists(atPath: path) {
-                return path
+        // Load model on background thread
+        do {
+            let result = try await Task.detached(priority: .userInitiated) { [foundPath, tier] () -> ModelLoadResult in
+                // Create a mutable progress value that can be updated from callback
+                let progressBox = ProgressBox()
+                
+                // Load model with progress callback
+                let model = llama_wrapper_load_model(
+                    foundPath,
+                    tier.gpuLayers,
+                    { progress, _ in
+                        progressBox.value = 0.1 + Double(progress) * 0.7
+                        return true
+                    },
+                    nil
+                )
+                
+                guard let model = model else {
+                    return .failure("Failed to load model from \(foundPath)")
+                }
+                
+                // Get vocab from model
+                let vocab = llama_wrapper_get_vocab(model)
+                guard let vocab = vocab else {
+                    llama_wrapper_free_model(model)
+                    return .failure("Failed to get vocabulary from model")
+                }
+                
+                // Create context
+                let nThreads = max(1, min(8, ProcessInfo.processInfo.processorCount - 2))
+                let context = llama_wrapper_new_context(
+                    model,
+                    tier.contextWindow,
+                    Int32(nThreads),
+                    Int32(nThreads)
+                )
+                
+                guard let context = context else {
+                    llama_wrapper_free_model(model)
+                    return .failure("Failed to create context")
+                }
+                
+                // Get model info
+                var descBuf = [CChar](repeating: 0, count: 256)
+                llama_wrapper_model_desc(model, &descBuf, 256)
+                let desc = String(cString: descBuf)
+                
+                return .success(
+                    model: model,
+                    context: context,
+                    vocab: vocab,
+                    description: desc,
+                    contextSize: llama_wrapper_n_ctx(context),
+                    vocabSize: llama_wrapper_n_vocab(vocab)
+                )
+            }.value
+            
+            // Handle result on main actor
+            switch result {
+            case .success(let model, let context, let vocab, let desc, let ctxSize, let vocabSize):
+                self.model = model
+                self.context = context
+                self.vocab = vocab
+                self.isModelLoaded = true
+                self.modelStatus = .ready
+                self.configureSampler(tier: tier)
+                
+                print("✅ Model loaded: \(desc)")
+                print("   Context: \(ctxSize) tokens")
+                print("   Vocab: \(vocabSize) tokens")
+                
+            case .failure(let error):
+                modelStatus = .error(error)
+                print("❌ Model loading failed: \(error)")
             }
+            
+        } catch {
+            modelStatus = .error("Loading failed: \(error.localizedDescription)")
         }
-        return nil
+    }
+    
+    /// Unload the model and free resources
+    func unloadModel() {
+        if let ctx = context {
+            llama_wrapper_free_context(ctx)
+            context = nil
+        }
+        if let m = model {
+            llama_wrapper_free_model(m)
+            model = nil
+        }
+        vocab = nil
+        isModelLoaded = false
+        modelStatus = .notLoaded
+        print("🗑️ Model unloaded")
+    }
+    
+    /// Configure the sampler with performance tier settings
+    private func configureSampler(tier: PerformanceTier) {
+        samplerConfig = llama_wrapper_default_sampler_config()
+        samplerConfig.temperature = tier.temperature
+        samplerConfig.top_k = tier.topK
+        samplerConfig.top_p = tier.topP
+        samplerConfig.repeat_penalty = tier.repeatPenalty
+        samplerConfig.repeat_last_n = tier.repeatLastN
     }
     
     // MARK: - Inference
     
+    /// Process a transcript into a structured clinical note
+    /// - Parameters:
+    ///   - transcript: The raw transcribed text
+    ///   - template: The note template to use (defaults to currentTemplate)
+    /// - Returns: A StructuredNote containing the generated note
     func processTranscript(_ transcript: String, template: NoteTemplate? = nil) async -> StructuredNote? {
-        guard llamaContext != nil else { return nil }
-        
         let templateToUse = template ?? currentTemplate
-        let prompt = templateToUse.systemPrompt + "\n\n" + transcript + "\n\nStructured Note:"
+        
+        guard isModelLoaded, let ctx = context, let vocab = vocab else {
+            print("⚠️ Model not loaded, cannot process transcript")
+            return nil
+        }
         
         isProcessing = true
+        generationProgress = "Preparing prompt..."
+        generatedText = ""
         defer { isProcessing = false }
         
-        // Simplified processing - just return a placeholder for now
-        // Full implementation would use llama.cpp inference
-        let sections = parseOutput("Generated note would appear here", template: templateToUse)
+        print("🧠 Processing with template: \(templateToUse.rawValue)")
         
-        return StructuredNote(
+        // Build prompt with template
+        let prompt = buildPrompt(transcript: transcript, template: templateToUse)
+        
+        // Clear KV cache for fresh generation
+        llama_wrapper_clear_kv_cache(ctx)
+        
+        generationProgress = "Generating..."
+        
+        // Generate text with streaming callback
+        let output = await generateText(
+            prompt: prompt,
+            maxTokens: maxTokens,
+            onToken: { [weak self] token in
+                Task { @MainActor in
+                    self?.generatedText.append(token)
+                    self?.generationProgress = "Generated \(self?.generatedText.count ?? 0) chars..."
+                }
+            }
+        )
+        
+        // Parse output into sections
+        let sections = templateToUse.parseSections(from: output)
+        let fullText = formatFullText(sections: sections, template: templateToUse)
+        
+        let note = StructuredNote(
             template: templateToUse,
             rawTranscript: transcript,
             generatedAt: Date(),
             sections: sections,
-            fullText: "Note generation requires full llama.cpp integration"
+            fullText: fullText
         )
+        
+        self.structuredNote = note
+        return note
     }
     
-    private func parseOutput(_ output: String, template: NoteTemplate) -> [String: String] {
-        var sections: [String: String] = [:]
+    /// Build the prompt for the LLM
+    private func buildPrompt(transcript: String, template: NoteTemplate) -> String {
+        let systemPrompt = template.systemPrompt
         
-        switch template {
-        case .soap:
-            sections["Subjective"] = "Patient reports symptoms..."
-            sections["Objective"] = "Vital signs stable..."
-            sections["Assessment"] = "Assessment pending..."
-            sections["Plan"] = "Plan pending..."
-        default:
-            sections["Content"] = output
-        }
-        
-        return sections
+        return """
+<|im_start|>system
+\(systemPrompt)<|im_end|>
+<|im_start|>user
+\(transcript)<|im_end|>
+<|im_start|>assistant
+"""
     }
+    
+    /// Generate text from a prompt using the loaded model
+    /// - Parameters:
+    ///   - prompt: The input prompt
+    ///   - maxTokens: Maximum tokens to generate
+    ///   - onToken: Optional callback for each generated token
+    /// - Returns: The generated text
+    private func generateText(
+        prompt: String,
+        maxTokens: Int32,
+        onToken: ((String) -> Void)? = nil
+    ) async -> String {
+        guard let ctx = context, let vocab = vocab else { return "" }
+        
+        // Store callback for C wrapper to use
+        self.tokenCallback = onToken
+        
+        return await Task.detached(priority: .userInitiated) { [weak self] () -> String in
+            guard let self = self else { return "" }
+            
+            var outputBuffer = [CChar](repeating: 0, count: 65536)
+            
+            // Create C-compatible callback that forwards to Swift closure
+            let callback: llama_wrapper_token_callback = { tokenText, userData in
+                guard let text = tokenText else { return }
+                let swiftString = String(cString: text)
+                
+                // Forward to stored callback on main actor
+                Task { @MainActor in
+                    self.tokenCallback?(swiftString)
+                }
+            }
+            
+            // Generate using llama_wrapper_generate
+            let generatedCount = llama_wrapper_generate(
+                ctx,
+                vocab,
+                prompt,
+                maxTokens,
+                self.samplerConfig,
+                callback,
+                nil,
+                &outputBuffer,
+                65536
+            )
+            
+            if generatedCount > 0 {
+                return String(cString: outputBuffer)
+            } else {
+                // If generation failed, return what we collected via callbacks
+                Task { @MainActor in
+                    self.tokenCallback = nil
+                }
+                return ""
+            }
+        }.value
+    }
+    
+    /// Format sections into full text output
+    private func formatFullText(sections: [String: String], template: NoteTemplate) -> String {
+        var text = ""
+        for (key, value) in sections.sorted(by: { $0.key < $1.key }) {
+            text += "**\(key):**\n\(value)\n\n"
+        }
+        return text
+    }
+}
+
+// MARK: - Model Load Result
+
+/// Internal enum for model loading results
+private enum ModelLoadResult {
+    case success(model: OpaquePointer, context: OpaquePointer, vocab: OpaquePointer, description: String, contextSize: UInt32, vocabSize: Int32)
+    case failure(String)
+}
+
+/// Box class for mutable progress tracking across boundaries
+private final class ProgressBox {
+    var value: Double = 0
 }
 
 // MARK: - Performance Tier
@@ -174,42 +502,140 @@ extension LLMProcessor {
         case powerSaver
         case balanced
         case maximum
-        case extreme
         
         var llmModel: String {
             switch self {
-            case .powerSaver: return "qwen2.5-3b-q4_k_m.gguf"
-            case .balanced: return "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"
+            case .powerSaver: return "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"
+            case .balanced: return "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"
             case .maximum: return "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"
-            case .extreme: return "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"
             }
         }
         
         var gpuLayers: Int32 {
-            switch self {
-            case .powerSaver: return 99
-            case .balanced: return 99
-            case .maximum: return 40
-            case .extreme: return 40
-            }
+            // Offload all layers to GPU for best performance
+            return 99
         }
         
         var contextWindow: UInt32 {
             switch self {
             case .powerSaver: return 4096
             case .balanced: return 4096
-            case .maximum: return 2048
-            case .extreme: return 2048
+            case .maximum: return 8192
             }
         }
         
-        var batchSize: UInt32 {
+        var temperature: Float {
             switch self {
-            case .powerSaver: return 512
-            case .balanced: return 512
-            case .maximum: return 256
-            case .extreme: return 256
+            case .powerSaver: return 0.5  // More deterministic
+            case .balanced: return 0.7
+            case .maximum: return 0.8    // More creative
             }
         }
+        
+        var topK: Int32 {
+            return 40
+        }
+        
+        var topP: Float {
+            return 0.9
+        }
+        
+        var repeatPenalty: Float {
+            return 1.1
+        }
+        
+        var repeatLastN: Int32 {
+            return 64
+        }
+    }
+}
+
+// MARK: - Streaming Generation Support
+
+extension LLMProcessor {
+    /// Process transcript with streaming output
+    /// - Parameters:
+    ///   - transcript: The raw transcribed text
+    ///   - template: The note template to use
+    ///   - onToken: Callback called for each generated token
+    /// - Returns: A StructuredNote containing the generated note
+    func processTranscriptStreaming(
+        _ transcript: String,
+        template: NoteTemplate? = nil,
+        onToken: @escaping (String) -> Void
+    ) async -> StructuredNote? {
+        let templateToUse = template ?? currentTemplate
+        
+        guard isModelLoaded, let ctx = context, let vocab = vocab else {
+            print("⚠️ Model not loaded, cannot process transcript")
+            return nil
+        }
+        
+        isProcessing = true
+        generationProgress = "Preparing prompt..."
+        generatedText = ""
+        defer { isProcessing = false }
+        
+        // Build prompt
+        let prompt = buildPrompt(transcript: transcript, template: templateToUse)
+        
+        // Clear KV cache
+        llama_wrapper_clear_kv_cache(ctx)
+        
+        generationProgress = "Generating..."
+        
+        // Generate with streaming
+        await generateTextStreaming(
+            prompt: prompt,
+            maxTokens: maxTokens,
+            onToken: onToken
+        )
+        
+        // Parse output
+        let sections = templateToUse.parseSections(from: generatedText)
+        let fullText = formatFullText(sections: sections, template: templateToUse)
+        
+        let note = StructuredNote(
+            template: templateToUse,
+            rawTranscript: transcript,
+            generatedAt: Date(),
+            sections: sections,
+            fullText: fullText
+        )
+        
+        self.structuredNote = note
+        return note
+    }
+    
+    /// Generate text with streaming output
+    private func generateTextStreaming(
+        prompt: String,
+        maxTokens: Int32,
+        onToken: @escaping (String) -> Void
+    ) async {
+        guard let ctx = context, let vocab = vocab else { return }
+        
+        await Task.detached(priority: .userInitiated) {
+            var outputBuffer = [CChar](repeating: 0, count: 65536)
+            
+            // Create callback that forwards to Swift closure
+            let callback: llama_wrapper_token_callback = { tokenText, _ in
+                guard let text = tokenText else { return }
+                let swiftString = String(cString: text)
+                onToken(swiftString)
+            }
+            
+            llama_wrapper_generate(
+                ctx,
+                vocab,
+                prompt,
+                maxTokens,
+                self.samplerConfig,
+                callback,
+                nil,
+                &outputBuffer,
+                65536
+            )
+        }.value
     }
 }
