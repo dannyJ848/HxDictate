@@ -387,6 +387,12 @@ Transcript:
         )
         
         self.structuredNote = note
+        
+        // CRITICAL: Unload model immediately after generation to free memory
+        // This prevents iOS from killing the app due to memory pressure
+        print("🧹 Auto-unloading model to free memory...")
+        unloadModel()
+        
         return note
     }
     

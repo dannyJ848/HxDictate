@@ -112,6 +112,10 @@ struct RecordingView: View {
             // Process any remaining audio in the buffer
             Task {
                 await transcriptionEngine.processFinalBuffer()
+                // CRITICAL: Unload Whisper immediately after transcription to free memory
+                // This prevents iOS from killing the app when loading the LLM
+                print("🧹 Unloading Whisper to free memory for LLM...")
+                transcriptionEngine.unloadModel()
             }
         } else {
             do {
