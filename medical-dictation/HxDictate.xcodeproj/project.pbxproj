@@ -233,12 +233,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CFC84B8B416BFB0B3934CEF /* Assets.xcassets in Resources */,
-				7E21B587A830B9B9B79A162F /* ggml-small.bin in Resources */,
-				4C1327B3302E57B4CE53D05A /* ggml-medium.bin in Resources */,
-				2881E8CC8FD4E07E7AC7F320 /* ggml-large-v3-turbo.bin in Resources */,
-				1E9C34536C2D497CE163FA0B /* ggml-large-v3.bin in Resources */,
-				9EA7FED178B2BE0EDC79E10F /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf in Resources */,
-				A16BDBFF65CA16DB2AC141FA /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
