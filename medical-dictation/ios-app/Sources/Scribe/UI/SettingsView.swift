@@ -14,7 +14,7 @@ struct SettingsView: View {
         
         var sttTier: TranscriptionEngine.PerformanceTier {
             switch self {
-            case .powerSaver: return .largeTurbo
+            case .powerSaver: return .medium
             case .balanced: return .medium
             case .maximum: return .medium
             }
@@ -30,7 +30,7 @@ struct SettingsView: View {
         
         var llmSize: String {
             switch self {
-            case .powerSaver: return "~2.0 GB + 1.6 GB STT"
+            case .powerSaver: return "~2.0 GB + 1.5 GB STT"
             case .balanced: return "~4.4 GB + 1.5 GB STT"
             case .maximum: return "~3.8 GB + 1.5 GB STT"
             }
@@ -39,7 +39,7 @@ struct SettingsView: View {
         var description: String {
             switch self {
             case .powerSaver:
-                return "Llama 3.2 3B. Fastest, English only."
+                return "Llama 3.2 3B + Whisper Medium. Fastest, English only."
             case .balanced:
                 return "Qwen2.5 7B + Whisper Medium. Multilingual (Spanish/English)."
             case .maximum:
