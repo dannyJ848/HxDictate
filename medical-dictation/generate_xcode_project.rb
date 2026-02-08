@@ -3,6 +3,7 @@
 # Generates HxDictate.xcodeproj with proper configuration
 
 require 'xcodeproj'
+require 'fileutils'
 
 PROJECT_NAME = "HxDictate"
 PROJECT_PATH = "#{PROJECT_NAME}.xcodeproj"
