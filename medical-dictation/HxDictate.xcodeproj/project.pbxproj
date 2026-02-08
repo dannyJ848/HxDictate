@@ -258,8 +258,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
 				);
 				OTHER_LDFLAGS = (
 					"-lwhisper",
@@ -353,8 +353,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
 				);
 				OTHER_LDFLAGS = (
 					"-lwhisper",
