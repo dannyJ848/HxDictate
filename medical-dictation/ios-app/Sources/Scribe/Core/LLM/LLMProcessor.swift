@@ -484,24 +484,13 @@ extension LLMProcessor {
     enum PerformanceTier: String, CaseIterable {
         case powerSaver = "Power Saver"
         case balanced = "Balanced"
-        case maximum = "Maximum"
         case deepseekQ40 = "DeepSeek 7B Q4_0"
         
         var llmModel: String {
             switch self {
             case .powerSaver: return "llama-3.2-3b-q4_k_m.gguf"
             case .balanced: return "qwen2.5-7b-q4_k_m.gguf"
-            case .maximum: return "llama-3.2-3b-q4_k_m.gguf"
             case .deepseekQ40: return "deepseek-r1-distill-qwen-7b-q4_0.gguf"
-            }
-        }
-        
-        var translationModel: String? {
-            switch self {
-            case .powerSaver: return nil
-            case .balanced: return nil
-            case .maximum: return "qwen2.5-7b-q4_k_m.gguf"
-            case .deepseekQ40: return nil
             }
         }
         
@@ -509,7 +498,6 @@ extension LLMProcessor {
             switch self {
             case .powerSaver: return false
             case .balanced: return true
-            case .maximum: return true
             case .deepseekQ40: return true
             }
         }
@@ -518,7 +506,6 @@ extension LLMProcessor {
             switch self {
             case .powerSaver: return 20
             case .balanced: return 15
-            case .maximum: return 25
             case .deepseekQ40: return 20
             }
         }
@@ -527,7 +514,6 @@ extension LLMProcessor {
             switch self {
             case .powerSaver: return 2048
             case .balanced: return 2048
-            case .maximum: return 2048
             case .deepseekQ40: return 2048
             }
         }
@@ -536,7 +522,7 @@ extension LLMProcessor {
             switch self {
             case .powerSaver: return 0.5  // More deterministic
             case .balanced: return 0.7
-            case .maximum: return 0.8    // More creative
+            case .deepseekQ40: return 0.7
             }
         }
         
