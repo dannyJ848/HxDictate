@@ -87,9 +87,15 @@ void llama_free(struct llama_context * ctx);
 struct llama_model_params llama_model_default_params(void);
 struct llama_context_params llama_context_default_params(void);
 int llama_tokenize(const struct llama_model * model, const char * text, int text_len, llama_token * tokens, int n_max_tokens, int add_special, int parse_special);
+int llama_token_to_piece(const struct llama_model * model, llama_token token, char * buf, int length, int lstrip, int special);
 int llama_decode(struct llama_context * ctx, struct llama_batch batch);
 float * llama_get_logits(struct llama_context * ctx);
+float * llama_get_logits_ith(struct llama_context * ctx, int i);
 llama_token llama_token_eos(const struct llama_model * model);
+const struct llama_model * llama_get_model(const struct llama_context * ctx);
 int llama_n_vocab(const struct llama_model * model);
+int llama_n_ctx(const struct llama_context * ctx);
+struct llama_batch llama_batch_init(int n_tokens_alloc, int embd, int n_seq_max);
+void llama_batch_free(struct llama_batch batch);
 
 #endif /* Scribe_Bridging_Header_h */
