@@ -37,8 +37,11 @@ echo "📦 Building Whisper.cpp..."
 cd whisper.cpp
 
 # Build for iOS device (arm64)
-echo "Building for iOS device..."
-m -rf build-ios && mkdir build-ios && cd build-ios
+echo "Building whisper.cpp for iOS device..."
+rm -rf build-ios
+mkdir build-ios
+cd build-ios
+
 cmake .. \
     -DCMAKE_SYSTEM_NAME=iOS \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
@@ -58,8 +61,11 @@ echo "📦 Building llama.cpp..."
 cd llama.cpp
 
 # Build for iOS device (arm64)
-echo "Building for iOS device..."
-rm -rf build-ios && mkdir build-ios && cd build-ios
+echo "Building llama.cpp for iOS device..."
+rm -rf build-ios
+mkdir build-ios
+cd build-ios
+
 cmake .. \
     -DCMAKE_SYSTEM_NAME=iOS \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
@@ -118,10 +124,11 @@ echo ""
 echo "✅ Build Complete!"
 echo ""
 echo "Next steps:"
-echo "1. Open Scribe.xcodeproj"
-echo "2. Add the built libraries to your project:"
+echo "1. Create Xcode project"
+echo "2. Add the built libraries:"
 echo "   - $BUILD_DIR/whisper.cpp/build-ios/libwhisper.a"
-echo "   - $BUILD_DIR/llama.cpp/build-ios/libllama.a"
+echo "   - $BUILD_DIR/llama.cpp/build-ios/libllama.a" 
 echo "   - $BUILD_DIR/llama.cpp/build-ios/libggml.a"
-echo "3. Copy models to app bundle or implement download-on-first-launch"
+echo "3. Add header search paths to whisper.cpp and llama.cpp include dirs"
+echo "4. Download models and add to project or implement download-on-first-launch"
 echo ""
