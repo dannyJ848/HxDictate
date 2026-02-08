@@ -90,7 +90,12 @@ struct RecordingView: View {
                             .font(.system(size: 32))
                             .foregroundColor(.blue)
                     }
-                    .disabled(transcriptionEngine.currentTranscript.isEmpty || llmProcessor.modelStatus != .ready)
+                    .disabled(transcriptionEngine.currentTranscript.isEmpty || {
+                        if case .ready = llmProcessor.modelStatus {
+                            return false
+                        }
+                        return true
+                    }())
                 }
                 .padding(.bottom, 30)
             }
@@ -303,7 +308,12 @@ struct ProcessSheet: View {
                         }
                     }
                     .buttonStyle(.borderedProminent)
-                    .disabled(llmProcessor.modelStatus != .ready)
+                    .disabled({
+                        if case .ready = llmProcessor.modelStatus {
+                            return false
+                        }
+                        return true
+                    }())
                     Spacer()
                 }
             }
