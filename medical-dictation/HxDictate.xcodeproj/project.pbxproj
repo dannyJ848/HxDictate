@@ -260,11 +260,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
 					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
 				);
 				OTHER_LDFLAGS = (
 					"-lwhisper",
 					"-lllama",
 					"-lggml",
+					"-lc++",
 					"-framework",
 					Accelerate,
 					"-framework",
@@ -355,11 +357,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
 					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
 				);
 				OTHER_LDFLAGS = (
 					"-lwhisper",
 					"-lllama",
 					"-lggml",
+					"-lc++",
 					"-framework",
 					Accelerate,
 					"-framework",
