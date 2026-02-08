@@ -104,15 +104,26 @@ Transcript:
     }
     
     private func locateModel(named: String) -> String? {
-        let possiblePaths = [
-            Bundle.main.path(forResource: named, ofType: nil),
-            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                .first?.appendingPathComponent(named).path,
-            FileManager.default.currentDirectoryPath + "/scripts/build/models/" + named,
-            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + named
-        ].compactMap { $0 }
+        var possiblePaths: [String] = []
         
-        return possiblePaths.first { FileManager.default.fileExists(atPath: $0) }
+        if let bundlePath = Bundle.main.path(forResource: named, ofType: nil) {
+            possiblePaths.append(bundlePath)
+        }
+        
+        if let docsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            .first?.appendingPathComponent(named).path {
+            possiblePaths.append(docsPath)
+        }
+        
+        possiblePaths.append(FileManager.default.currentDirectoryPath + "/scripts/build/models/" + named)
+        possiblePaths.append("/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + named)
+        
+        for path in possiblePaths {
+            if FileManager.default.fileExists(atPath: path) {
+                return path
+            }
+        }
+        return nil
     }
     
     // MARK: - Inference
