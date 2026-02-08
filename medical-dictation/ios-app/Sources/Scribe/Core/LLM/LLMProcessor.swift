@@ -17,6 +17,7 @@ final class LLMProcessor: ObservableObject {
     private var vocab: OpaquePointer?
     private var modelPath: String?
     private var isModelLoaded = false
+    private var currentTier: PerformanceTier = .powerSaver
     
     // Generation settings - use nonisolated(unsafe) for C struct that is only accessed from MainActor
     private var maxTokens: Int32 = 1024  // Reduced for iOS memory constraints
@@ -293,6 +294,7 @@ Transcript:
             self.context = context
             self.vocab = vocab
             self.isModelLoaded = true
+            self.currentTier = tier  // Store the tier for later use
             self.modelStatus = .ready
             self.configureSampler(tier: tier)
             
@@ -354,8 +356,15 @@ Transcript:
         
         print("🧠 Processing with template: \(templateToUse.rawValue)")
         
+        // For Qwen (Balanced tier), first translate if needed
+        var processedTranscript = transcript
+        if currentTier == .balanced {
+            generationProgress = "Translating if needed..."
+            processedTranscript = await translateIfNeeded(transcript: transcript)
+        }
+        
         // Build prompt with template
-        let prompt = buildPrompt(transcript: transcript, template: templateToUse)
+        let prompt = buildPrompt(transcript: processedTranscript, template: templateToUse)
         
         // Clear KV cache for fresh generation
         llama_wrapper_clear_kv_cache(ctx)
@@ -407,6 +416,67 @@ Transcript:
 \(transcript)<|im_end|>
 <|im_start|>assistant
 """
+    }
+    
+    /// Translate transcript to English if needed (for multilingual models like Qwen)
+    private func translateIfNeeded(transcript: String) async -> String {
+        // Check if transcript appears to be non-English (simple heuristic)
+        let spanishWords = ["el", "la", "los", "las", "es", "son", "y", "o", "con", "por", "para", "que", "como", "pero", "bien", "muy", "aquí", "ahora", "hoy", "dolor", "cabeza", "estómago", "malestar", "náusea", "vómito", "fiebre", "tos", "gripa", "gripe"]
+        let lowerTranscript = transcript.lowercased()
+        let hasSpanish = spanishWords.contains { lowerTranscript.contains($0) }
+        
+        guard hasSpanish else {
+            print("📝 No translation needed (appears to be English)")
+            return transcript
+        }
+        
+        print("🌐 Translating Spanish to English...")
+        
+        let translationPrompt = """
+<|im_start|>system
+You are a medical translator. Translate the following patient encounter from Spanish to English.
+Preserve all medical details, symptoms, and patient statements accurately.
+Output only the English translation, no explanations.<|im_end|>
+<|im_start|>user
+\(transcript)<|im_end|>
+<|im_start|>assistant
+"""
+        
+        guard let ctx = context, let vocab = vocab else {
+            print("⚠️ Model not ready for translation, returning original")
+            return transcript
+        }
+        
+        // Clear KV cache for fresh generation
+        llama_wrapper_clear_kv_cache(ctx)
+        
+        let localSamplerConfig = self.samplerConfig
+        
+        return await Task.detached(priority: .userInitiated) { [weak self] () -> String in
+            guard let self = self else { return transcript }
+            
+            var outputBuffer = [CChar](repeating: 0, count: 65536)
+            
+            let generatedCount = llama_wrapper_generate(
+                ctx,
+                vocab,
+                translationPrompt,
+                512,  // Shorter limit for translation
+                localSamplerConfig,
+                nil,
+                nil,
+                &outputBuffer,
+                65536
+            )
+            
+            if generatedCount > 0 {
+                let translated = String(cString: outputBuffer).trimmingCharacters(in: .whitespacesAndNewlines)
+                print("✅ Translated: \(translated.prefix(100))...")
+                return translated.isEmpty ? transcript : translated
+            } else {
+                return transcript
+            }
+        }.value
     }
     
     /// Generate text from a prompt using the loaded model
