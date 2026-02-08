@@ -23,7 +23,7 @@ struct SettingsView: View {
         var llmModel: String {
             switch self {
             case .powerSaver: return "Llama 3.2 3B"
-            case .balanced: return "Qwen2.5 7B"
+            case .balanced: return "DeepSeek-R1 7B Q4_K_M"
             case .maximum: return "DeepSeek-R1 7B Q3_K_L"
             }
         }
@@ -41,7 +41,7 @@ struct SettingsView: View {
             case .powerSaver:
                 return "Llama 3.2 3B. Fastest, English only."
             case .balanced:
-                return "Qwen2.5 7B. Multilingual (Spanish/English)."
+                return "DeepSeek 7B Q4_K_M + Whisper Medium. Good quality."
             case .maximum:
                 return "DeepSeek 7B Q3_K_L + Whisper Medium. Smallest DeepSeek with Medium STT."
             }
