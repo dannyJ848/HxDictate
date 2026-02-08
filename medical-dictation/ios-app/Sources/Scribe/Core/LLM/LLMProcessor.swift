@@ -476,15 +476,31 @@ private enum ModelLoadResult {
 
 extension LLMProcessor {
     enum PerformanceTier {
-        case powerSaver
-        case balanced
-        case maximum
+        case powerSaver      // Llama 3.2 3B - Fast, fits in memory
+        case balanced        // Qwen2.5 7B - Spanish + translation
+        case maximum         // Llama 3.2 3B + Qwen2.5 7B pipeline
         
         var llmModel: String {
             switch self {
-            case .powerSaver: return "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"
-            case .balanced: return "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"
-            case .maximum: return "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"
+            case .powerSaver: return "llama-3.2-3b-q4_k_m.gguf"
+            case .balanced: return "qwen2.5-7b-q4_k_m.gguf"
+            case .maximum: return "llama-3.2-3b-q4_k_m.gguf"  // Uses both models sequentially
+            }
+        }
+        
+        var translationModel: String? {
+            switch self {
+            case .powerSaver: return nil
+            case .balanced: return nil  // Qwen handles both
+            case .maximum: return "qwen2.5-7b-q4_k_m.gguf"  // Separate translation step
+            }
+        }
+        
+        var supportsSpanish: Bool {
+            switch self {
+            case .powerSaver: return false  // English only
+            case .balanced: return true     // Qwen is multilingual
+            case .maximum: return true      // Qwen for translation
             }
         }
         
