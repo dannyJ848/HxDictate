@@ -70,12 +70,12 @@ struct llama_context *llama_wrapper_new_context(struct llama_model *model,
     if (!model) return NULL;
     
     struct llama_context_params params = llama_context_default_params();
-    params.n_ctx = n_ctx > 0 ? n_ctx : 4096;
-    params.n_batch = 512;
-    params.n_ubatch = 512;
-    params.n_threads = n_threads > 0 ? n_threads : 4;
+    params.n_ctx = n_ctx > 0 ? n_ctx : 2048;  // Reduced default for iOS
+    params.n_batch = 256;                      // Smaller batches
+    params.n_ubatch = 256;
+    params.n_threads = n_threads > 0 ? n_threads : 2;  // Fewer threads
     params.n_threads_batch = n_threads_batch > 0 ? n_threads_batch : params.n_threads;
-    params.offload_kqv = true;
+    params.offload_kqv = false;                // Don't offload KQV to save memory
     
     return llama_init_from_model(model, params);
 }

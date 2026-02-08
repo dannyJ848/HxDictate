@@ -19,7 +19,7 @@ final class LLMProcessor: ObservableObject {
     private var isModelLoaded = false
     
     // Generation settings - use nonisolated(unsafe) for C struct that is only accessed from MainActor
-    private var maxTokens: Int32 = 2048
+    private var maxTokens: Int32 = 1024  // Reduced for iOS memory constraints
     private nonisolated(unsafe) var samplerConfig = llama_wrapper_default_sampler_config()
     
     enum ModelStatus: Equatable {
@@ -505,15 +505,20 @@ extension LLMProcessor {
         }
         
         var gpuLayers: Int32 {
-            // Offload all layers to GPU for best performance
-            return 99
+            // Conservative GPU layers for iOS memory constraints
+            switch self {
+            case .powerSaver: return 20   // Llama 3.2 3B: partial offload
+            case .balanced: return 15     // Qwen 7B: fewer layers on GPU
+            case .maximum: return 25      // Conservative even for max
+            }
         }
         
         var contextWindow: UInt32 {
+            // Reduced context windows for iOS memory constraints
             switch self {
-            case .powerSaver: return 4096
-            case .balanced: return 4096
-            case .maximum: return 8192
+            case .powerSaver: return 2048   // Llama 3.2 3B: small context
+            case .balanced: return 2048     // Qwen 7B: reduced to fit memory
+            case .maximum: return 2048      // Conservative even for max tier
             }
         }
         
