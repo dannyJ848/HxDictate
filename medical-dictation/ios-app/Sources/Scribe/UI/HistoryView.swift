@@ -74,16 +74,11 @@ struct NoteRow: View {
                 .lineLimit(2)
                 .foregroundColor(.primary)
             
-            Text("\(Int(note.rawTranscript.count / 6)) words · \(formatDuration(note.duration))")
+            Text("\(Int(note.rawTranscript.count / 6)) words")
                 .font(.caption2)
                 .foregroundColor(.secondary)
         }
         .padding(.vertical, 4)
-    }
-    
-    private var duration: TimeInterval {
-        // Estimate based on word count (~150 wpm)
-        Double(note.rawTranscript.count) / 7.5
     }
     
     private func formatDuration(_ seconds: TimeInterval) -> String {

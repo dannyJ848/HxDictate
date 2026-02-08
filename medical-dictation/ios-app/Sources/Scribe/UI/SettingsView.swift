@@ -75,7 +75,16 @@ struct SettingsView: View {
                             transcriptionEngine.unloadModel()
                             llmProcessor.unloadModel()
                             await transcriptionEngine.loadModel(tier: newTier.sttTier)
-                            await llmProcessor.loadModel(tier: newTier)
+                            // Convert tier for LLM
+                            let llmTier: LLMProcessor.PerformanceTier = {
+                                switch newTier {
+                                case .powerSaver: return .powerSaver
+                                case .balanced: return .balanced
+                                case .maximum: return .maximum
+                                case .extreme: return .extreme
+                                }
+                            }()
+                            await llmProcessor.loadModel(tier: llmTier)
                         }
                     }
                     
@@ -109,9 +118,9 @@ struct SettingsView: View {
                 }
                 
                 Section("Note Templates") {
-                    NavigationLink("Guided H&P") {
-                        GuidedHPView()
-                    }
+                    // NavigationLink("Guided H&P") {
+                    //     GuidedHPView()
+                    // }
                     
                     Picker("Default Template", selection: .constant(LLMProcessor.NoteTemplate.soap)) {
                         ForEach(LLMProcessor.NoteTemplate.allCases, id: \.self) { template in
