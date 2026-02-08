@@ -485,12 +485,14 @@ extension LLMProcessor {
         case powerSaver = "Power Saver"
         case balanced = "Balanced"
         case deepseekQ40 = "DeepSeek 7B Q4_0"
+        case deepseekQ3KL = "DeepSeek 7B Q3_K_L"
         
         var llmModel: String {
             switch self {
             case .powerSaver: return "llama-3.2-3b-q4_k_m.gguf"
             case .balanced: return "qwen2.5-7b-q4_k_m.gguf"
             case .deepseekQ40: return "deepseek-r1-distill-qwen-7b-q4_0.gguf"
+            case .deepseekQ3KL: return "deepseek-r1-distill-qwen-7b-q3_k_l.gguf"
             }
         }
         
@@ -499,6 +501,7 @@ extension LLMProcessor {
             case .powerSaver: return false
             case .balanced: return true
             case .deepseekQ40: return true
+            case .deepseekQ3KL: return true
             }
         }
         
@@ -507,6 +510,7 @@ extension LLMProcessor {
             case .powerSaver: return 20
             case .balanced: return 15
             case .deepseekQ40: return 20
+            case .deepseekQ3KL: return 25
             }
         }
         
@@ -515,6 +519,7 @@ extension LLMProcessor {
             case .powerSaver: return 2048
             case .balanced: return 2048
             case .deepseekQ40: return 2048
+            case .deepseekQ3KL: return 2048
             }
         }
         
@@ -523,6 +528,7 @@ extension LLMProcessor {
             case .powerSaver: return 0.5  // More deterministic
             case .balanced: return 0.7
             case .deepseekQ40: return 0.7
+            case .deepseekQ3KL: return 0.7
             }
         }
         

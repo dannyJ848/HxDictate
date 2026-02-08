@@ -255,6 +255,7 @@
 				"$(SRCROOT)/scripts/build/models/llama-3.2-3b-q4_k_m.gguf",
 				"$(SRCROOT)/scripts/build/models/qwen2.5-7b-q4_k_m.gguf",
 				"$(SRCROOT)/scripts/build/models/deepseek-r1-distill-qwen-7b-q4_0.gguf",
+				"$(SRCROOT)/scripts/build/models/deepseek-r1-distill-qwen-7b-q3_k_l.gguf",
 			);
 			name = "Copy Large Models";
 			outputFileListPaths = (
@@ -267,10 +268,11 @@
 				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/llama-3.2-3b-q4_k_m.gguf",
 				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/qwen2.5-7b-q4_k_m.gguf",
 				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/deepseek-r1-distill-qwen-7b-q4_0.gguf",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/deepseek-r1-distill-qwen-7b-q3_k_l.gguf",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy large model files directly to avoid Xcode resource copying issues\nMODELS_DIR=\"${SRCROOT}/scripts/build/models\"\nRESOURCES_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\necho \"=== Copy Large Models Build Phase ===\"\necho \"SRCROOT: ${SRCROOT}\"\necho \"TARGET_BUILD_DIR: ${TARGET_BUILD_DIR}\"\necho \"RESOURCES_DIR: ${RESOURCES_DIR}\"\n\n# Ensure resources directory exists\nmkdir -p \"${RESOURCES_DIR}\"\n\n# List what's in the models directory\necho \"Models in source directory:\"\nls -lh \"${MODELS_DIR}\" 2>/dev/null | head -10\n\n# Copy each model file (always copy for now to ensure freshness)\nfor model in ggml-small.bin ggml-medium.bin ggml-large-v3-turbo.bin ggml-large-v3.bin llama-3.2-3b-q4_k_m.gguf qwen2.5-7b-q4_k_m.gguf deepseek-r1-distill-qwen-7b-q4_0.gguf; do\n    SRC=\"${MODELS_DIR}/${model}\"\n    DST=\"${RESOURCES_DIR}/${model}\"\n    \n    if [ -f \"${SRC}\" ]; then\n        echo \"Copying ${model} ($(stat -f%z \"${SRC}\" 2>/dev/null || echo 'unknown') bytes)...\"\n        cp -f \"${SRC}\" \"${DST}\"\n        if [ $? -eq 0 ]; then\n            echo \"  ✓ ${model} copied successfully\"\n        else\n            echo \"  ✗ Failed to copy ${model}\"\n        fi\n    else\n        echo \"Warning: ${model} not found at ${SRC}\"\n    fi\ndone\n\necho \"=== Verifying copied models ===\"\nls -lh \"${RESOURCES_DIR}\"/*.bin \"${RESOURCES_DIR}\"/*.gguf 2>/dev/null || echo \"No models found in resources\"\n\necho \"Model copy complete\"\n";
+			shellScript = "# Copy large model files directly to avoid Xcode resource copying issues\nMODELS_DIR=\"${SRCROOT}/scripts/build/models\"\nRESOURCES_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\necho \"=== Copy Large Models Build Phase ===\"\necho \"SRCROOT: ${SRCROOT}\"\necho \"TARGET_BUILD_DIR: ${TARGET_BUILD_DIR}\"\necho \"RESOURCES_DIR: ${RESOURCES_DIR}\"\n\n# Ensure resources directory exists\nmkdir -p \"${RESOURCES_DIR}\"\n\n# List what's in the models directory\necho \"Models in source directory:\"\nls -lh \"${MODELS_DIR}\" 2>/dev/null | head -10\n\n# Copy each model file (always copy for now to ensure freshness)\nfor model in ggml-small.bin ggml-medium.bin ggml-large-v3-turbo.bin ggml-large-v3.bin llama-3.2-3b-q4_k_m.gguf qwen2.5-7b-q4_k_m.gguf deepseek-r1-distill-qwen-7b-q4_0.gguf deepseek-r1-distill-qwen-7b-q3_k_l.gguf; do\n    SRC=\"${MODELS_DIR}/${model}\"\n    DST=\"${RESOURCES_DIR}/${model}\"\n    \n    if [ -f \"${SRC}\" ]; then\n        echo \"Copying ${model} ($(stat -f%z \"${SRC}\" 2>/dev/null || echo 'unknown') bytes)...\"\n        cp -f \"${SRC}\" \"${DST}\"\n        if [ $? -eq 0 ]; then\n            echo \"  ✓ ${model} copied successfully\"\n        else\n            echo \"  ✗ Failed to copy ${model}\"\n        fi\n    else\n        echo \"Warning: ${model} not found at ${SRC}\"\n    fi\ndone\n\necho \"=== Verifying copied models ===\"\nls -lh \"${RESOURCES_DIR}\"/*.bin \"${RESOURCES_DIR}\"/*.gguf 2>/dev/null || echo \"No models found in resources\"\n\necho \"Model copy complete\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
