@@ -481,50 +481,54 @@ private enum ModelLoadResult {
 // MARK: - Performance Tier
 
 extension LLMProcessor {
-    enum PerformanceTier {
-        case powerSaver      // Llama 3.2 3B - Fast, fits in memory
-        case balanced        // Qwen2.5 7B - Spanish + translation
-        case maximum         // Llama 3.2 3B + Qwen2.5 7B pipeline
+    enum PerformanceTier: String, CaseIterable {
+        case powerSaver = "Power Saver"
+        case balanced = "Balanced"
+        case maximum = "Maximum"
+        case deepseekQ40 = "DeepSeek 7B Q4_0"
         
         var llmModel: String {
             switch self {
             case .powerSaver: return "llama-3.2-3b-q4_k_m.gguf"
             case .balanced: return "qwen2.5-7b-q4_k_m.gguf"
-            case .maximum: return "llama-3.2-3b-q4_k_m.gguf"  // Uses both models sequentially
+            case .maximum: return "llama-3.2-3b-q4_k_m.gguf"
+            case .deepseekQ40: return "deepseek-r1-distill-qwen-7b-q4_0.gguf"
             }
         }
         
         var translationModel: String? {
             switch self {
             case .powerSaver: return nil
-            case .balanced: return nil  // Qwen handles both
-            case .maximum: return "qwen2.5-7b-q4_k_m.gguf"  // Separate translation step
+            case .balanced: return nil
+            case .maximum: return "qwen2.5-7b-q4_k_m.gguf"
+            case .deepseekQ40: return nil
             }
         }
         
         var supportsSpanish: Bool {
             switch self {
-            case .powerSaver: return false  // English only
-            case .balanced: return true     // Qwen is multilingual
-            case .maximum: return true      // Qwen for translation
+            case .powerSaver: return false
+            case .balanced: return true
+            case .maximum: return true
+            case .deepseekQ40: return true
             }
         }
         
         var gpuLayers: Int32 {
-            // Conservative GPU layers for iOS memory constraints
             switch self {
-            case .powerSaver: return 20   // Llama 3.2 3B: partial offload
-            case .balanced: return 15     // Qwen 7B: fewer layers on GPU
-            case .maximum: return 25      // Conservative even for max
+            case .powerSaver: return 20
+            case .balanced: return 15
+            case .maximum: return 25
+            case .deepseekQ40: return 20
             }
         }
         
         var contextWindow: UInt32 {
-            // Reduced context windows for iOS memory constraints
             switch self {
-            case .powerSaver: return 2048   // Llama 3.2 3B: small context
-            case .balanced: return 2048     // Qwen 7B: reduced to fit memory
-            case .maximum: return 2048      // Conservative even for max tier
+            case .powerSaver: return 2048
+            case .balanced: return 2048
+            case .maximum: return 2048
+            case .deepseekQ40: return 2048
             }
         }
         
