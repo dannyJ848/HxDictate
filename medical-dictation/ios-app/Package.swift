@@ -18,8 +18,8 @@ let package = Package(
             sources: ["whisper_wrapper.c"],
             publicHeadersPath: "include",
             cSettings: [
-                .headerSearchPath("../scripts/build/whisper.cpp/include"),
-                .headerSearchPath("../scripts/build/whisper.cpp/ggml/include"),
+                .headerSearchPath("../../scripts/build/whisper.cpp/include"),
+                .headerSearchPath("../../scripts/build/whisper.cpp/ggml/include"),
                 .define("GGML_USE_METAL", to: "1"),
                 .define("GGML_USE_CPU", to: "1")
             ],
@@ -44,8 +44,8 @@ let package = Package(
             sources: ["llama_wrapper.c"],
             publicHeadersPath: "include",
             cSettings: [
-                .headerSearchPath("../scripts/build/llama.cpp/include"),
-                .headerSearchPath("../scripts/build/llama.cpp/ggml/include"),
+                .headerSearchPath("../../scripts/build/llama.cpp/include"),
+                .headerSearchPath("../../scripts/build/llama.cpp/ggml/include"),
                 .define("GGML_USE_METAL", to: "1"),
                 .define("GGML_USE_CPU", to: "1")
             ],

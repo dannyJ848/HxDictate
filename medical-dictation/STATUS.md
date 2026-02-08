@@ -1,7 +1,7 @@
 # HxDictate - TestFlight Ready Status Report
 
 **Date:** 2026-02-08  
-**Status:** ✅ Ready for Xcode Build
+**Status:** ✅ Ready for Xcode Build (Use Xcode, NOT Swift Package Manager)
 
 ---
 
@@ -44,13 +44,13 @@
 - ✅ NoteModels - Structured note storage
 
 ### 5. Project Configuration
-- ✅ Xcode project generated
+- ✅ Xcode project generated (HxDictate.xcodeproj)
 - ✅ Bridging header (C++ interop)
 - ✅ Library search paths
 - ✅ Info.plist (microphone permission)
 - ✅ AppIcon placeholders
 - ✅ Models included as resources
-- ✅ Package.swift fixed (removed `package:` labels)
+- ⚠️ Package.swift has path issues (use Xcode instead)
 - ✅ C wrapper files organized in CWhisper/CLlama directories
 
 ### 6. Testing & Validation
@@ -143,6 +143,7 @@ open /Users/dannygomez/.openclaw/workspace/medical-dictate/HxDictate.xcodeproj
 | Metal errors | Must use physical device |
 | Memory warnings | Use Balanced tier, close apps |
 | Build errors | Clean build folder (⌘ShiftK) |
+| "whisper.h not found" | Use Xcode build, not `swift build` |
 
 ---
 

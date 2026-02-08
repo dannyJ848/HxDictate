@@ -37,25 +37,25 @@
 
 /* Begin PBXFileReference section */
 		07CBC5890B44231151A906B5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		0BDC8AFD1CECF9F3798D50C7 /* ggml-medium.bin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.macbinary; name = "ggml-medium.bin"; path = "scripts/build/models/ggml-medium.bin"; sourceTree = "<group>"; };
+		0BDC8AFD1CECF9F3798D50C7 /* ggml-medium.bin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "ggml-medium.bin"; path = "scripts/build/models/ggml-medium.bin"; sourceTree = "<group>"; };
 		0DB8EF65D5FD34959D33F35D /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		10FBFBC82859DDC113192074 /* HPTemplate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HPTemplate.swift; path = "ios-app/Sources/Scribe/Models/HPTemplate.swift"; sourceTree = "<group>"; };
-		1717EDFBB9F458809D7914EF /* ggml-large-v3-turbo.bin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.macbinary; name = "ggml-large-v3-turbo.bin"; path = "scripts/build/models/ggml-large-v3-turbo.bin"; sourceTree = "<group>"; };
+		1717EDFBB9F458809D7914EF /* ggml-large-v3-turbo.bin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "ggml-large-v3-turbo.bin"; path = "scripts/build/models/ggml-large-v3-turbo.bin"; sourceTree = "<group>"; };
 		269CD85259596F224B8ECA16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		31A3F613C5A0F7D6D6FD7C58 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		3BA1CD221878D5387AA6ADCA /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "ios-app/Resources/Assets.xcassets"; sourceTree = "<group>"; };
 		3E0E11E84EF6D258F2A2C91F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = "ios-app/Resources/Info.plist"; sourceTree = "<group>"; };
 		512D9771F45EA8255572EBDD /* ScribeApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScribeApp.swift; path = "ios-app/Sources/ScribeApp/ScribeApp.swift"; sourceTree = "<group>"; };
-		54F89313E3F1E5D0CF2F0277 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; sourceTree = "<group>"; };
+		54F89313E3F1E5D0CF2F0277 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; sourceTree = "<group>"; };
 		6C39F507C7B7C25D8B951676 /* whisper_wrapper.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = whisper_wrapper.c; path = "ios-app/CWhisper/whisper_wrapper.c"; sourceTree = "<group>"; };
 		6FB25B8AED75263FDDE7F737 /* TranscriptionEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TranscriptionEngine.swift; path = "ios-app/Sources/Scribe/Core/STT/TranscriptionEngine.swift"; sourceTree = "<group>"; };
 		7F10E268218392BD85623475 /* GuidedHPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GuidedHPView.swift; path = "ios-app/Sources/Scribe/UI/GuidedHPView.swift"; sourceTree = "<group>"; };
 		861ED13A75454F0896CBE960 /* NoteModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NoteModels.swift; path = "ios-app/Sources/Scribe/Models/NoteModels.swift"; sourceTree = "<group>"; };
 		87FDD42F4B13778030D56FBF /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = "ios-app/Sources/Scribe/UI/SettingsView.swift"; sourceTree = "<group>"; };
-		8E23B573919C82C5E73A9EA3 /* ggml-small.bin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.macbinary; name = "ggml-small.bin"; path = "scripts/build/models/ggml-small.bin"; sourceTree = "<group>"; };
+		8E23B573919C82C5E73A9EA3 /* ggml-small.bin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "ggml-small.bin"; path = "scripts/build/models/ggml-small.bin"; sourceTree = "<group>"; };
 		A9EC678596B45F665AF582E5 /* AudioSessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AudioSessionManager.swift; path = "ios-app/Sources/Scribe/Core/Audio/AudioSessionManager.swift"; sourceTree = "<group>"; };
 		B952A80687C76668170F3AB6 /* Stubs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stubs.swift; path = "ios-app/Sources/Scribe/Core/Stubs.swift"; sourceTree = "<group>"; };
-		CDF5FA20CDC7671B408E9CAB /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; sourceTree = "<group>"; };
+		CDF5FA20CDC7671B408E9CAB /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; sourceTree = "<group>"; };
 		CE98EE684C9F45520ADFF64E /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoryView.swift; path = "ios-app/Sources/Scribe/UI/HistoryView.swift"; sourceTree = "<group>"; };
 		E159662D89F4F6D3FE44F401 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		ECC60E2BD713CAB07570B483 /* RecordingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RecordingView.swift; path = "ios-app/Sources/Scribe/UI/RecordingView.swift"; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 		F46E8E9C38990A07A0245A5F /* HxDictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HxDictate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6589168735DD7EEB95C7DE1 /* LLMProcessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LLMProcessor.swift; path = "ios-app/Sources/Scribe/Core/LLM/LLMProcessor.swift"; sourceTree = "<group>"; };
 		F6A21B3B530583EE0A1E289D /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		FEE15B60657951A2B308277B /* ggml-large-v3.bin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.macbinary; name = "ggml-large-v3.bin"; path = "scripts/build/models/ggml-large-v3.bin"; sourceTree = "<group>"; };
+		FEE15B60657951A2B308277B /* ggml-large-v3.bin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "ggml-large-v3.bin"; path = "scripts/build/models/ggml-large-v3.bin"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +183,7 @@
 				0A05463F111B81D1DE27F691 /* Sources */,
 				275DB821D9342BF32EA32180 /* Frameworks */,
 				9BEDD783290E545F42700297 /* Resources */,
+				ABCD1234567890ABCDEF001 /* Copy Large Models */,
 			);
 			buildRules = (
 			);
@@ -242,6 +243,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		ABCD1234567890ABCDEF001 /* Copy Large Models */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/scripts/build/models/ggml-small.bin",
+				"$(SRCROOT)/scripts/build/models/ggml-medium.bin",
+				"$(SRCROOT)/scripts/build/models/ggml-large-v3-turbo.bin",
+				"$(SRCROOT)/scripts/build/models/ggml-large-v3.bin",
+				"$(SRCROOT)/scripts/build/models/deepseek-r1-distill-qwen-7b-q4_k_m.gguf",
+				"$(SRCROOT)/scripts/build/models/deepseek-r1-distill-qwen-14b-q3_k_m.gguf",
+			);
+			name = "Copy Large Models";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ggml-small.bin",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ggml-medium.bin",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ggml-large-v3-turbo.bin",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ggml-large-v3.bin",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/deepseek-r1-distill-qwen-7b-q4_k_m.gguf",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/deepseek-r1-distill-qwen-14b-q3_k_m.gguf",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Copy large model files directly to avoid Xcode resource copying issues\nMODELS_DIR=\"${SRCROOT}/scripts/build/models\"\nRESOURCES_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\n# Ensure resources directory exists\nmkdir -p \"${RESOURCES_DIR}\"\n\n# Copy each model file\nfor model in ggml-small.bin ggml-medium.bin ggml-large-v3-turbo.bin ggml-large-v3.bin deepseek-r1-distill-qwen-7b-q4_k_m.gguf deepseek-r1-distill-qwen-14b-q3_k_m.gguf; do\n    SRC=\"${MODELS_DIR}/${model}\"\n    DST=\"${RESOURCES_DIR}/${model}\"\n    \n    if [ -f \"${SRC}\" ]; then\n        # Only copy if source is newer than destination\n        if [ \"${SRC}\" -nt \"${DST}\" ] || [ ! -f \"${DST}\" ]; then\n            echo \"Copying ${model}...\"\n            cp \"${SRC}\" \"${DST}\"\n        else\n            echo \"${model} is up to date\"\n        fi\n    else\n        echo \"Warning: ${model} not found at ${SRC}\"\n    fi\ndone\n\necho \"Model copy complete\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0A05463F111B81D1DE27F691 /* Sources */ = {
