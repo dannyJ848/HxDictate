@@ -5,28 +5,96 @@ struct SettingsView: View {
     @EnvironmentObject var llmProcessor: LLMProcessor
     
     @State private var showingModelDownloadSheet = false
+    @State private var selectedTier: PerformanceTier = .balanced
+    
+    enum PerformanceTier {
+        case powerSaver
+        case balanced
+        case maximum
+        
+        var sttTier: TranscriptionEngine.PerformanceTier {
+            switch self {
+            case .powerSaver: return .small
+            case .balanced: return .medium
+            case .maximum: return .largeTurbo
+            }
+        }
+        
+        var llmModel: String {
+            switch self {
+            case .powerSaver: return "Qwen 2.5 3B"
+            case .balanced: return "DeepSeek-R1 7B"
+            case .maximum: return "DeepSeek-R1 14B"
+            }
+        }
+        
+        var llmSize: String {
+            switch self {
+            case .powerSaver: return "~1.8 GB"
+            case .balanced: return "~4.5 GB"
+            case .maximum: return "~6.5 GB (Q3)"
+            }
+        }
+        
+        var description: String {
+            switch self {
+            case .powerSaver:
+                return "Fastest, lowest battery. Good for ED/surgery."
+            case .balanced:
+                return "Best tradeoff. Recommended for most rotations."
+            case .maximum:
+                return "Best accuracy. Psychiatry/internal medicine. May lag."
+            }
+        }
+    }
+    
+    var tierDescription: String {
+        selectedTier.description
+    }
     
     var body: some View {
         NavigationView {
             List {
+                Section("Performance Tier") {
+                    Picker("Mode", selection: $selectedTier) {
+                        Text("Power Saver").tag(PerformanceTier.powerSaver)
+                        Text("Balanced").tag(PerformanceTier.balanced)
+                        Text("Maximum").tag(PerformanceTier.maximum)
+                    }
+                    .pickerStyle(.segmented)
+                    .onChange(of: selectedTier) { newTier in
+                        Task {
+                            // Reload both models with new tier
+                            transcriptionEngine.unloadModel()
+                            llmProcessor.unloadModel()
+                            await transcriptionEngine.loadModel(tier: newTier.sttTier)
+                            await llmProcessor.loadModel(tier: newTier)
+                        }
+                    }
+                    
+                    Text(tierDescription)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                
                 Section("Models") {
                     // STT Model
                     ModelStatusRow(
-                        name: "Whisper STT",
+                        name: selectedTier.sttTier.modelName,
                         status: transcriptionEngine.modelStatus,
-                        size: "~466 MB",
+                        size: selectedTier.sttTier.size,
                         action: {
                             Task {
-                                await transcriptionEngine.loadModel()
+                                await transcriptionEngine.loadModel(tier: selectedTier.sttTier)
                             }
                         }
                     )
                     
                     // LLM Model
                     ModelStatusRow(
-                        name: "DeepSeek 7B",
+                        name: selectedTier.llmModel,
                         status: llmProcessor.modelStatus,
-                        size: "~4.5 GB",
+                        size: selectedTier.llmSize,
                         action: {
                             showingModelDownloadSheet = true
                         }

@@ -18,6 +18,52 @@ final class LLMProcessor: ObservableObject {
         case error(String)
     }
     
+    enum PerformanceTier {
+        case powerSaver    // Small + 3B
+        case balanced      // Medium + 7B
+        case maximum       // Turbo + 14B
+        
+        var llmModel: String {
+            switch self {
+            case .powerSaver: return "qwen2.5-3b-q4_k_m.gguf"
+            case .balanced: return "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"
+            case .maximum: return "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"
+            }
+        }
+        
+        var gpuLayers: Int32 {
+            switch self {
+            case .powerSaver: return 99
+            case .balanced: return 99
+            case .maximum: return 40  // Don't offload all 14B layers
+            }
+        }
+        
+        var contextWindow: UInt32 {
+            switch self {
+            case .powerSaver: return 4096
+            case .balanced: return 4096
+            case .maximum: return 2048  // Reduce for 14B
+            }
+        }
+        
+        var batchSize: UInt32 {
+            switch self {
+            case .powerSaver: return 512
+            case .balanced: return 512
+            case .maximum: return 256  // Reduce for 14B
+            }
+        }
+        
+        var description: String {
+            switch self {
+            case .powerSaver: return "Power Saver (3B)"
+            case .balanced: return "Balanced (7B)"
+            case .maximum: return "Maximum (14B)"
+            }
+        }
+    }
+    
     enum NoteTemplate: String, CaseIterable {
         case soap = "SOAP Note"
         case hp = "H&P"
@@ -55,17 +101,20 @@ Transcript:"""
     
     // MARK: - Model Management
     
-    func loadModel(named modelName: String = "deepseek-r1-distill-qwen-7b-q4_k_m.gguf") async {
+    /// Load LLM with tier-based configuration
+    func loadModel(tier: PerformanceTier = .balanced) async {
         modelStatus = .loading(progress: 0)
         
-        guard let modelPath = locateModel(named: modelName) else {
-            modelStatus = .error("Model not found: \(modelName)")
+        guard let modelPath = locateModel(named: tier.llmModel) else {
+            modelStatus = .error("Model not found: \(tier.llmModel)")
             return
         }
         
-        // llama.cpp initialization
+        // llama.cpp initialization with tier-specific params
         var params = llama_model_default_params()
-        params.n_gpu_layers = 99 // Offload all layers to GPU (iPhone 17 Pro can handle it)
+        params.n_gpu_layers = tier.gpuLayers
+        params.use_mmap = true
+        params.use_mlock = tier == .maximum ? false : true  // Don't lock 14B models
         
         guard let model = llama_load_model_from_file(modelPath, params) else {
             modelStatus = .error("Failed to load model")
@@ -73,9 +122,11 @@ Transcript:"""
         }
         
         var ctxParams = llama_context_default_params()
-        ctxParams.n_ctx = 4096 // Context window
+        ctxParams.n_ctx = tier.contextWindow
+        ctxParams.n_batch = tier.batchSize
         ctxParams.n_threads = 6 // Use all performance cores
         ctxParams.n_threads_batch = 6
+        ctxParams.flash_attn = true  // Enable Flash Attention for memory efficiency
         
         llamaContext = llama_new_context_with_model(model, ctxParams)
         

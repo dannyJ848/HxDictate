@@ -20,9 +20,33 @@ final class TranscriptionEngine: ObservableObject {
         case error(String)
     }
     
+    enum PerformanceTier {
+        case small, medium, largeTurbo
+        
+        var modelName: String {
+            switch self {
+            case .small: return "ggml-small.bin"
+            case .medium: return "ggml-medium.bin"
+            case .largeTurbo: return "ggml-large-v3-turbo.bin"
+            }
+        }
+        
+        var size: String {
+            switch self {
+            case .small: return "466 MB"
+            case .medium: return "1.5 GB"
+            case .largeTurbo: return "1.6 GB"
+            }
+        }
+    }
+    
     // MARK: - Model Management
     
-    func loadModel(named modelName: String = "ggml-small.bin") async {
+    func loadModel(tier: PerformanceTier = .small) async {
+        await loadModel(named: tier.modelName)
+    }
+    
+    func loadModel(named modelName: String) async {
         modelStatus = .loading
         
         guard let modelPath = Bundle.main.path(forResource: modelName, ofType: nil) ??
