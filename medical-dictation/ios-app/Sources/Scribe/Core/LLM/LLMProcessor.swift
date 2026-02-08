@@ -344,37 +344,3 @@ Transcript:
         return ""
     }
 }
-
-// C function stubs (actual implementation needs llama.cpp headers)
-typealias llama_token = Int32
-typealias llama_model = OpaquePointer
-typealias llama_context = OpaquePointer
-struct llama_model_params {}
-struct llama_context_params {}
-struct llama_batch {
-    var n_tokens: Int32 = 0
-    var token: UnsafeMutablePointer<llama_token>?
-    var pos: UnsafeMutablePointer<Int32>?
-    var n_seq_id: UnsafeMutablePointer<Int32>?
-    var seq_id: UnsafeMutablePointer<UnsafeMutablePointer<Int32>?>?
-    var logits: UnsafeMutablePointer<Int8>?
-    var all_pos_0: Int32 = 0
-    var all_pos_1: Int32 = 0
-    var all_seq_id: Int32 = 0
-}
-
-func llama_model_default_params() -> llama_model_params { fatalError() }
-func llama_context_default_params() -> llama_context_params { fatalError() }
-func llama_load_model_from_file(_ path: String, _ params: llama_model_params) -> OpaquePointer? { fatalError() }
-func llama_new_context_with_model(_ model: OpaquePointer, _ params: llama_context_params) -> OpaquePointer? { fatalError() }
-func llama_free(_ ctx: OpaquePointer) {}
-func llama_n_vocab(_ model: OpaquePointer) -> Int32 { fatalError() }
-func llama_get_model(_ ctx: OpaquePointer) -> OpaquePointer { fatalError() }
-func llama_get_logits(_ ctx: OpaquePointer) -> UnsafeMutablePointer<Float>? { fatalError() }
-func llama_token_eos(_ ctx: OpaquePointer) -> llama_token { fatalError() }
-func llama_tokenize(_ model: OpaquePointer, _ text: String, _ text_len: Int32, _ tokens: UnsafeMutablePointer<llama_token>, _ n_max_tokens: Int32, _ add_special: Bool, _ parse_special: Bool) -> Int32 { fatalError() }
-func llama_token_to_piece(_ model: OpaquePointer, _ token: llama_token, _ buf: UnsafeMutablePointer<CChar>, _ length: Int32, _ lstrip: Int32, _ special: Bool) -> Int32 { fatalError() }
-func llama_decode(_ ctx: OpaquePointer, _ batch: llama_batch) -> Int32 { fatalError() }
-func llama_batch_init(_ n_tokens: Int32, _ embd: Int32, _ n_seq_max: Int32) -> llama_batch { fatalError() }
-func llama_batch_free(_ batch: llama_batch) {}
-func llama_batch_clear(_ batch: inout llama_batch) {}

@@ -158,18 +158,3 @@ final class TranscriptionEngine: ObservableObject {
         audioBuffer.removeAll()
     }
 }
-
-// C function declarations (would be in a bridging header)
-// These are placeholders - actual implementation needs whisper.cpp headers
-struct whisper_context {}
-struct whisper_full_params {}
-enum whisper_sampling_strategy: Int32 {
-    case WHISPER_SAMPLING_GREEDY = 0
-}
-func whisper_context_default_params() -> whisper_full_params { fatalError() }
-func whisper_init_from_file_with_params(_ path: String, _ params: whisper_full_params) -> OpaquePointer? { fatalError() }
-func whisper_free(_ ctx: OpaquePointer) {}
-func whisper_full_default_params(_ strategy: whisper_sampling_strategy) -> whisper_full_params { fatalError() }
-func whisper_full(_ ctx: OpaquePointer, _ params: whisper_full_params, _ samples: [Float], _ n_samples: Int32) -> Int32 { fatalError() }
-func whisper_full_n_segments(_ ctx: OpaquePointer) -> Int32 { fatalError() }
-func whisper_full_get_segment_text(_ ctx: OpaquePointer, _ segment: Int32) -> UnsafePointer<CChar>? { fatalError() }
