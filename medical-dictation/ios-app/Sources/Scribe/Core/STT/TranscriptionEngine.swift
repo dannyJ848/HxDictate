@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import AVFoundation
 
 /// Bridges to whisper.cpp for on-device STT
 @MainActor
