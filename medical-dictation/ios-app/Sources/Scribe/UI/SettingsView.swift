@@ -10,15 +10,13 @@ struct SettingsView: View {
     enum PerformanceTier {
         case powerSaver
         case balanced
-        case deepseekQ40
-        case deepseekQ3KL
+        case maximum
         
         var sttTier: TranscriptionEngine.PerformanceTier {
             switch self {
             case .powerSaver: return .largeTurbo
             case .balanced: return .medium
-            case .deepseekQ40: return .largeTurbo
-            case .deepseekQ3KL: return .largeTurbo
+            case .maximum: return .largeTurbo
             }
         }
         
@@ -26,8 +24,7 @@ struct SettingsView: View {
             switch self {
             case .powerSaver: return "Llama 3.2 3B"
             case .balanced: return "Qwen2.5 7B"
-            case .deepseekQ40: return "DeepSeek-R1 7B Q4_0"
-            case .deepseekQ3KL: return "DeepSeek-R1 7B Q3_K_L"
+            case .maximum: return "DeepSeek-R1 7B Q3_K_L"
             }
         }
         
@@ -35,8 +32,7 @@ struct SettingsView: View {
             switch self {
             case .powerSaver: return "~2.0 GB + 1.6 GB STT"
             case .balanced: return "~4.4 GB + 1.5 GB STT"
-            case .deepseekQ40: return "~4.1 GB + 1.6 GB STT"
-            case .deepseekQ3KL: return "~3.2 GB + 1.6 GB STT"
+            case .maximum: return "~3.2 GB + 1.6 GB STT"
             }
         }
         
@@ -46,10 +42,8 @@ struct SettingsView: View {
                 return "Llama 3.2 3B. Fastest, English only."
             case .balanced:
                 return "Qwen2.5 7B. Multilingual (Spanish/English)."
-            case .deepseekQ40:
-                return "DeepSeek 7B Q4_0. Smaller DeepSeek, good quality."
-            case .deepseekQ3KL:
-                return "DeepSeek 7B Q3_K_L. Smallest DeepSeek, try if others freeze."
+            case .maximum:
+                return "DeepSeek 7B Q3_K_L. Smallest DeepSeek, most likely to work."
             }
         }
     }
@@ -65,8 +59,7 @@ struct SettingsView: View {
                     Picker("Mode", selection: $selectedTier) {
                         Text("Power Saver").tag(PerformanceTier.powerSaver)
                         Text("Balanced").tag(PerformanceTier.balanced)
-                        Text("DeepSeek Q4_0").tag(PerformanceTier.deepseekQ40)
-                        Text("DeepSeek Q3_K_L").tag(PerformanceTier.deepseekQ3KL)
+                        Text("Maximum").tag(PerformanceTier.maximum)
                     }
                     .pickerStyle(.segmented)
                     .onChange(of: selectedTier) { newTier in
@@ -80,8 +73,7 @@ struct SettingsView: View {
                                 switch newTier {
                                 case .powerSaver: return .powerSaver
                                 case .balanced: return .balanced
-                                case .deepseekQ40: return .deepseekQ40
-                                case .deepseekQ3KL: return .deepseekQ3KL
+                                case .maximum: return .maximum
                                 }
                             }()
                             await llmProcessor.loadModel(tier: llmTier)
