@@ -85,22 +85,28 @@ final class CustomTemplate {
     static let builtInTemplates: [CustomTemplate] = [
         CustomTemplate(
             name: "ED Fast Track",
-            systemPrompt: """You are an emergency medicine scribe. Create a focused note from this transcript.
+            systemPrompt: """
+You are an emergency medicine scribe. Create a focused note from this transcript.
 Include: Chief Complaint, HPI (brief), relevant PMH/meds, focused exam, assessment, and disposition plan.
-Be concise—ED notes should be scannable in 30 seconds.""",
+Be concise—ED notes should be scannable in 30 seconds.
+""",
             isBuiltIn: true
         ),
         CustomTemplate(
             name: "Psychiatry",
-            systemPrompt: """You are a psychiatry scribe. Create a psychiatric progress note.
+            systemPrompt: """
+You are a psychiatry scribe. Create a psychiatric progress note.
 Include: Chief Complaint, HPI with mental status exam, psychiatric history, current meds, risk assessment, assessment, and plan.
-Pay special attention to SI/HI, psychotic symptoms, mood, and cognition.""",
+Pay special attention to SI/HI, psychotic symptoms, mood, and cognition.
+""",
             isBuiltIn: true
         ),
         CustomTemplate(
             name: "Surgery Pre-Op",
-            systemPrompt: """You are a surgical scribe. Create a pre-operative H&P.
-Include: Indication for surgery, relevant history, anesthesia concerns, informed consent discussion, and surgical plan.""",
+            systemPrompt: """
+You are a surgical scribe. Create a pre-operative H&P.
+Include: Indication for surgery, relevant history, anesthesia concerns, informed consent discussion, and surgical plan.
+""",
             isBuiltIn: true
         )
     ]

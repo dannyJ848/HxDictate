@@ -73,7 +73,8 @@ final class LLMProcessor: ObservableObject {
         var systemPrompt: String {
             switch self {
             case .soap:
-                return """You are a medical scribe. Convert the following patient encounter transcript into a structured SOAP note.
+                return """
+You are a medical scribe. Convert the following patient encounter transcript into a structured SOAP note.
 Format:
 **Subjective:** Patient's complaints, history, symptoms
 **Objective:** Vital signs, physical exam findings, test results
@@ -82,13 +83,16 @@ Format:
 
 Be concise but complete. Use medical terminology appropriately.
 
-Transcript:"""
+Transcript:
+"""
                 
             case .hp:
-                return """You are a medical scribe. Convert the following patient encounter transcript into a complete History and Physical (H&P) note.
+                return """
+You are a medical scribe. Convert the following patient encounter transcript into a complete History and Physical (H&P) note.
 Include: Chief Complaint, History of Present Illness, Past Medical History, Medications, Allergies, Family History, Social History, Review of Systems, Physical Exam, Assessment, and Plan.
 
-Transcript:"""
+Transcript:
+"""
                 
             case .summary:
                 return "Summarize the following patient encounter in one clear paragraph suitable for handoff to another provider:"
