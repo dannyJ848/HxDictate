@@ -1,181 +1,234 @@
-# Scribe - Medical Dictation for iOS
+# HxDictate - Medical Dictation for iOS
 
-Real-time, on-device clinical documentation powered by Whisper.cpp + DeepSeek.
+Real-time, on-device clinical documentation powered by Whisper Large V3 + DeepSeek 14B.
 
-## ⚡ Quick Start
+**Status:** ✅ Libraries built, models downloaded, ready for Xcode integration
+
+---
+
+## 🚀 Quick Start
 
 ```bash
-# 1. Clone and enter directory
-cd medical-dictation
+# Clone repo
+git clone https://github.com/dannyJ848/HxDictate.git
+cd HxDictate
 
-# 2. Build the C++ dependencies
-./scripts/build_models.sh
+# Generate Xcode project (automated)
+ruby generate_xcode_project.rb
 
-# 3. Download the DeepSeek model (manual step)
-# Visit: https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF
-# Download: deepseek-r1-distill-qwen-7b-Q4_K_M.gguf
-# Place in: models/
-
-# 4. Open in Xcode
-open ios-app/Scribe.xcodeproj
-
-# 5. Build and run on iPhone 17 Pro (or simulator with reduced models)
+# Or manual setup - see docs/XCODE_SETUP.md
 ```
+
+---
+
+## 🔥 EXTREME Configuration
+
+| Component | Model | Size | Status |
+|-----------|-------|------|--------|
+| **STT** | Whisper Large V3 | 2.9 GB | ✅ Downloaded |
+| **LLM** | DeepSeek-R1 14B Q3 | 6.8 GB | ✅ Downloaded |
+| **Fallback** | Whisper Small | 465 MB | ✅ Downloaded |
+| **Total** | | **~10.2 GB** | ✅ Ready |
+
+### Performance (iPhone 17 Pro)
+
+| Metric | Expected |
+|--------|----------|
+| Model load time | ~15-20 seconds |
+| STT latency | ~0.5x real-time |
+| LLM inference | ~6-10 tokens/sec |
+| Note generation | ~6-10 seconds |
+| Battery drain | ~25-30%/hour |
+| Temperature | Warm to hot |
+
+---
 
 ## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  SwiftUI Layer                                              │
+│  SwiftUI Interface                                          │
 │  ├─ RecordingView (live transcription)                     │
 │  ├─ HistoryView (saved encounters)                         │
-│  └─ SettingsView (model management)                        │
+│  └─ SettingsView (performance tiers)                       │
 ├─────────────────────────────────────────────────────────────┤
-│  Swift Business Logic                                       │
+│  Core Components                                            │
 │  ├─ AudioSessionManager (AVAudioEngine)                    │
-│  ├─ TranscriptionEngine (whisper.cpp bridge)               │
-│  ├─ LLMProcessor (llama.cpp bridge)                        │
-│  └─ SwiftData persistence                                  │
+│  ├─ TranscriptionEngine (Whisper Large V3)                 │
+│  ├─ LLMProcessor (DeepSeek 14B)                            │
+│  └─ SwiftData (encrypted persistence)                      │
 ├─────────────────────────────────────────────────────────────┤
 │  C++ Libraries (Metal GPU accelerated)                      │
-│  ├─ whisper.cpp (STT)                                      │
-│  └─ llama.cpp + ggml (LLM inference)                       │
+│  ├─ libwhisper.a ✅                                        │
+│  ├─ libllama.a ✅                                          │
+│  └─ libggml.a ✅                                           │
 ├─────────────────────────────────────────────────────────────┤
-│  Models (~5GB total)                                        │
-│  ├─ whisper-small.bin (~466MB)                             │
-│  └─ deepseek-7b-q4.gguf (~4.5GB)                           │
+│  Models (~10GB)                                             │
+│  ├─ ggml-large-v3.bin (2.9GB) ✅                           │
+│  └─ deepseek-14b-q3.gguf (6.8GB) ✅                        │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 🔧 Manual Setup (if build script fails)
+---
 
-### 1. Build whisper.cpp
+## 📦 What's Included
 
+### Pre-built Binaries
+- ✅ `libwhisper.a` - iOS ARM64 + Metal
+- ✅ `libllama.a` - iOS ARM64 + Metal  
+- ✅ `libggml.a` - GGML backend
+
+### Source Code
+- ✅ Full SwiftUI app (Recording, History, Settings)
+- ✅ Audio capture (AVAudioEngine, 16kHz PCM)
+- ✅ Bridging headers for C++ libraries
+- ✅ SwiftData models for encrypted persistence
+- ✅ Performance tier system (PowerSaver → EXTREME)
+
+### Documentation
+- ✅ `docs/XCODE_SETUP.md` - Manual Xcode setup guide
+- ✅ `docs/EXTREME_MODELS.md` - Model download & performance
+- ✅ `docs/ADVANCED_MODELS.md` - Model selection guide
+
+---
+
+## 🔧 Setup Options
+
+### Option 1: Automated (Recommended)
 ```bash
-cd build/whisper.cpp
-mkdir build-ios && cd build-ios
-
-cmake .. \
-    -DCMAKE_SYSTEM_NAME=iOS \
-    -DCMAKE_OSX_DEPLOYMENT_TARGET=17.0 \
-    -DCMAKE_OSX_ARCHITECTURES=arm64 \
-    -DWHISPER_METAL=ON \
-    -DWHISPER_METAL_EMBED_LIBRARY=ON \
-    -DBUILD_SHARED_LIBS=OFF \
-    -DCMAKE_BUILD_TYPE=Release
-
-make -j8
+gem install xcodeproj
+ruby generate_xcode_project.rb
+open HxDictate.xcodeproj
 ```
 
-### 2. Build llama.cpp
+### Option 2: Manual
+See `docs/XCODE_SETUP.md` for step-by-step instructions.
 
-```bash
-cd build/llama.cpp
-mkdir build-ios && cd build-ios
+---
 
-cmake .. \
-    -DCMAKE_SYSTEM_NAME=iOS \
-    -DCMAKE_OSX_DEPLOYMENT_TARGET=17.0 \
-    -DCMAKE_OSX_ARCHITECTURES=arm64 \
-    -DGGML_METAL=ON \
-    -DGGML_METAL_EMBED_LIBRARY=ON \
-    -DBUILD_SHARED_LIBS=OFF \
-    -DCMAKE_BUILD_TYPE=Release
+## ⚙️ Build Configuration
 
-make -j8
+### Required Build Settings
+
+**Library Search Paths:**
+```
+$(SRCROOT)/scripts/build/whisper.cpp/build-ios
+$(SRCROOT)/scripts/build/llama.cpp/build-ios
 ```
 
-### 3. Xcode Project Setup
-
-1. **Create bridging header** (`Scribe-Bridging-Header.h`):
-```objc
-#ifndef Scribe_Bridging_Header_h
-#define Scribe_Bridging_Header_h
-
-// whisper.cpp
-#import "whisper.h"
-
-// llama.cpp  
-#import "llama.h"
-#import "ggml.h"
-
-#endif
+**Header Search Paths:**
+```
+$(SRCROOT)/scripts/build/whisper.cpp/include
+$(SRCROOT)/scripts/build/llama.cpp/include
+$(SRCROOT)/scripts/build/whisper.cpp/ggml/include
+$(SRCROOT)/scripts/build/llama.cpp/ggml/include
 ```
 
-2. **Link libraries** in Build Settings:
-   - Add `.a` files to "Link Binary with Libraries"
-   - Add header search paths to whisper.cpp and llama.cpp includes
-   - Set "Objective-C Bridging Header" to your bridging header path
+**Linked Libraries:**
+- `libwhisper.a`
+- `libllama.a`
+- `libggml.a`
+- `Accelerate.framework`
+- `Metal.framework`
+- `MetalKit.framework`
 
-3. **Add Metal framework** for GPU acceleration
+---
 
-## 📱 Device Requirements
+## 🎯 Performance Tiers
 
-| Component | Requirement |
-|-----------|-------------|
-| iOS Version | 17.0+ |
-| Device | iPhone 15 Pro / 16 Pro / 17 Pro recommended |
-| RAM | 8GB+ (for 7B model) |
-| Storage | ~6GB free (models + app) |
-| NPU | Apple A17 Pro or better |
+| Tier | STT | LLM | Use Case |
+|------|-----|-----|----------|
+| 🔋 PowerSaver | Whisper Small | Qwen 3B | ED/Surgery - speed |
+| ⚖️ Balanced | Whisper Medium | DeepSeek 7B | General medicine |
+| 🚀 Maximum | Whisper Large Turbo | DeepSeek 14B | Psychiatry/complex |
+| 🔥 **EXTREME** | **Whisper Large V3** | **DeepSeek 14B** | **Absolute max** |
 
-## 🎯 Performance Expectations
-
-On iPhone 17 Pro (A18 Pro):
-
-| Task | Latency |
-|------|---------|
-| STT (Whisper small) | ~0.3s real-time factor |
-| LLM inference (7B Q4) | ~10-20 tok/sec |
-| Full note generation | ~3-5 seconds |
+---
 
 ## 🔒 Privacy & HIPAA
 
-- **No network calls** for patient data processing
-- All models run on-device
-- Core Data with encryption
-- Optional biometric app lock
-- No iCloud sync for patient data
+- ✅ **100% on-device** - No network for patient data
+- ✅ Encrypted SwiftData storage
+- ✅ Optional biometric lock
+- ✅ No iCloud sync for patient data
+- ✅ AirDrop export only
+
+---
 
 ## 📝 Output Templates
 
-### SOAP Note
-```markdown
-**Subjective:** Patient reports...
-**Objective:** Vital signs:...
-**Assessment:** Primary diagnosis:...
-**Plan:** 1. ... 2. ...
-```
+- **SOAP Note** - Subjective, Objective, Assessment, Plan
+- **H&P** - Full History & Physical
+- **Brief Summary** - 1-paragraph handoff
+- **Bullet Points** - Quick review
+- **Custom** - Rotation-specific templates
 
-### H&P
-Full history and physical with all standard sections.
+---
 
-### Custom Templates
-Add rotation-specific templates in Settings.
+## ⚠️ Known Limitations
+
+### Memory (14B Model)
+- Peak RAM usage: ~14GB on 8GB device
+- iOS will aggressively manage memory
+- May unload background apps
+- Thermal throttling likely under sustained use
+
+### Battery
+- 25-30% per hour of active use
+- Consider external battery for long sessions
+
+### Device Requirements
+- **Must use physical iPhone 17 Pro** - Simulator doesn't support Metal
+- A18 Pro chip required for acceptable performance
+
+---
 
 ## 🐛 Troubleshooting
 
-### "Model not found" error
-Models are too large for git. Download manually:
-- Whisper: `bash scripts/download_whisper.sh small`
-- DeepSeek: Download from HuggingFace, convert to GGUF
+### "Model not found" on first launch
+Models are too large for git. Downloaded models are in:
+```
+scripts/build/models/
+```
 
-### Build fails with Metal errors
-Ensure you're building for device (not simulator) - Metal requires actual GPU.
+Copy to Xcode project or implement download-on-first-launch.
 
-### Out of memory crashes
-Use smaller models:
-- Whisper: base instead of small
-- LLM: Qwen 4B or Llama 3.2 3B instead of 7B
+### Metal errors
+- Must run on physical device
+- iPhone 17 Pro (A18 Pro) required
+
+### Memory warnings
+- Close all background apps
+- Use Balanced tier instead of EXTREME
+- Reduce context window in code
+
+### Build errors
+- Check Xcode 15+ installed
+- Verify CMake installed (`brew install cmake`)
+- Run `build_models.sh` first
+
+---
 
 ## 📚 Resources
 
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp)
 - [llama.cpp](https://github.com/ggerganov/llama.cpp)
-- [DeepSeek R1](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B)
-- [GGUF Conversion](https://github.com/ggerganov/llama.cpp/blob/master/convert_hf_to_gguf.py)
+- [DeepSeek R1](https://huggingface.co/deepseek-ai/DeepSeek-R1)
+- [GGUF Models](https://huggingface.co/bartowski)
 
-## 📄 License
+---
 
-This project structure is MIT licensed. Models have their own licenses (Whisper = MIT, DeepSeek = MIT, etc.)
+## 🎓 For Medical Students
 
+This app is designed for clinical rotations:
+
+- **Emergency Medicine** - Fast capture, structured output
+- **Internal Medicine** - Detailed H&P generation
+- **Psychiatry** - Nuanced assessment/plan reasoning
+- **Surgery** - Pre-op notes, procedure documentation
+
+**Always review AI-generated notes** before signing. The LLM can hallucinate.
+
+---
+
+Built with 💙 for privacy-first medical AI.
