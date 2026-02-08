@@ -16,6 +16,7 @@
 		BB2346032C62DFB680A3A26E /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C4BE6EA6FB6B1B954C2F3 /* RecordingView.swift */; };
 		CEA429A57106B2E98B4898A4 /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7005667DEFA5343DC19BB7AC /* TranscriptionEngine.swift */; };
 		D8F942C9A27831E95C8F8689 /* ggml-large-v3.bin in Resources */ = {isa = PBXBuildFile; fileRef = 6783AF81EA7E73A4F2D2A701 /* ggml-large-v3.bin */; };
+		E2D2A890772F93435F51BAED /* Stubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B39F798046D9C17134B39A /* Stubs.swift */; };
 		E3293B72CF4571EE666C51E0 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CAC705F4AD4D0A76C47E295 /* HistoryView.swift */; };
 		F4E7D2BCEC4332CD60734096 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf in Resources */ = {isa = PBXBuildFile; fileRef = 3E4EEFF68F26FB483CD07512 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		8CAC705F4AD4D0A76C47E295 /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoryView.swift; path = "ios-app/Sources/Scribe/UI/HistoryView.swift"; sourceTree = "<group>"; };
 		9C76B754FC6874DCF1AAFC97 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		9EA9D10F0C945C07FE2CD82C /* LLMProcessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LLMProcessor.swift; path = "ios-app/Sources/Scribe/Core/LLM/LLMProcessor.swift"; sourceTree = "<group>"; };
+		C7B39F798046D9C17134B39A /* Stubs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stubs.swift; path = "ios-app/Sources/Scribe/Core/Stubs.swift"; sourceTree = "<group>"; };
 		DC5F289D17535955F38502FD /* HxDictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HxDictate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1A761F51486802E9D227F6C /* ScribeApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScribeApp.swift; path = "ios-app/Sources/ScribeApp/ScribeApp.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,6 +67,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4D4365C875EF2CD24231BD37 /* Scribe */ = {
+			isa = PBXGroup;
+			children = (
+				F1E5BDEA44D2EA4204A52D50 /* Core */,
+			);
+			name = Scribe;
+			sourceTree = "<group>";
+		};
 		50DC1E84479F0580755D7515 = {
 			isa = PBXGroup;
 			children = (
@@ -80,7 +90,16 @@
 				7F902614375825F293C62F9C /* NoteModels.swift */,
 				29CB9AD14B672FA4ABCDDF5E /* Scribe-Bridging-Header.h */,
 				14AF68EAD87FC29166A04EE9 /* Models */,
+				946C45A26AADD6F0F2DC7F17 /* Sources */,
 			);
+			sourceTree = "<group>";
+		};
+		946C45A26AADD6F0F2DC7F17 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				4D4365C875EF2CD24231BD37 /* Scribe */,
+			);
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		CC345AB81FA87D14E180F5CB /* iOS */ = {
@@ -97,6 +116,14 @@
 				DC5F289D17535955F38502FD /* HxDictate.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F1E5BDEA44D2EA4204A52D50 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C7B39F798046D9C17134B39A /* Stubs.swift */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,6 +200,7 @@
 				A73436173A475F3241726359 /* AudioSessionManager.swift in Sources */,
 				CEA429A57106B2E98B4898A4 /* TranscriptionEngine.swift in Sources */,
 				4FE06AC7DEA9083A069EE87A /* NoteModels.swift in Sources */,
+				E2D2A890772F93435F51BAED /* Stubs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

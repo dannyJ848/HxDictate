@@ -5,7 +5,7 @@
 import Foundation
 
 // MARK: - whisper.cpp stubs
-struct whisper_context {}
+final class whisper_context {}
 struct whisper_full_params {}
 struct whisper_context_params {
     var use_gpu: Int32 = 0
@@ -44,8 +44,8 @@ func whisper_full_get_segment_text(_ ctx: OpaquePointer?, _ segment: Int32) -> U
 // MARK: - llama.cpp stubs
 typealias llama_token = Int32
 typealias llama_pos = Int32
-struct llama_model {}
-struct llama_context {}
+final class llama_model {}
+final class llama_context {}
 struct llama_batch {
     var n_tokens: Int32 = 0
     var token: UnsafeMutablePointer<llama_token>?
