@@ -95,9 +95,17 @@ struct SettingsView: View {
                 
                 Section("Models") {
                     // STT Model
+                    let sttStatus: ModelStatusRow.ModelStatus = {
+                        switch transcriptionEngine.modelStatus {
+                        case .ready: return .ready
+                        case .loading: return .loading
+                        case .error(let msg): return .error(msg)
+                        case .notLoaded: return .notLoaded
+                        }
+                    }()
                     ModelStatusRow(
                         name: selectedTier.sttTier.modelName,
-                        status: transcriptionEngine.modelStatus,
+                        status: sttStatus,
                         size: selectedTier.sttTier.size,
                         action: {
                             Task {
@@ -107,9 +115,17 @@ struct SettingsView: View {
                     )
                     
                     // LLM Model
+                    let llmStatus: ModelStatusRow.ModelStatus = {
+                        switch llmProcessor.modelStatus {
+                        case .ready: return .ready
+                        case .loading: return .loading
+                        case .error(let msg): return .error(msg)
+                        case .notLoaded: return .notLoaded
+                        }
+                    }()
                     ModelStatusRow(
                         name: selectedTier.llmModel,
-                        status: llmProcessor.modelStatus,
+                        status: llmStatus,
                         size: selectedTier.llmSize,
                         action: {
                             showingModelDownloadSheet = true
