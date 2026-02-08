@@ -108,7 +108,11 @@ struct SettingsView: View {
                     )
                 }
                 
-                Section("Output Preferences") {
+                Section("Note Templates") {
+                    NavigationLink("Guided H&P") {
+                        GuidedHPView()
+                    }
+                    
                     Picker("Default Template", selection: .constant(LLMProcessor.NoteTemplate.soap)) {
                         ForEach(LLMProcessor.NoteTemplate.allCases, id: \.self) { template in
                             Text(template.rawValue).tag(template)
