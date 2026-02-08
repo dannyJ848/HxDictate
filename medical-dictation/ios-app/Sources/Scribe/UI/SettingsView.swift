@@ -11,12 +11,14 @@ struct SettingsView: View {
         case powerSaver
         case balanced
         case maximum
+        case extreme
         
         var sttTier: TranscriptionEngine.PerformanceTier {
             switch self {
             case .powerSaver: return .small
             case .balanced: return .medium
             case .maximum: return .largeTurbo
+            case .extreme: return .largeV3
             }
         }
         
@@ -25,6 +27,7 @@ struct SettingsView: View {
             case .powerSaver: return "Qwen 2.5 3B"
             case .balanced: return "DeepSeek-R1 7B"
             case .maximum: return "DeepSeek-R1 14B"
+            case .extreme: return "DeepSeek-R1 14B (Large V3 STT)"
             }
         }
         
@@ -33,6 +36,7 @@ struct SettingsView: View {
             case .powerSaver: return "~1.8 GB"
             case .balanced: return "~4.5 GB"
             case .maximum: return "~6.5 GB (Q3)"
+            case .extreme: return "~6.5 GB + 2.9 GB STT"
             }
         }
         
@@ -44,6 +48,8 @@ struct SettingsView: View {
                 return "Best tradeoff. Recommended for most rotations."
             case .maximum:
                 return "Best accuracy. Psychiatry/internal medicine. May lag."
+            case .extreme:
+                return "ABSOLUTE MAXIMUM. Large V3 + 14B. Phone will heat up."
             }
         }
     }
@@ -60,6 +66,7 @@ struct SettingsView: View {
                         Text("Power Saver").tag(PerformanceTier.powerSaver)
                         Text("Balanced").tag(PerformanceTier.balanced)
                         Text("Maximum").tag(PerformanceTier.maximum)
+                        Text("🔥 EXTREME").tag(PerformanceTier.extreme)
                     }
                     .pickerStyle(.segmented)
                     .onChange(of: selectedTier) { newTier in

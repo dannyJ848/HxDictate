@@ -37,7 +37,8 @@ echo "📦 Building Whisper.cpp..."
 cd whisper.cpp
 
 # Build for iOS device (arm64)
-echo "Building for iOS device..."m -rf build-ios && mkdir build-ios && cd build-ios
+echo "Building for iOS device..."
+m -rf build-ios && mkdir build-ios && cd build-ios
 cmake .. \
     -DCMAKE_SYSTEM_NAME=iOS \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
@@ -79,23 +80,36 @@ mkdir -p models
 
 cd models
 
-# Whisper small
+# Whisper models
 if [ ! -f "ggml-small.bin" ]; then
-    echo "Downloading Whisper small model..."
+    echo "Downloading Whisper small model (~466MB)..."
     bash ../whisper.cpp/models/download-ggml-model.sh small
     cp ../whisper.cpp/models/ggml-small.bin .
 fi
 
-# DeepSeek 7B (requires HuggingFace login or manual download)
-if [ ! -f "deepseek-r1-distill-qwen-7b-q4_k_m.gguf" ]; then
+# Whisper Large V3 (EXTREME mode)
+if [ ! -f "ggml-large-v3.bin" ]; then
     echo ""
-    echo "⚠️  DeepSeek model not found!"
-    echo "Download from: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
-    echo "Convert to GGUF format using llama.cpp's convert script"
-    echo "Quantize to Q4_K_M for best size/quality tradeoff"
+    echo "⚠️  Whisper Large V3 not found (~2.9GB)"
+    echo "Download manually from:"
+    echo "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3.bin"
+    echo "Or run: curl -L -o ggml-large-v3.bin 'https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3.bin'"
+fi
+
+# DeepSeek models (require manual download due to size/auth)
+if [ ! -f "deepseek-r1-distill-qwen-7b-q4_k_m.gguf" ] && [ ! -f "deepseek-r1-distill-qwen-14b-q3_k_m.gguf" ]; then
     echo ""
-    echo "Or download pre-converted from:"
-    echo "https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF"
+    echo "⚠️  DeepSeek models not found!"
+    echo ""
+    echo "For 7B (Balanced): ~4.5GB"
+    echo "  https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF"
+    echo "  File: deepseek-r1-distill-qwen-7b-Q4_K_M.gguf"
+    echo ""
+    echo "For 14B (EXTREME): ~6.5GB"
+    echo "  https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF"
+    echo "  File: deepseek-r1-distill-qwen-14b-Q3_K_M.gguf"
+    echo ""
+    echo "Note: HuggingFace may require authentication for some models"
 fi
 
 cd ..

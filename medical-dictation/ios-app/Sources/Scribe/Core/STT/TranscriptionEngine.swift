@@ -21,13 +21,14 @@ final class TranscriptionEngine: ObservableObject {
     }
     
     enum PerformanceTier {
-        case small, medium, largeTurbo
+        case small, medium, largeTurbo, largeV3
         
         var modelName: String {
             switch self {
             case .small: return "ggml-small.bin"
             case .medium: return "ggml-medium.bin"
             case .largeTurbo: return "ggml-large-v3-turbo.bin"
+            case .largeV3: return "ggml-large-v3.bin"
             }
         }
         
@@ -36,6 +37,7 @@ final class TranscriptionEngine: ObservableObject {
             case .small: return "466 MB"
             case .medium: return "1.5 GB"
             case .largeTurbo: return "1.6 GB"
+            case .largeV3: return "2.9 GB"
             }
         }
     }
