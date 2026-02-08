@@ -10,40 +10,40 @@ struct SettingsView: View {
     enum PerformanceTier {
         case powerSaver
         case balanced
-        case maximum
+        case deepseekQ40
         
         var sttTier: TranscriptionEngine.PerformanceTier {
             switch self {
             case .powerSaver: return .largeTurbo
             case .balanced: return .medium
-            case .maximum: return .largeTurbo
+            case .deepseekQ40: return .largeTurbo
             }
         }
         
         var llmModel: String {
             switch self {
-            case .powerSaver: return "DeepSeek-R1 7B"
-            case .balanced: return "DeepSeek-R1 14B"
-            case .maximum: return "DeepSeek-R1 14B"
+            case .powerSaver: return "Llama 3.2 3B"
+            case .balanced: return "Qwen2.5 7B"
+            case .deepseekQ40: return "DeepSeek-R1 7B Q4_0"
             }
         }
         
         var llmSize: String {
             switch self {
-            case .powerSaver: return "~4.5 GB + 1.6 GB STT"
-            case .balanced: return "~6.5 GB + 1.5 GB STT"
-            case .maximum: return "~6.5 GB + 1.6 GB STT"
+            case .powerSaver: return "~2.0 GB + 1.6 GB STT"
+            case .balanced: return "~4.4 GB + 1.5 GB STT"
+            case .deepseekQ40: return "~4.1 GB + 1.6 GB STT"
             }
         }
         
         var description: String {
             switch self {
             case .powerSaver:
-                return "Large V3 Turbo + 7B. Good balance of speed and accuracy."
+                return "Llama 3.2 3B. Fastest, English only."
             case .balanced:
-                return "Medium + 14B. Best for clinical use."
-            case .maximum:
-                return "Large V3 Turbo + 14B. Fastest with best accuracy."
+                return "Qwen2.5 7B. Multilingual (Spanish/English)."
+            case .deepseekQ40:
+                return "DeepSeek 7B Q4_0. Smaller DeepSeek, good quality."
             }
         }
     }
@@ -59,7 +59,7 @@ struct SettingsView: View {
                     Picker("Mode", selection: $selectedTier) {
                         Text("Power Saver").tag(PerformanceTier.powerSaver)
                         Text("Balanced").tag(PerformanceTier.balanced)
-                        Text("Maximum").tag(PerformanceTier.maximum)
+                        Text("DeepSeek Q4_0").tag(PerformanceTier.deepseekQ40)
                     }
                     .pickerStyle(.segmented)
                     .onChange(of: selectedTier) { newTier in
@@ -73,7 +73,7 @@ struct SettingsView: View {
                                 switch newTier {
                                 case .powerSaver: return .powerSaver
                                 case .balanced: return .balanced
-                                case .maximum: return .maximum
+                                case .deepseekQ40: return .deepseekQ40
                                 }
                             }()
                             await llmProcessor.loadModel(tier: llmTier)
