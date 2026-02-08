@@ -51,10 +51,21 @@ final class TranscriptionEngine: ObservableObject {
     func loadModel(named modelName: String) async {
         modelStatus = .loading
         
-        guard let modelPath = Bundle.main.path(forResource: modelName, ofType: nil) ??
-                FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                    .first?.appendingPathComponent(modelName).path else {
-            modelStatus = .error("Model not found: \(modelName)")
+        // Try multiple locations for model
+        let possiblePaths = [
+            // 1. App bundle
+            Bundle.main.path(forResource: modelName, ofType: nil),
+            // 2. Documents directory (for download-on-first-launch)
+            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                .first?.appendingPathComponent(modelName).path,
+            // 3. Build directory (development)
+            FileManager.default.currentDirectoryPath + "/scripts/build/models/" + modelName,
+            // 4. Absolute path from workspace
+            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + modelName
+        ].compactMap { $0 }
+        
+        guard let modelPath = possiblePaths.first(where: { FileManager.default.fileExists(atPath: $0) }) else {
+            modelStatus = .error("Model not found: \(modelName). Checked paths: \(possiblePaths)")
             return
         }
         

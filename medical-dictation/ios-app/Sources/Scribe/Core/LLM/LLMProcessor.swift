@@ -148,17 +148,20 @@ Transcript:"""
     }
     
     private func locateModel(named: String) -> String? {
-        // Check bundle first
-        if let bundlePath = Bundle.main.path(forResource: named, ofType: nil) {
-            return bundlePath
-        }
-        // Check documents directory
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        let modelPath = docs?.appendingPathComponent(named).path
-        if FileManager.default.fileExists(atPath: modelPath ?? "") {
-            return modelPath
-        }
-        return nil
+        // Check multiple locations
+        let possiblePaths = [
+            // 1. App bundle
+            Bundle.main.path(forResource: named, ofType: nil),
+            // 2. Documents directory
+            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                .first?.appendingPathComponent(named).path,
+            // 3. Build directory (development)
+            FileManager.default.currentDirectoryPath + "/scripts/build/models/" + named,
+            // 4. Absolute path from workspace
+            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + named
+        ].compactMap { $0 }
+        
+        return possiblePaths.first { FileManager.default.fileExists(atPath: $0) }
     }
     
     // MARK: - Inference
