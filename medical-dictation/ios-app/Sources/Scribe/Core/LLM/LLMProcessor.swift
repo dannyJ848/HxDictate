@@ -217,11 +217,17 @@ Transcript:
         
         // Find model file
         let modelName = tier.llmModel
+        // Search for model in multiple locations (documents first for downloaded models, then bundle)
         let possiblePaths = [
-            Bundle.main.path(forResource: modelName, ofType: nil),
+            // Documents directory (downloaded on first launch)
             FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                .first?.appendingPathComponent(modelName).path,
-            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + modelName
+                .first?.appendingPathComponent("models/\(modelName)").path,
+            // Bundle paths
+            Bundle.main.path(forResource: modelName, ofType: nil),
+            Bundle.main.bundlePath + "/scripts/build/models/" + modelName,
+            // Hardcoded paths for development
+            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + modelName,
+            "/Users/dannygomez/.openclaw-minimax/workspace/HxDictate/medical-dictation/scripts/build/models/" + modelName
         ].compactMap { $0 }
         
         guard let foundPath = possiblePaths.first(where: { FileManager.default.fileExists(atPath: $0) }) else {
@@ -560,7 +566,7 @@ extension LLMProcessor {
             switch self {
             case .powerSaver: return "llama-3.2-3b-q4_k_m.gguf"
             case .balanced: return "qwen2.5-7b-q4_k_m.gguf"
-            case .maximum: return "deepseek-r1-distill-qwen-7b-q3_k_l.gguf"
+            case .maximum: return "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"
             }
         }
         

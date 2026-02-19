@@ -56,12 +56,18 @@ final class TranscriptionEngine: ObservableObject {
         modelStatus = .loading
         
         // Search for model in multiple locations
+        // Search for model in multiple locations (documents first for downloaded models, then bundle)
         let possiblePaths = [
-            Bundle.main.path(forResource: modelName, ofType: nil),
+            // Documents directory (downloaded on first launch)
             FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                .first?.appendingPathComponent(modelName).path,
+                .first?.appendingPathComponent("models/\(modelName)").path,
+            // Bundle paths
+            Bundle.main.path(forResource: modelName, ofType: nil),
+            Bundle.main.bundlePath + "/scripts/build/models/" + modelName,
+            // Hardcoded paths for development
             FileManager.default.currentDirectoryPath + "/scripts/build/models/" + modelName,
-            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + modelName
+            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + modelName,
+            "/Users/dannygomez/.openclaw-minimax/workspace/HxDictate/medical-dictation/scripts/build/models/" + modelName
         ].compactMap { $0 }
         
         guard let modelPath = possiblePaths.first(where: { FileManager.default.fileExists(atPath: $0) }) else {

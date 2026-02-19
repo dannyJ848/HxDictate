@@ -7,168 +7,165 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B6E1F90D1CB4BB179F7F0AD /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC678596B45F665AF582E5 /* AudioSessionManager.swift */; };
-		15CCEE07132D1BAA390C66A7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FDD42F4B13778030D56FBF /* SettingsView.swift */; };
-		1E9C34536C2D497CE163FA0B /* ggml-large-v3.bin in Resources */ = {isa = PBXBuildFile; fileRef = FEE15B60657951A2B308277B /* ggml-large-v3.bin */; };
-		1F8F3132F18E78D59BE73EA3 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A3F613C5A0F7D6D6FD7C58 /* Accelerate.framework */; };
-		21E8E6003847DB0BC601835C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269CD85259596F224B8ECA16 /* Foundation.framework */; };
-		22562D82FBAA7A91D22336A1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E159662D89F4F6D3FE44F401 /* AVFoundation.framework */; };
-		2881E8CC8FD4E07E7AC7F320 /* ggml-large-v3-turbo.bin in Resources */ = {isa = PBXBuildFile; fileRef = 1717EDFBB9F458809D7914EF /* ggml-large-v3-turbo.bin */; };
-		2FAAFCD39695F4EDD6985473 /* whisper_wrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C39F507C7B7C25D8B951676 /* whisper_wrapper.c */; };
-		30845211295D2BEFD0D33936 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE98EE684C9F45520ADFF64E /* HistoryView.swift */; };
-		30B1946045B5AF19FC30C029 /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB25B8AED75263FDDE7F737 /* TranscriptionEngine.swift */; };
-		3B644BDFA20CE9501E210F43 /* GuidedHPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F10E268218392BD85623475 /* GuidedHPView.swift */; };
-		3CFC84B8B416BFB0B3934CEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BA1CD221878D5387AA6ADCA /* Assets.xcassets */; };
-		4C1327B3302E57B4CE53D05A /* ggml-medium.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0BDC8AFD1CECF9F3798D50C7 /* ggml-medium.bin */; };
-		513A748B5292481ED2DE2615 /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC60E2BD713CAB07570B483 /* RecordingView.swift */; };
-		5B58603850FC32A3411E0C6D /* llama_wrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = F2608FC459CF0CA75F932BDE /* llama_wrapper.c */; };
-		61D9EBA637928020901D975F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6A21B3B530583EE0A1E289D /* MetalKit.framework */; };
-		73485AEFA40FE5CD3E537C15 /* Stubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B952A80687C76668170F3AB6 /* Stubs.swift */; };
-		77CE91B22AB7A7C0B35D7ADF /* LLMProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6589168735DD7EEB95C7DE1 /* LLMProcessor.swift */; };
-		7E21B587A830B9B9B79A162F /* ggml-small.bin in Resources */ = {isa = PBXBuildFile; fileRef = 8E23B573919C82C5E73A9EA3 /* ggml-small.bin */; };
-		9EA7FED178B2BE0EDC79E10F /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf in Resources */ = {isa = PBXBuildFile; fileRef = CDF5FA20CDC7671B408E9CAB /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */; };
-		A16BDBFF65CA16DB2AC141FA /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf in Resources */ = {isa = PBXBuildFile; fileRef = 54F89313E3F1E5D0CF2F0277 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */; };
-		AA356AA791F4221292ABD739 /* HPTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FBFBC82859DDC113192074 /* HPTemplate.swift */; };
-		B0464702BFFC1D51C9B719B4 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DB8EF65D5FD34959D33F35D /* Metal.framework */; };
-		C0BFBDEC5767D2CDBF150719 /* ScribeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512D9771F45EA8255572EBDD /* ScribeApp.swift */; };
-		E15918949EDBBE36CA89A368 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CBC5890B44231151A906B5 /* UIKit.framework */; };
-		F9B549B17B0D400686ED4980 /* NoteModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861ED13A75454F0896CBE960 /* NoteModels.swift */; };
+		101918651CF7D8BF66F9FD6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07418168222C7A333398EBB0 /* Foundation.framework */; };
+		4477E81653FDAAB96531B94A /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F48E0C0E600AE1502E5DF55 /* RecordingView.swift */; };
+		582559B64A0066C7E9D1AD49 /* Stubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777BBB1340E0118544CE1597 /* Stubs.swift */; };
+		5BEFB692FEE8B1C23A33C954 /* HPTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07D81426590C768545CE32 /* HPTemplate.swift */; };
+		6292CD1B828F419981C48446 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A8A2E2F3741D350A5DF2E3 /* AVFoundation.framework */; };
+		675F16F8F1C6087D913B4C9A /* GuidedHPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB77237FB00D9BDD1F59A335 /* GuidedHPView.swift */; };
+		76B32CE6F366A2C6CFF7FE4A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F010CF4695A501C1E082BEF /* Accelerate.framework */; };
+		76F872996E6712E6EC5775ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73E09A6708E7CFEA0FB762CE /* Assets.xcassets */; };
+		79CA089090D6DAC372DBA9F7 /* ggml-small.bin in Resources */ = {isa = PBXBuildFile; fileRef = F5E8BE462E65B0C8669C79E2 /* ggml-small.bin */; };
+		823DBCD136B5CF98F538E8F9 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCACEFEE3931313E375E5D9D /* Metal.framework */; };
+		85739C4890CFDF27C8B9D9D3 /* NoteExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59136DBD4D4BBA1065767713 /* NoteExporter.swift */; };
+		975BEFD3E9C8FA0248EE8410 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD579B08369B4F20AD172A5C /* AudioSessionManager.swift */; };
+		98B661BE9A065F151F86A346 /* BiometricAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D067A8FAF8C9627B7D8988E /* BiometricAuthManager.swift */; };
+		A4A94F9B1A7CDD5BBFF69AA1 /* ggml-medium.bin in Resources */ = {isa = PBXBuildFile; fileRef = 2C886F9709C1A2EABB52393C /* ggml-medium.bin */; };
+		A65D4E89ECD8D02217140A3D /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf in Resources */ = {isa = PBXBuildFile; fileRef = A5AA9F38EA5294C0D248F819 /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */; };
+		ADF07237759FDE3559A51F6C /* ScribeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123306215CBACAE4F380D1BA /* ScribeApp.swift */; };
+		AF113DEC3185EFFA0AE432B2 /* ModelDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB7E4B7FF7562B39C080EAF /* ModelDownloader.swift */; };
+		AFC3571D2B585AF5F8E9BE74 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE824D438EA701C578882F /* SettingsView.swift */; };
+		BC4D4D4504D168CAB82420E1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE68C1DACFEBBD1802B8F8B2 /* UIKit.framework */; };
+		C7D83F1C9110FF371D4CB58B /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFA4B612F2B06761417B9 /* TranscriptionEngine.swift */; };
+		CBB65FFC8C92CAEBBFE815E1 /* ggml-large-v3.bin in Resources */ = {isa = PBXBuildFile; fileRef = B4CA443A0D987FAB20C14BA6 /* ggml-large-v3.bin */; };
+		E071D814BF6B11C57F5D1164 /* LLMProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3B42D4DEBA2FAF7BA0163B /* LLMProcessor.swift */; };
+		EDF5E1901C1D4799D38FD21A /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1579D3ABDD1DD6BB2E32D0A /* MetalKit.framework */; };
+		F45CEC55FD061A00C190EBC4 /* NoteModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8D9E63A8BA99ADACDA8439 /* NoteModels.swift */; };
+		F63681B6A98C8A42D70F763E /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47857665A252C8BF29C129D5 /* HistoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		07CBC5890B44231151A906B5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		0BDC8AFD1CECF9F3798D50C7 /* ggml-medium.bin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "ggml-medium.bin"; path = "scripts/build/models/ggml-medium.bin"; sourceTree = "<group>"; };
-		0DB8EF65D5FD34959D33F35D /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		10FBFBC82859DDC113192074 /* HPTemplate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HPTemplate.swift; path = "ios-app/Sources/Scribe/Models/HPTemplate.swift"; sourceTree = "<group>"; };
-		1717EDFBB9F458809D7914EF /* ggml-large-v3-turbo.bin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "ggml-large-v3-turbo.bin"; path = "scripts/build/models/ggml-large-v3-turbo.bin"; sourceTree = "<group>"; };
-		269CD85259596F224B8ECA16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		31A3F613C5A0F7D6D6FD7C58 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		3BA1CD221878D5387AA6ADCA /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "ios-app/Resources/Assets.xcassets"; sourceTree = "<group>"; };
-		3E0E11E84EF6D258F2A2C91F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = "ios-app/Resources/Info.plist"; sourceTree = "<group>"; };
-		512D9771F45EA8255572EBDD /* ScribeApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScribeApp.swift; path = "ios-app/Sources/ScribeApp/ScribeApp.swift"; sourceTree = "<group>"; };
-		54F89313E3F1E5D0CF2F0277 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-14b-q3_k_m.gguf"; sourceTree = "<group>"; };
-		6C39F507C7B7C25D8B951676 /* whisper_wrapper.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = whisper_wrapper.c; path = "ios-app/CWhisper/whisper_wrapper.c"; sourceTree = "<group>"; };
-		6FB25B8AED75263FDDE7F737 /* TranscriptionEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TranscriptionEngine.swift; path = "ios-app/Sources/Scribe/Core/STT/TranscriptionEngine.swift"; sourceTree = "<group>"; };
-		7F10E268218392BD85623475 /* GuidedHPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GuidedHPView.swift; path = "ios-app/Sources/Scribe/UI/GuidedHPView.swift"; sourceTree = "<group>"; };
-		861ED13A75454F0896CBE960 /* NoteModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NoteModels.swift; path = "ios-app/Sources/Scribe/Models/NoteModels.swift"; sourceTree = "<group>"; };
-		87FDD42F4B13778030D56FBF /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = "ios-app/Sources/Scribe/UI/SettingsView.swift"; sourceTree = "<group>"; };
-		8E23B573919C82C5E73A9EA3 /* ggml-small.bin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "ggml-small.bin"; path = "scripts/build/models/ggml-small.bin"; sourceTree = "<group>"; };
-		A9EC678596B45F665AF582E5 /* AudioSessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AudioSessionManager.swift; path = "ios-app/Sources/Scribe/Core/Audio/AudioSessionManager.swift"; sourceTree = "<group>"; };
-		B952A80687C76668170F3AB6 /* Stubs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stubs.swift; path = "ios-app/Sources/Scribe/Core/Stubs.swift"; sourceTree = "<group>"; };
-		CDF5FA20CDC7671B408E9CAB /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; sourceTree = "<group>"; };
-		CE98EE684C9F45520ADFF64E /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoryView.swift; path = "ios-app/Sources/Scribe/UI/HistoryView.swift"; sourceTree = "<group>"; };
-		E159662D89F4F6D3FE44F401 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		ECC60E2BD713CAB07570B483 /* RecordingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RecordingView.swift; path = "ios-app/Sources/Scribe/UI/RecordingView.swift"; sourceTree = "<group>"; };
-		F2608FC459CF0CA75F932BDE /* llama_wrapper.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = llama_wrapper.c; path = "ios-app/CLlama/llama_wrapper.c"; sourceTree = "<group>"; };
-		F46E8E9C38990A07A0245A5F /* HxDictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HxDictate.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F6589168735DD7EEB95C7DE1 /* LLMProcessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LLMProcessor.swift; path = "ios-app/Sources/Scribe/Core/LLM/LLMProcessor.swift"; sourceTree = "<group>"; };
-		F6A21B3B530583EE0A1E289D /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		FEE15B60657951A2B308277B /* ggml-large-v3.bin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "ggml-large-v3.bin"; path = "scripts/build/models/ggml-large-v3.bin"; sourceTree = "<group>"; };
+		07418168222C7A333398EBB0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		0F010CF4695A501C1E082BEF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		123306215CBACAE4F380D1BA /* ScribeApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScribeApp.swift; path = "ios-app/Sources/ScribeApp/ScribeApp.swift"; sourceTree = "<group>"; };
+		1D067A8FAF8C9627B7D8988E /* BiometricAuthManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BiometricAuthManager.swift; path = "ios-app/Sources/Scribe/Core/Auth/BiometricAuthManager.swift"; sourceTree = "<group>"; };
+		26BBCEC4E60FD689A10B21A1 /* HxDictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HxDictate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C886F9709C1A2EABB52393C /* ggml-medium.bin */ = {isa = PBXFileReference; includeInIndex = 1; name = "ggml-medium.bin"; path = "scripts/build/models/ggml-medium.bin"; sourceTree = "<group>"; };
+		3D07D81426590C768545CE32 /* HPTemplate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HPTemplate.swift; path = "ios-app/Sources/Scribe/Models/HPTemplate.swift"; sourceTree = "<group>"; };
+		47857665A252C8BF29C129D5 /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoryView.swift; path = "ios-app/Sources/Scribe/UI/HistoryView.swift"; sourceTree = "<group>"; };
+		59136DBD4D4BBA1065767713 /* NoteExporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NoteExporter.swift; path = "ios-app/Sources/Scribe/Core/Models/NoteExporter.swift"; sourceTree = "<group>"; };
+		595F61D2F76B423AB10CC60A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = "ios-app/Resources/Info.plist"; sourceTree = "<group>"; };
+		5F48E0C0E600AE1502E5DF55 /* RecordingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RecordingView.swift; path = "ios-app/Sources/Scribe/UI/RecordingView.swift"; sourceTree = "<group>"; };
+		6CB7E4B7FF7562B39C080EAF /* ModelDownloader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelDownloader.swift; path = "ios-app/Sources/Scribe/Core/Models/ModelDownloader.swift"; sourceTree = "<group>"; };
+		73E09A6708E7CFEA0FB762CE /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "ios-app/Resources/Assets.xcassets"; sourceTree = "<group>"; };
+		777BBB1340E0118544CE1597 /* Stubs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stubs.swift; path = "ios-app/Sources/Scribe/Core/Stubs.swift"; sourceTree = "<group>"; };
+		A5AA9F38EA5294C0D248F819 /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */ = {isa = PBXFileReference; includeInIndex = 1; name = "deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; path = "scripts/build/models/deepseek-r1-distill-qwen-7b-q4_k_m.gguf"; sourceTree = "<group>"; };
+		AD579B08369B4F20AD172A5C /* AudioSessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AudioSessionManager.swift; path = "ios-app/Sources/Scribe/Core/Audio/AudioSessionManager.swift"; sourceTree = "<group>"; };
+		AE68C1DACFEBBD1802B8F8B2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B46EFA4B612F2B06761417B9 /* TranscriptionEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TranscriptionEngine.swift; path = "ios-app/Sources/Scribe/Core/STT/TranscriptionEngine.swift"; sourceTree = "<group>"; };
+		B4CA443A0D987FAB20C14BA6 /* ggml-large-v3.bin */ = {isa = PBXFileReference; includeInIndex = 1; name = "ggml-large-v3.bin"; path = "scripts/build/models/ggml-large-v3.bin"; sourceTree = "<group>"; };
+		C1579D3ABDD1DD6BB2E32D0A /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		C3A8A2E2F3741D350A5DF2E3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DCACEFEE3931313E375E5D9D /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		EA8D9E63A8BA99ADACDA8439 /* NoteModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NoteModels.swift; path = "ios-app/Sources/Scribe/Models/NoteModels.swift"; sourceTree = "<group>"; };
+		EB77237FB00D9BDD1F59A335 /* GuidedHPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GuidedHPView.swift; path = "ios-app/Sources/Scribe/UI/GuidedHPView.swift"; sourceTree = "<group>"; };
+		F3CE824D438EA701C578882F /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = "ios-app/Sources/Scribe/UI/SettingsView.swift"; sourceTree = "<group>"; };
+		F5E8BE462E65B0C8669C79E2 /* ggml-small.bin */ = {isa = PBXFileReference; includeInIndex = 1; name = "ggml-small.bin"; path = "scripts/build/models/ggml-small.bin"; sourceTree = "<group>"; };
+		FC3B42D4DEBA2FAF7BA0163B /* LLMProcessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LLMProcessor.swift; path = "ios-app/Sources/Scribe/Core/LLM/LLMProcessor.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		275DB821D9342BF32EA32180 /* Frameworks */ = {
+		DAFA6EFE764CC00CDC9E37F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21E8E6003847DB0BC601835C /* Foundation.framework in Frameworks */,
-				1F8F3132F18E78D59BE73EA3 /* Accelerate.framework in Frameworks */,
-				B0464702BFFC1D51C9B719B4 /* Metal.framework in Frameworks */,
-				61D9EBA637928020901D975F /* MetalKit.framework in Frameworks */,
-				22562D82FBAA7A91D22336A1 /* AVFoundation.framework in Frameworks */,
-				E15918949EDBBE36CA89A368 /* UIKit.framework in Frameworks */,
+				101918651CF7D8BF66F9FD6E /* Foundation.framework in Frameworks */,
+				76B32CE6F366A2C6CFF7FE4A /* Accelerate.framework in Frameworks */,
+				823DBCD136B5CF98F538E8F9 /* Metal.framework in Frameworks */,
+				EDF5E1901C1D4799D38FD21A /* MetalKit.framework in Frameworks */,
+				6292CD1B828F419981C48446 /* AVFoundation.framework in Frameworks */,
+				BC4D4D4504D168CAB82420E1 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0E3FD81AC76DD00DA8AD4149 /* Frameworks */ = {
+		0BF2F5BD510EFE7D3AF6DA2F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5FB46E45B0E472BCD78D9086 /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		315D4FE7AFB1F4FE6601187F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				8E23B573919C82C5E73A9EA3 /* ggml-small.bin */,
-				0BDC8AFD1CECF9F3798D50C7 /* ggml-medium.bin */,
-				1717EDFBB9F458809D7914EF /* ggml-large-v3-turbo.bin */,
-				FEE15B60657951A2B308277B /* ggml-large-v3.bin */,
-				CDF5FA20CDC7671B408E9CAB /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */,
-				54F89313E3F1E5D0CF2F0277 /* deepseek-r1-distill-qwen-14b-q3_k_m.gguf */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		5FB46E45B0E472BCD78D9086 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				269CD85259596F224B8ECA16 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		62D60FAAB397CCE3206B0BD3 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				3BA1CD221878D5387AA6ADCA /* Assets.xcassets */,
-				3E0E11E84EF6D258F2A2C91F /* Info.plist */,
+				73E09A6708E7CFEA0FB762CE /* Assets.xcassets */,
+				595F61D2F76B423AB10CC60A /* Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		BC6CA9989CC81A05781E28CF /* Sources */ = {
+		14968CF186F43CB02E8C0E66 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				512D9771F45EA8255572EBDD /* ScribeApp.swift */,
-				87FDD42F4B13778030D56FBF /* SettingsView.swift */,
-				7F10E268218392BD85623475 /* GuidedHPView.swift */,
-				ECC60E2BD713CAB07570B483 /* RecordingView.swift */,
-				CE98EE684C9F45520ADFF64E /* HistoryView.swift */,
-				F6589168735DD7EEB95C7DE1 /* LLMProcessor.swift */,
-				A9EC678596B45F665AF582E5 /* AudioSessionManager.swift */,
-				B952A80687C76668170F3AB6 /* Stubs.swift */,
-				6FB25B8AED75263FDDE7F737 /* TranscriptionEngine.swift */,
-				10FBFBC82859DDC113192074 /* HPTemplate.swift */,
-				861ED13A75454F0896CBE960 /* NoteModels.swift */,
-				6C39F507C7B7C25D8B951676 /* whisper_wrapper.c */,
-				F2608FC459CF0CA75F932BDE /* llama_wrapper.c */,
+				F5E8BE462E65B0C8669C79E2 /* ggml-small.bin */,
+				2C886F9709C1A2EABB52393C /* ggml-medium.bin */,
+				B4CA443A0D987FAB20C14BA6 /* ggml-large-v3.bin */,
+				A5AA9F38EA5294C0D248F819 /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf */,
 			);
-			name = Sources;
+			name = Models;
 			sourceTree = "<group>";
 		};
-		C15D3158036E142095F2464F /* Frameworks */ = {
+		19C197D6EAC1D4EAEECCE2D2 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				31A3F613C5A0F7D6D6FD7C58 /* Accelerate.framework */,
-				0DB8EF65D5FD34959D33F35D /* Metal.framework */,
-				F6A21B3B530583EE0A1E289D /* MetalKit.framework */,
-				E159662D89F4F6D3FE44F401 /* AVFoundation.framework */,
-				07CBC5890B44231151A906B5 /* UIKit.framework */,
+				07418168222C7A333398EBB0 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		40D40B04AC4CE79BBC757BE8 = {
+			isa = PBXGroup;
+			children = (
+				E0C6599F94A5A3BF324831C2 /* Products */,
+				723F963036F7CA244D7B2675 /* Frameworks */,
+				DE673B7DCA7E85CBB2AF7707 /* Frameworks */,
+				C30F0D619A15FB10D5366F5F /* Sources */,
+				0BF2F5BD510EFE7D3AF6DA2F /* Resources */,
+				14968CF186F43CB02E8C0E66 /* Models */,
+			);
+			sourceTree = "<group>";
+		};
+		723F963036F7CA244D7B2675 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				19C197D6EAC1D4EAEECCE2D2 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C367FCB4CB576BA00F2E8AB4 = {
+		C30F0D619A15FB10D5366F5F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				DC695B576531BF29EEA2B28C /* Products */,
-				0E3FD81AC76DD00DA8AD4149 /* Frameworks */,
-				C15D3158036E142095F2464F /* Frameworks */,
-				BC6CA9989CC81A05781E28CF /* Sources */,
-				62D60FAAB397CCE3206B0BD3 /* Resources */,
-				315D4FE7AFB1F4FE6601187F /* Models */,
+				123306215CBACAE4F380D1BA /* ScribeApp.swift */,
+				F3CE824D438EA701C578882F /* SettingsView.swift */,
+				EB77237FB00D9BDD1F59A335 /* GuidedHPView.swift */,
+				5F48E0C0E600AE1502E5DF55 /* RecordingView.swift */,
+				47857665A252C8BF29C129D5 /* HistoryView.swift */,
+				FC3B42D4DEBA2FAF7BA0163B /* LLMProcessor.swift */,
+				1D067A8FAF8C9627B7D8988E /* BiometricAuthManager.swift */,
+				6CB7E4B7FF7562B39C080EAF /* ModelDownloader.swift */,
+				59136DBD4D4BBA1065767713 /* NoteExporter.swift */,
+				AD579B08369B4F20AD172A5C /* AudioSessionManager.swift */,
+				777BBB1340E0118544CE1597 /* Stubs.swift */,
+				B46EFA4B612F2B06761417B9 /* TranscriptionEngine.swift */,
+				3D07D81426590C768545CE32 /* HPTemplate.swift */,
+				EA8D9E63A8BA99ADACDA8439 /* NoteModels.swift */,
 			);
+			name = Sources;
 			sourceTree = "<group>";
 		};
-		DC695B576531BF29EEA2B28C /* Products */ = {
+		DE673B7DCA7E85CBB2AF7707 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F46E8E9C38990A07A0245A5F /* HxDictate.app */,
+				0F010CF4695A501C1E082BEF /* Accelerate.framework */,
+				DCACEFEE3931313E375E5D9D /* Metal.framework */,
+				C1579D3ABDD1DD6BB2E32D0A /* MetalKit.framework */,
+				C3A8A2E2F3741D350A5DF2E3 /* AVFoundation.framework */,
+				AE68C1DACFEBBD1802B8F8B2 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E0C6599F94A5A3BF324831C2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				26BBCEC4E60FD689A10B21A1 /* HxDictate.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -176,14 +173,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F852BF4ED916208F0BCA6EF7 /* HxDictate */ = {
+		17C4EE43E0E3BA80873BEDC2 /* HxDictate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DBD89FA9E4180769A04EEA8A /* Build configuration list for PBXNativeTarget "HxDictate" */;
+			buildConfigurationList = CBE9F63CC1440954C2BAE56D /* Build configuration list for PBXNativeTarget "HxDictate" */;
 			buildPhases = (
-				0A05463F111B81D1DE27F691 /* Sources */,
-				275DB821D9342BF32EA32180 /* Frameworks */,
-				9BEDD783290E545F42700297 /* Resources */,
-				ABCD1234567890ABCDEF001 /* Copy Large Models */,
+				2392F31873F19D4453247A03 /* Sources */,
+				DAFA6EFE764CC00CDC9E37F7 /* Frameworks */,
+				48B00EEB3BD3037755DF3062 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -191,25 +187,19 @@
 			);
 			name = HxDictate;
 			productName = HxDictate;
-			productReference = F46E8E9C38990A07A0245A5F /* HxDictate.app */;
+			productReference = 26BBCEC4E60FD689A10B21A1 /* HxDictate.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		E928D76A53A9CDC7D9DC396C /* Project object */ = {
+		C52288E518DD078A89A9B2F0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
-				TargetAttributes = {
-					F852BF4ED916208F0BCA6EF7 = {
-						DevelopmentTeam = NDJZ6S9Q4L;
-						ProvisioningStyle = Automatic;
-					};
-				};
 			};
-			buildConfigurationList = 1971DC1503FBB794003D1043 /* Build configuration list for PBXProject "HxDictate" */;
+			buildConfigurationList = 1437A61F6569F21AC7E1EF75 /* Build configuration list for PBXProject "HxDictate" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -217,156 +207,59 @@
 				en,
 				Base,
 			);
-			mainGroup = C367FCB4CB576BA00F2E8AB4;
-			productRefGroup = DC695B576531BF29EEA2B28C /* Products */;
+			mainGroup = 40D40B04AC4CE79BBC757BE8;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E0C6599F94A5A3BF324831C2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F852BF4ED916208F0BCA6EF7 /* HxDictate */,
+				17C4EE43E0E3BA80873BEDC2 /* HxDictate */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9BEDD783290E545F42700297 /* Resources */ = {
+		48B00EEB3BD3037755DF3062 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CFC84B8B416BFB0B3934CEF /* Assets.xcassets in Resources */,
+				76F872996E6712E6EC5775ED /* Assets.xcassets in Resources */,
+				79CA089090D6DAC372DBA9F7 /* ggml-small.bin in Resources */,
+				A4A94F9B1A7CDD5BBFF69AA1 /* ggml-medium.bin in Resources */,
+				CBB65FFC8C92CAEBBFE815E1 /* ggml-large-v3.bin in Resources */,
+				A65D4E89ECD8D02217140A3D /* deepseek-r1-distill-qwen-7b-q4_k_m.gguf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		ABCD1234567890ABCDEF001 /* Copy Large Models */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/scripts/build/models/ggml-small.bin",
-				"$(SRCROOT)/scripts/build/models/ggml-medium.bin",
-				"$(SRCROOT)/scripts/build/models/ggml-large-v3-turbo.bin",
-				"$(SRCROOT)/scripts/build/models/ggml-large-v3.bin",
-				"$(SRCROOT)/scripts/build/models/llama-3.2-3b-q4_k_m.gguf",
-				"$(SRCROOT)/scripts/build/models/qwen2.5-7b-q4_k_m.gguf",
-				"$(SRCROOT)/scripts/build/models/deepseek-r1-distill-qwen-7b-q3_k_l.gguf",
-			);
-			name = "Copy Large Models";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ggml-small.bin",
-				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ggml-medium.bin",
-				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ggml-large-v3-turbo.bin",
-				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ggml-large-v3.bin",
-				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/llama-3.2-3b-q4_k_m.gguf",
-				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/qwen2.5-7b-q4_k_m.gguf",
-				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/deepseek-r1-distill-qwen-7b-q3_k_l.gguf",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Copy large model files directly to avoid Xcode resource copying issues\nMODELS_DIR=\"${SRCROOT}/scripts/build/models\"\nRESOURCES_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\necho \"=== Copy Large Models Build Phase ===\"\necho \"SRCROOT: ${SRCROOT}\"\necho \"TARGET_BUILD_DIR: ${TARGET_BUILD_DIR}\"\necho \"RESOURCES_DIR: ${RESOURCES_DIR}\"\n\n# Ensure resources directory exists\nmkdir -p \"${RESOURCES_DIR}\"\n\n# List what's in the models directory\necho \"Models in source directory:\"\nls -lh \"${MODELS_DIR}\" 2>/dev/null | head -10\n\n# Copy each model file (always copy for now to ensure freshness)\nfor model in ggml-small.bin ggml-medium.bin ggml-large-v3-turbo.bin ggml-large-v3.bin llama-3.2-3b-q4_k_m.gguf qwen2.5-7b-q4_k_m.gguf deepseek-r1-distill-qwen-7b-q3_k_l.gguf; do\n    SRC=\"${MODELS_DIR}/${model}\"\n    DST=\"${RESOURCES_DIR}/${model}\"\n    \n    if [ -f \"${SRC}\" ]; then\n        echo \"Copying ${model} ($(stat -f%z \"${SRC}\" 2>/dev/null || echo 'unknown') bytes)...\"\n        cp -f \"${SRC}\" \"${DST}\"\n        if [ $? -eq 0 ]; then\n            echo \"  ✓ ${model} copied successfully\"\n        else\n            echo \"  ✗ Failed to copy ${model}\"\n        fi\n    else\n        echo \"Warning: ${model} not found at ${SRC}\"\n    fi\ndone\n\necho \"=== Verifying copied models ===\"\nls -lh \"${RESOURCES_DIR}\"/*.bin \"${RESOURCES_DIR}\"/*.gguf 2>/dev/null || echo \"No models found in resources\"\n\necho \"Model copy complete\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		0A05463F111B81D1DE27F691 /* Sources */ = {
+		2392F31873F19D4453247A03 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0BFBDEC5767D2CDBF150719 /* ScribeApp.swift in Sources */,
-				15CCEE07132D1BAA390C66A7 /* SettingsView.swift in Sources */,
-				3B644BDFA20CE9501E210F43 /* GuidedHPView.swift in Sources */,
-				513A748B5292481ED2DE2615 /* RecordingView.swift in Sources */,
-				30845211295D2BEFD0D33936 /* HistoryView.swift in Sources */,
-				77CE91B22AB7A7C0B35D7ADF /* LLMProcessor.swift in Sources */,
-				0B6E1F90D1CB4BB179F7F0AD /* AudioSessionManager.swift in Sources */,
-				73485AEFA40FE5CD3E537C15 /* Stubs.swift in Sources */,
-				30B1946045B5AF19FC30C029 /* TranscriptionEngine.swift in Sources */,
-				AA356AA791F4221292ABD739 /* HPTemplate.swift in Sources */,
-				F9B549B17B0D400686ED4980 /* NoteModels.swift in Sources */,
-				2FAAFCD39695F4EDD6985473 /* whisper_wrapper.c in Sources */,
-				5B58603850FC32A3411E0C6D /* llama_wrapper.c in Sources */,
+				ADF07237759FDE3559A51F6C /* ScribeApp.swift in Sources */,
+				AFC3571D2B585AF5F8E9BE74 /* SettingsView.swift in Sources */,
+				675F16F8F1C6087D913B4C9A /* GuidedHPView.swift in Sources */,
+				4477E81653FDAAB96531B94A /* RecordingView.swift in Sources */,
+				F63681B6A98C8A42D70F763E /* HistoryView.swift in Sources */,
+				E071D814BF6B11C57F5D1164 /* LLMProcessor.swift in Sources */,
+				98B661BE9A065F151F86A346 /* BiometricAuthManager.swift in Sources */,
+				AF113DEC3185EFFA0AE432B2 /* ModelDownloader.swift in Sources */,
+				85739C4890CFDF27C8B9D9D3 /* NoteExporter.swift in Sources */,
+				975BEFD3E9C8FA0248EE8410 /* AudioSessionManager.swift in Sources */,
+				582559B64A0066C7E9D1AD49 /* Stubs.swift in Sources */,
+				C7D83F1C9110FF371D4CB58B /* TranscriptionEngine.swift in Sources */,
+				5BEFB692FEE8B1C23A33C954 /* HPTemplate.swift in Sources */,
+				F45CEC55FD061A00C190EBC4 /* NoteModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		08322E05586F720F5B9FF173 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NDJZ6S9Q4L;
-				ENABLE_BITCODE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/include",
-					"$(SRCROOT)/scripts/build/llama.cpp/include",
-					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
-					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
-					"$(SRCROOT)/ios-app",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/ios-app/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
-					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/ggml/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-blas",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-metal",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-lwhisper",
-					"-lllama",
-					"-lggml",
-					"-lggml-base",
-					"-lggml-cpu",
-					"-lggml-metal",
-					"-lggml-blas",
-					"-lc++",
-					"-lc++abi",
-					"-framework",
-					Accelerate,
-					"-framework",
-					Metal,
-					"-framework",
-					MetalKit,
-					"-framework",
-					Foundation,
-					"-framework",
-					AVFoundation,
-					"-framework",
-					SwiftData,
-					"-framework",
-					UIKit,
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.danny.hxdictate;
-				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ios-app/Scribe-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
-		322ECD8D5F11C915741F809F /* Release */ = {
+		634A3CB4B41C3B6A0361D5AC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -414,81 +307,13 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
-		37C8EF00C094498A09CA9D5F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NDJZ6S9Q4L;
-				ENABLE_BITCODE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/include",
-					"$(SRCROOT)/scripts/build/llama.cpp/include",
-					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
-					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
-					"$(SRCROOT)/ios-app",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/ios-app/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
-					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/ggml/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-blas",
-					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-metal",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-lwhisper",
-					"-lllama",
-					"-lggml",
-					"-lggml-base",
-					"-lggml-cpu",
-					"-lggml-metal",
-					"-lggml-blas",
-					"-lc++",
-					"-lc++abi",
-					"-framework",
-					Accelerate,
-					"-framework",
-					Metal,
-					"-framework",
-					MetalKit,
-					"-framework",
-					Foundation,
-					"-framework",
-					AVFoundation,
-					"-framework",
-					SwiftData,
-					"-framework",
-					UIKit,
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.danny.hxdictate;
-				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ios-app/Scribe-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = 1;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		730B1D462B7180A7C783F60A /* Debug */ = {
+		85E16542EA0958EA20C4586B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -549,28 +374,165 @@
 			};
 			name = Debug;
 		};
+		A2E8D90CA3B22C08259A7E66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G99N9A97Z4;
+				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/scripts/build/whisper.cpp/include",
+					"$(SRCROOT)/scripts/build/llama.cpp/include",
+					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
+					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
+					"$(SRCROOT)/ios-app",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/ios-app/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/ggml/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-blas",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-metal",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lwhisper",
+					"-lllama",
+					"-lggml",
+					"-lggml-base",
+					"-lggml-cpu",
+					"-lggml-metal",
+					"-lggml-blas",
+					"-lc++",
+					"-lc++abi",
+					"-framework",
+					Accelerate,
+					"-framework",
+					Metal,
+					"-framework",
+					MetalKit,
+					"-framework",
+					Foundation,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					SwiftData,
+					"-framework",
+					UIKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danny.hxdictate;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ios-app/Scribe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		D728CD978CBF16AF92046474 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G99N9A97Z4;
+				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/scripts/build/whisper.cpp/include",
+					"$(SRCROOT)/scripts/build/llama.cpp/include",
+					"$(SRCROOT)/scripts/build/whisper.cpp/ggml/include",
+					"$(SRCROOT)/scripts/build/llama.cpp/ggml/include",
+					"$(SRCROOT)/ios-app",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/ios-app/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/whisper.cpp/build-ios/ggml/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-blas",
+					"$(SRCROOT)/scripts/build/llama.cpp/build-ios/ggml/src/ggml-metal",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lwhisper",
+					"-lllama",
+					"-lggml",
+					"-lggml-base",
+					"-lggml-cpu",
+					"-lggml-metal",
+					"-lggml-blas",
+					"-lc++",
+					"-lc++abi",
+					"-framework",
+					Accelerate,
+					"-framework",
+					Metal,
+					"-framework",
+					MetalKit,
+					"-framework",
+					Foundation,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					SwiftData,
+					"-framework",
+					UIKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danny.hxdictate;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ios-app/Scribe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1971DC1503FBB794003D1043 /* Build configuration list for PBXProject "HxDictate" */ = {
+		1437A61F6569F21AC7E1EF75 /* Build configuration list for PBXProject "HxDictate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				730B1D462B7180A7C783F60A /* Debug */,
-				322ECD8D5F11C915741F809F /* Release */,
+				85E16542EA0958EA20C4586B /* Debug */,
+				634A3CB4B41C3B6A0361D5AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DBD89FA9E4180769A04EEA8A /* Build configuration list for PBXNativeTarget "HxDictate" */ = {
+		CBE9F63CC1440954C2BAE56D /* Build configuration list for PBXNativeTarget "HxDictate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				37C8EF00C094498A09CA9D5F /* Release */,
-				08322E05586F720F5B9FF173 /* Debug */,
+				D728CD978CBF16AF92046474 /* Release */,
+				A2E8D90CA3B22C08259A7E66 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = E928D76A53A9CDC7D9DC396C /* Project object */;
+	rootObject = C52288E518DD078A89A9B2F0 /* Project object */;
 }

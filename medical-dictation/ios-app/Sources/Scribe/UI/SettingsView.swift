@@ -7,6 +7,15 @@ struct SettingsView: View {
     @State private var showingModelDownloadSheet = false
     @State private var selectedTier: PerformanceTier = .balanced
     
+    // Privacy settings
+    @State private var biometricEnabled = true
+    @State private var autoLockEnabled = true
+    @State private var biometricType: BiometricAuthManager.BiometricType = .none
+    
+    // Auto-process settings
+    @State private var autoProcessEnabled = false
+    @State private var includeTimestamps = true
+    
     enum PerformanceTier {
         case powerSaver
         case balanced
@@ -24,7 +33,7 @@ struct SettingsView: View {
             switch self {
             case .powerSaver: return "Llama 3.2 3B"
             case .balanced: return "Qwen2.5 7B"
-            case .maximum: return "DeepSeek-R1 7B Q3_K_L"
+            case .maximum: return "DeepSeek-R1 7B Q4_K_M"
             }
         }
         
@@ -130,19 +139,21 @@ struct SettingsView: View {
                     //     GuidedHPView()
                     // }
                     
-                    Picker("Default Template", selection: .constant(LLMProcessor.NoteTemplate.soap)) {
+                    Picker("Default Template", selection: $llmProcessor.currentTemplate) {
                         ForEach(LLMProcessor.NoteTemplate.allCases, id: \.self) { template in
                             Text(template.rawValue).tag(template)
                         }
                     }
                     
-                    Toggle("Auto-process on stop", isOn: .constant(false))
-                    Toggle("Include timestamps", isOn: .constant(true))
+                    Toggle("Auto-process on stop", isOn: $autoProcessEnabled)
+                    Toggle("Include timestamps", isOn: $includeTimestamps)
                 }
                 
                 Section("Privacy") {
-                    Toggle("Require Face ID/Touch ID", isOn: .constant(true))
-                    Toggle("Auto-lock after 5 minutes", isOn: .constant(true))
+                    if biometricType != .none {
+                        Toggle(biometricType == .faceID ? "Require Face ID" : "Require Touch ID", isOn: $biometricEnabled)
+                    }
+                    Toggle("Auto-lock after 5 minutes", isOn: $autoLockEnabled)
                     
                     NavigationLink("Data Management") {
                         DataManagementView()
@@ -163,6 +174,14 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .sheet(isPresented: $showingModelDownloadSheet) {
                 ModelDownloadSheet()
+            }
+            .onAppear {
+                Task {
+                    let type = await BiometricAuthManager.shared.biometricType()
+                    await MainActor.run {
+                        biometricType = type
+                    }
+                }
             }
         }
     }
@@ -246,6 +265,8 @@ struct ModelDownloadSheet: View {
     
     @State private var downloadProgress: Double = 0
     @State private var isDownloading = false
+    @State private var currentModelName: String = ""
+    @State private var errorMessage: String?
     
     var body: some View {
         NavigationView {
@@ -254,11 +275,11 @@ struct ModelDownloadSheet: View {
                     .font(.system(size: 60))
                     .foregroundColor(.accentColor)
                 
-                Text("Download DeepSeek 7B")
+                Text("Download AI Models")
                     .font(.title2)
                     .fontWeight(.bold)
                 
-                Text("This model is ~4.5 GB and will be stored on your device. All processing happens locally—no data leaves your phone.")
+                Text("First-time setup: Download the AI models needed for transcription and note generation. Total: ~9 GB. Models are stored locally—nothing leaves your device.")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
                     .padding(.horizontal)
@@ -268,6 +289,10 @@ struct ModelDownloadSheet: View {
                         ProgressView(value: downloadProgress)
                             .progressViewStyle(.linear)
                         
+                        Text("\(currentModelName)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
                         Text("\(Int(downloadProgress * 100))%")
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -275,17 +300,24 @@ struct ModelDownloadSheet: View {
                     .padding(.horizontal)
                 }
                 
+                if let error = errorMessage {
+                    Text(error)
+                        .font(.caption)
+                        .foregroundColor(.red)
+                        .padding(.horizontal)
+                }
+                
                 Spacer()
                 
                 VStack(spacing: 12) {
                     Button {
                         isDownloading = true
-                        // Trigger download + load
+                        errorMessage = nil
                         Task {
-                            await downloadAndLoadModel()
+                            await downloadAllModels()
                         }
                     } label: {
-                        Text(isDownloading ? "Downloading..." : "Download & Load")
+                        Text(isDownloading ? "Downloading..." : "Download All Models")
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
@@ -303,19 +335,16 @@ struct ModelDownloadSheet: View {
         }
     }
     
-    private func downloadAndLoadModel() async {
-        // Simulate download progress
-        for i in 0...100 {
-            try? await Task.sleep(nanoseconds: 50_000_000) // 50ms
-            await MainActor.run {
-                downloadProgress = Double(i) / 100.0
+    private func downloadAllModels() async {
+        await ModelDownloader.shared.downloadAllModels { modelName, progress in
+            Task { @MainActor in
+                self.currentModelName = modelName
+                self.downloadProgress = progress
             }
         }
         
-        // Actually load the model
-        await llmProcessor.loadModel()
-        
         await MainActor.run {
+            isDownloading = false
             dismiss()
         }
     }
