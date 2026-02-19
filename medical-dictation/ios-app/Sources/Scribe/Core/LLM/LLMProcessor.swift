@@ -205,6 +205,44 @@ Transcript:
     
     // MARK: - Model Management
     
+    /// Find model file in multiple possible locations
+    private func findModelPath(_ modelName: String) -> String? {
+        let searchPaths = [
+            // Bundle resources
+            Bundle.main.path(forResource: modelName.replacingOccurrences(of: ".gguf", with: ""), ofType: "gguf"),
+            Bundle.main.path(forResource: modelName, ofType: nil),
+            
+            // Documents directory (for downloaded models)
+            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                .first?.appendingPathComponent(modelName).path,
+            
+            // App support directory
+            FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+                .first?.appendingPathComponent(modelName).path,
+            
+            // Build scripts output (development)
+            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + modelName,
+            "./scripts/build/models/" + modelName,
+            
+            // Current directory
+            FileManager.default.currentDirectoryPath + "/scripts/build/models/" + modelName,
+        ].compactMap { $0 }
+        
+        for path in searchPaths {
+            if FileManager.default.fileExists(atPath: path) {
+                print("📍 Found LLM at: \(path)")
+                return path
+            }
+        }
+        
+        print("🔍 Searched paths for \(modelName):")
+        for path in searchPaths {
+            print("   - \(path ?? "nil")")
+        }
+        
+        return nil
+    }
+    
     /// Load the LLM model from disk
     /// - Parameter tier: Performance tier determining which model to load
     func loadModel(tier: PerformanceTier = .balanced) async {
@@ -215,24 +253,23 @@ Transcript:
         
         modelStatus = .loading(progress: 0)
         
-        // Find model file
+        // Find model file using the search function
         let modelName = tier.llmModel
-        let possiblePaths = [
-            Bundle.main.path(forResource: modelName, ofType: nil),
-            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                .first?.appendingPathComponent(modelName).path,
-            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + modelName
-        ].compactMap { $0 }
-        
-        guard let foundPath = possiblePaths.first(where: { FileManager.default.fileExists(atPath: $0) }) else {
-            modelStatus = .error("Model not found: \(modelName)")
+        guard let foundPath = findModelPath(modelName) else {
+            modelStatus = .error("Model not found: \(modelName). Please download from HuggingFace and add to project.")
             print("⚠️ Model not found: \(modelName)")
-            print("Searched paths: \(possiblePaths)")
+            print("Download from: https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF")
             return
         }
         
         modelPath = foundPath
         print("📦 Loading model from: \(foundPath)")
+        
+        // Verify file is readable
+        guard FileManager.default.isReadableFile(atPath: foundPath) else {
+            modelStatus = .error("Model file not readable: \(modelName)")
+            return
+        }
         
         // Update progress
         modelStatus = .loading(progress: 0.1)

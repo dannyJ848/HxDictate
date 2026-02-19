@@ -67,7 +67,12 @@ struct SettingsView: View {
                             // Reload both models with new tier
                             transcriptionEngine.unloadModel()
                             llmProcessor.unloadModel()
+                            
+                            // Small delay to ensure cleanup
+                            try? await Task.sleep(nanoseconds: 500_000_000)
+                            
                             await transcriptionEngine.loadModel(tier: newTier.sttTier)
+                            
                             // Convert tier for LLM
                             let llmTier: LLMProcessor.PerformanceTier = {
                                 switch newTier {
