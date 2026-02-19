@@ -46,12 +46,54 @@ final class TranscriptionEngine: ObservableObject {
     
     // MARK: - Model Management
     
+    /// Search paths for models - expanded for iOS bundle and documents
+    private func findModelPath(_ modelName: String) -> String? {
+        let searchPaths = [
+            // Bundle resources (when added to Xcode project)
+            Bundle.main.path(forResource: modelName.replacingOccurrences(of: ".bin", with: ""), ofType: "bin"),
+            Bundle.main.path(forResource: modelName, ofType: nil),
+            
+            // Documents directory (for downloaded models)
+            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                .first?.appendingPathComponent(modelName).path,
+            
+            // App support directory
+            FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+                .first?.appendingPathComponent(modelName).path,
+            
+            // Build scripts output (development)
+            "/Users/dannygomez/.openclaw/workspace/medical-dictation/scripts/build/models/" + modelName,
+            "./scripts/build/models/" + modelName,
+            
+            // Current directory (for tests)
+            FileManager.default.currentDirectoryPath + "/scripts/build/models/" + modelName,
+        ].compactMap { $0 }
+        
+        for path in searchPaths {
+            if FileManager.default.fileExists(atPath: path) {
+                print("📍 Found model at: \(path)")
+                return path
+            }
+        }
+        
+        // Print all searched paths for debugging
+        print("🔍 Searched paths for \(modelName):")
+        for path in searchPaths {
+            print("   - \(path ?? "nil")")
+        }
+        
+        return nil
+    }
+    
     func loadModel(tier: PerformanceTier = .small) async {
         await loadModel(named: tier.modelName)
     }
     
     func loadModel(named modelName: String) async {
-        guard !isModelLoaded else { return }
+        guard !isModelLoaded else { 
+            print("⚠️ Model already loaded")
+            return 
+        }
         
         modelStatus = .loading
         
@@ -77,9 +119,16 @@ final class TranscriptionEngine: ObservableObject {
         
         print("📦 Loading Whisper model from: \(modelPath)")
         
+        // Check if file exists and is readable
+        guard FileManager.default.isReadableFile(atPath: modelPath) else {
+            modelStatus = .error("Model file not readable: \(modelName)")
+            return
+        }
+        
         // Create context params
         guard let paramsPtr = whisper_context_default_params_by_ref_wrapper() else {
-            modelStatus = .error("Failed to create context params")
+            modelStatus = .error("Failed to create context params - C library not initialized")
+            print("❌ Failed to create context params")
             return
         }
         defer { whisper_free_context_params_wrapper(paramsPtr) }
